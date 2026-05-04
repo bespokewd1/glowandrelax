@@ -3,6 +3,12 @@
 @theme {
   --breakpoint-xmd: 49rem;
 
+  /* Brand typography */
+  --font-serif: 'Fraunces', 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-sans:
+    'Mona Sans', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+
   /* Brand palette — derived from Glow & Relax logo */
 
   /* Sage green — lotus + moon outline */

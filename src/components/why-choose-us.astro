@@ -7,25 +7,32 @@ import { resolveImage } from '@js/imageUtils';
 const whyChooseImg = await resolveImage(homeData.whyChooseUs.image);
 ---
 
-<section id="why-choose-us" class="px-0">
+<section id="why-choose-us" class="bg-cream-50 px-0">
   <div
-    class="relative mx-auto grid grid-cols-6 items-stretch gap-0 px-6 py-12 md:py-14 lg:py-16"
+    class="relative mx-auto grid grid-cols-6 items-stretch gap-0 px-6 py-16 md:py-20 lg:py-24"
   >
     <!-- Left image -->
     <div
       class="relative col-span-full xl:col-start-2 xl:col-end-4 xl:justify-self-end"
     >
-      {
-        whyChooseImg && (
-          <Image
-            src={whyChooseImg}
-            class="mx-auto block aspect-square w-full max-w-[600px] object-cover lg:h-full xl:ms-0"
-            alt={homeData.whyChooseUs.alt}
-            lqip="base64"
-            lqipSize={10}
-          />
-        )
-      }
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          class="absolute -top-5 -left-5 -z-10 hidden h-full w-full max-w-[600px] border border-copper-400/60 xl:block"
+        >
+        </div>
+        {
+          whyChooseImg && (
+            <Image
+              src={whyChooseImg}
+              class="mx-auto block aspect-square w-full max-w-[600px] object-cover shadow-[0_30px_60px_-25px_rgba(60,49,40,0.4)] lg:h-full xl:ms-0"
+              alt={homeData.whyChooseUs.alt}
+              lqip="base64"
+              lqipSize={10}
+            />
+          )
+        }
+      </div>
     </div>
 
     <!-- Card with bullets -->
@@ -33,36 +40,54 @@ const whyChooseImg = await resolveImage(homeData.whyChooseUs.image);
       class="relative inset-0 col-span-full mx-auto flex items-center py-12 md:px-6 xl:absolute xl:col-start-4 xl:col-end-7 xl:mx-0 xl:justify-self-start"
     >
       <div
-        class="w-full max-w-[680px] rounded-xl bg-orange-200 shadow-[0_10px_25px_rgba(0,0,0,0.15)] ring-1 ring-black/10"
+        class="w-full max-w-[680px] rounded-sm border border-taupe-200 bg-cream-100 shadow-[0_25px_50px_-20px_rgba(60,49,40,0.3)]"
       >
         <div class="p-6 sm:p-8 md:p-10">
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-500"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+            >
+              Why us
+            </span>
+          </div>
+
           <h3
-            class="font-serif text-[clamp(var(--text-2xl),5vw,var(--text-4xl))] leading-snug text-gray-950"
+            class="mt-4 font-serif text-[clamp(var(--text-2xl),5vw,var(--text-4xl))] leading-[1.05] tracking-[-0.01em] text-taupe-900"
           >
             {homeData.whyChooseUs.title}
           </h3>
 
-          <p class="mt-4 leading-7 text-gray-700">
+          <p class="mt-5 leading-7 text-taupe-700">
             {homeData.whyChooseUs.description}
           </p>
 
-          <ul class="mt-6 space-y-3 text-gray-800">
+          <ul class="mt-7 space-y-4 text-taupe-800">
             {
-              homeData.whyChooseUs.points.map((point) => (
-                <li class="flex gap-3">
-                  <span class="mt-2 h-2 w-2 rounded-full bg-gray-900" />
-                  <span>{point.text}</span>
+              homeData.whyChooseUs.points.map((point, i) => (
+                <li class="flex items-start gap-4">
+                  <span
+                    aria-hidden="true"
+                    class={`mt-2 h-1 w-6 flex-none ${i % 2 === 0 ? 'bg-copper-500' : 'bg-sage-500'}`}
+                  />
+                  <span class="leading-6">{point.text}</span>
                 </li>
               ))
             }
           </ul>
 
-          <div class="mt-8">
+          <div class="mt-9">
             <a
               href="/about"
-              class="inline-flex items-center rounded-full border-2 border-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-orange-100"
+              class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-6 py-3 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
             >
               Learn More
+              <span
+                aria-hidden="true"
+                class="transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
             </a>
           </div>
         </div>

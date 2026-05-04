@@ -133,7 +133,7 @@ const navData = await getNavData();
                   <ul
                     id={`submenu-${entry.key}`}
                     class:list={[
-                      'cs-drop-ul rounded-xl border-emerald-300 bg-orange-50',
+                      'cs-drop-ul border-brand-accent rounded-xl bg-orange-50',
                     ]}
                   >
                     {entry.children?.map((child) => (
@@ -141,7 +141,7 @@ const navData = await getNavData();
                         <a
                           href={child.url}
                           class:list={[
-                            'cs-li-link cs-drop-link hover:bg-brand-muted text-gray-950 transition-colors',
+                            'cs-li-link cs-drop-link hover:bg-brand-secondary text-gray-950 transition-colors',
                             {
                               'bg-brand-primary': Astro.url.pathname.includes(
                                 child.url
