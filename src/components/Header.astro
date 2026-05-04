@@ -27,7 +27,7 @@ const navData = await getNavData();
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 </style>
-<header id="cs-navigation" class="sticky bg-emerald-200/75 p-0" {...props}>
+<header id="cs-navigation" class="bg-brand-background sticky p-0" {...props}>
   <!-- Fixed Announcement Bar -->
   <AnnouncementBar />
 
@@ -37,11 +37,7 @@ const navData = await getNavData();
     <a href="/" class="cs-logo mr-0" aria-label="back to home">
       {
         MainLogo && (
-          <Image
-            src={MainLogo}
-            alt={navInfo.alt}
-            class="max-w-[180px] px-2 drop-shadow-md"
-          />
+          <Image src={MainLogo} alt={navInfo.alt} class="max-w-[180px] px-2" />
         )
       }
     </a>
@@ -77,15 +73,15 @@ const navData = await getNavData();
                   },
                 ]}
               >
-                {entry.children?.length > 0 ? (
+                {(entry.children?.length ?? 0 > 0) ? (
                   <div class="relative block lg:contents">
                     <a
                       href={entry.url}
                       class:list={[
                         'cs-li-link before:hidden',
-                        'rounded-full bg-orange-50 py-1 pr-8 pl-3 text-gray-950 transition-colors hover:bg-orange-100 lg:pr-3',
+                        'hover:bg-brand-secondary rounded-full py-1 pr-8 pl-3 text-gray-950 transition-colors lg:pr-3',
                         {
-                          'cs-active bg-orange-200 text-gray-50':
+                          'cs-active bg-brand-primary text-gray-50':
                             Astro.url.pathname === entry.url,
                         },
                       ]}
@@ -119,9 +115,9 @@ const navData = await getNavData();
                     href={entry.url}
                     class:list={[
                       'cs-li-link before:hidden',
-                      'rounded-full bg-orange-50 px-3 py-1 text-gray-950 transition-colors hover:bg-orange-100',
+                      'hover:bg-brand-secondary rounded-full px-3 py-1 text-gray-950 transition-colors',
                       {
-                        'cs-active bg-orange-200 text-gray-50':
+                        'cs-active bg-brand-primary text-gray-50':
                           Astro.url.pathname === entry.url,
                       },
                     ]}
@@ -133,16 +129,25 @@ const navData = await getNavData();
                     {entry.key}
                   </a>
                 )}
-                {entry.children?.length > 0 && (
+                {(entry.children?.length ?? 0) > 0 && (
                   <ul
                     id={`submenu-${entry.key}`}
-                    class="cs-drop-ul rounded-xl border-emerald-300 bg-orange-50"
+                    class:list={[
+                      'cs-drop-ul rounded-xl border-emerald-300 bg-orange-50',
+                    ]}
                   >
                     {entry.children?.map((child) => (
                       <li class="cs-drop-li">
                         <a
                           href={child.url}
-                          class="cs-li-link cs-drop-link text-gray-950 transition-colors hover:bg-orange-100"
+                          class:list={[
+                            'cs-li-link cs-drop-link hover:bg-brand-muted text-gray-950 transition-colors',
+                            {
+                              'bg-brand-primary': Astro.url.pathname.includes(
+                                child.url
+                              ),
+                            },
+                          ]}
                           aria-current={
                             Astro.url.pathname === child.url
                               ? 'page'
