@@ -1,0 +1,10 @@
+{
+  "image": "/src/assets/images/logo/updated-logo.png",
+  "alt": "iMassage Main logo",
+  "home": "Home",
+  "about": "About Us",
+  "services": "Services",
+  "contact": "Contact Us",
+  "directBilling": "Direct Billing",
+  "book": "Book Appointment"
+}

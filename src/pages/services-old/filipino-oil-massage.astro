@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/hilot.png';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Filipino Oil Massage',
+  image: services7Img,
+  alt: 'Traditional Filipino massage using warm local oils to soothe muscles and promote overall wellness',
+  subtitle:
+    'A deeply relaxing traditional Filipino massage that combines gentle to firm strokes with the healing warmth of native oils like Pau d’Arco. This treatment relieves tension, improves circulation, and restores balance to body and mind through time-honored Filipino techniques.',
+  highlights: [
+    {
+      title: 'Authentic Filipino Tradition',
+      body: 'Rooted in local healing practices that focus on restoring natural energy flow and balance.',
+    },
+    {
+      title: 'Warm Herbal Oils',
+      body: 'Uses nourishing native oils such as Pau d’Arco to ease muscle tension and rejuvenate the skin.',
+    },
+    {
+      title: 'Full-Body Wellness',
+      body: 'Promotes relaxation, stress relief, and a renewed sense of vitality from head to toe.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Filipino Oil Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Filipino Oil Massage', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Filipino Oil Massage.',
+  benefits: [
+    {
+      num: '01',
+      title: 'Ease muscle tension',
+      body: 'Warm oil and rhythmic strokes melt away stiffness and fatigue.',
+    },
+    {
+      num: '02',
+      title: 'Enhance circulation',
+      body: 'Encourages better blood flow and oxygen delivery throughout the body.',
+    },
+    {
+      num: '03',
+      title: 'Nourish skin and senses',
+      body: 'Natural oils hydrate the skin and offer a soothing, aromatic experience.',
+    },
+    {
+      num: '04',
+      title: 'Promote relaxation and balance',
+      body: 'Helps calm the mind and restore the body’s natural harmony.',
+    },
+  ],
+  benefitsTagline:
+    'Warm oils, deep relaxation, improved circulation, and authentic Filipino healing',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Filipino Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

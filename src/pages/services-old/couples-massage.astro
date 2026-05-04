@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/couples-massage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Couples Massage',
+  image: services7Img,
+  alt: 'Relaxing side-by-side massage experience designed for couples to unwind and reconnect',
+  subtitle:
+    'A shared relaxation experience where you and your partner enjoy personalized massages side-by-side, promoting connection, balance, and total tranquility. Perfect for anniversaries, special occasions, or simply spending quality time together.',
+  highlights: [
+    {
+      title: 'Shared Serenity',
+      body: 'Enjoy simultaneous massages that help both partners relax and recharge together.',
+    },
+    {
+      title: 'Customized Experience',
+      body: 'Each massage is tailored to individual comfort levels, pressure preferences, and relaxation needs.',
+    },
+    {
+      title: 'Emotional Connection',
+      body: 'Encourages bonding through calm, synchronized energy and peaceful presence.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Couples Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Couples Massage', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Couples Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Deepen connection',
+      body: 'Shared relaxation fosters emotional closeness and mindful connection.',
+    },
+    {
+      num: '02',
+      title: 'Relieve stress together',
+      body: 'Soothes tension and promotes calm for both partners at once.',
+    },
+    {
+      num: '03',
+      title: 'Boost overall well-being',
+      body: 'Enhances circulation, relaxation, and mood balance.',
+    },
+    {
+      num: '04',
+      title: 'Perfect for special moments',
+      body: 'Ideal for celebrations, getaways, or meaningful shared time.',
+    },
+  ],
+  benefitsTagline:
+    'Shared relaxation, deeper connection, balanced energy, and total tranquility',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Couples Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

@@ -1,0 +1,377 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import client from '@data/clientData';
+import Landing from '@components/Landing.astro';
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import { getOptimizedImage } from '@js/utils';
+import landingImage from '@assets/images/stone-massage-background1.png'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import FacebookIcon from '@components/Icons/Socials/FacebookIcon.astro';
+import type { AstroComponentDirectives } from 'astro';
+import TwitterIcon from '@components/Icons/Socials/TwitterIcon.astro';
+import LinkedInIcon from '@components/Icons/Socials/LinkedInIcon.astro';
+import InstagramIcon from '@components/Icons/Socials/InstagramIcon.astro';
+import CheckIcon from '@components/Icons/Utility/CheckIcon.astro';
+import MapPinFilled from '@components/Icons/Utility/MapPinFilled.astro';
+
+import { resolveImage } from '@js/imageUtils';
+import type { GetImageResult } from 'astro';
+import seoSetting from '@data/seo-pages.json';
+const seo = seoSetting.contact;
+const ogImg = await resolveImage(seo.ogImage);
+let ogImage: GetImageResult | null = null;
+if (ogImg) {
+  ogImage = await getOptimizedImage(ogImg);
+}
+
+// type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+// type IconComponent = AstroComponentDirectives;
+
+type Social = {
+  name: string;
+  href: string;
+  Icon: typeof FacebookIcon;
+};
+
+const optimizedImage = await getOptimizedImage(landingImage);
+
+const phoneDisplay = client.phoneFormatted;
+const phoneHref = `tel:${client.phoneForTel}`;
+const email = client.email;
+const emailHref = `mailto:${client.email}`;
+const socials: Social[] = [
+  { name: 'Facebook', href: client.socials.facebook, Icon: FacebookIcon },
+  { name: 'Twitter/X', href: client.socials.twitter, Icon: TwitterIcon },
+  { name: 'LinkedIn', href: client.socials.linkedin, Icon: LinkedInIcon },
+  { name: 'Instagram', href: client.socials.instagram, Icon: InstagramIcon },
+];
+
+const clinicName = client.name || 'iMassage Therapeutic Clinique';
+const address =
+  client.address.lineOne?.trim() + ',' + client.address.lineTwo?.trim();
+const mapHref = client.address.lineOne + client.address.lineTwo;
+
+const hours = [
+  { label: 'Mon – Sat', value: '10:00 am – 10:00 pm' },
+  { label: 'Sunday', value: '3:00 pm – 10:00 pm' },
+];
+---
+
+<BaseLayout
+  title={seo.title || 'Contact'}
+  description={seo.description}
+  ogImage={ogImage}
+  preloadedImage={optimizedImage}
+>
+  <section
+    class="relative grid grid-cols-5 bg-orange-50 lg:max-h-[900px] lg:grid-cols-6 lg:grid-rows-5 xl:grid-rows-4"
+  >
+    <!-- Background image band -->
+    <div class="relative col-span-6 lg:row-span-2">
+      <img
+        src={optimizedImage.src}
+        width={optimizedImage.attributes.width}
+        height={optimizedImage.attributes.height}
+        alt="Green plants and soft light through a window"
+        class="w-full object-cover lg:h-full"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Content -->
+    <div
+      class="relative col-span-6 mx-auto h-full max-w-6xl border-b lg:absolute lg:inset-0 lg:col-start-2 lg:col-end-6 lg:row-start-2 lg:pb-4"
+    >
+      <!-- lg:shadow-xl lg:ring-1 lg:ring-black/10 -->
+      <div
+        class="grid h-full grid-cols-1 gap-8 rounded-xl bg-orange-50/85 p-6 backdrop-blur-md md:grid-cols-2 md:p-10"
+      >
+        <!-- Left: text -->
+        <div class="flex flex-col gap-6 md:col-span-2 lg:col-span-1 lg:pr-6">
+          <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
+            Book Your Massage Today!
+          </h2>
+          <p class="leading-7 text-gray-700">
+            Have questions about our therapeutic massage services, pricing, or
+            mobile availability? Our team is happy to assist. Reach out to book
+            an appointment or ask about the best treatment for your needs.
+          </p>
+
+          <ul class="space-y-2 text-gray-800">
+            <li class="flex items-center gap-3">
+              <CheckIcon class="text-green-700" />
+              <span>Same‑day bookings may be available</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <CheckIcon class="text-green-700" />
+              <span>Secure online payments and multiple payment options</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <CheckIcon class="text-green-700" />
+              <span>Registered, professional massage therapists</span>
+            </li>
+          </ul>
+
+          <div class="mt-4 grid gap-x-4 gap-y-6 sm:grid-cols-2">
+            <div class="xs:col-span-1">
+              <h3
+                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
+              >
+                Phone
+              </h3>
+              <a
+                href={phoneHref}
+                class="mt-1 block text-gray-900 hover:text-emerald-700"
+              >
+                {phoneDisplay}
+              </a>
+            </div>
+
+            <div class="">
+              <h3
+                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
+              >
+                Email
+              </h3>
+              <a
+                href={emailHref}
+                class="mt-1 block text-gray-900 hover:text-emerald-700"
+              >
+                {email}
+              </a>
+            </div>
+
+            <div class="xs:col-span-2">
+              <h3
+                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
+              >
+                Social Media
+              </h3>
+              <div class="mt-2 flex items-center gap-1">
+                {
+                  socials.map(({ name, href, Icon }) => (
+                    <a
+                      href={href}
+                      aria-label={name}
+                      class="inline-flex h-8 w-8 items-center justify-center rounded-full text-emerald-900 transition-colors duration-300 hover:bg-emerald-800 hover:text-emerald-50"
+                    >
+                      {/* <i class="" /> */}
+                      <Icon />
+                    </a>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="md:col-span-2 lg:col-span-1">
+          <form
+            class="grid grid-cols-1 gap-4"
+            onsubmit="event.preventDefault();"
+          >
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label class="mb-1 block text-sm text-gray-700"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  placeholder="First name"
+                />
+              </div>
+              <div>
+                <label class="mb-1 block text-sm text-gray-700">Last Name</label
+                >
+                <input
+                  type="text"
+                  class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  placeholder="Last name"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm text-gray-700">Email *</label>
+              <input
+                type="email"
+                required
+                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <div>
+              <label class="mb-1 block text-sm text-gray-700">Message</label>
+              <textarea
+                rows="5"
+                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                placeholder="How can we help?"></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center rounded bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500"
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-orange-50">
+    <div class="mx-auto max-w-3xl px-6 py-16 md:px-10 md:py-20 xl:max-w-6xl">
+      <div class="mx-auto">
+        <h2 class="font-serif text-3xl text-gray-950 md:text-4xl">
+          Visit Us In‑Clinic
+        </h2>
+        <p class="mt-4 leading-7 text-gray-700">
+          Our licensed therapists provide personalized therapeutic
+          care—including deep‑tissue, relaxation massage, and hot stone
+          therapy—in a calm, welcoming space. We’re easy to find and always
+          happy to help you feel your best.
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-col gap-6">
+        <!-- left info -->
+        <div class="">
+          <div class="space-y-6">
+            <div>
+              <h3
+                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
+              >
+                Address
+              </h3>
+              <div class="mt-2 pl-2 text-gray-900">
+                <p class="inline-flex items-center gap-2 font-medium">
+                  <span>
+                    <MapPinFilled />
+                  </span>
+                  {clinicName}
+                </p>
+                <a
+                  href={mapHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-1 block text-emerald-800 underline underline-offset-2 hover:text-emerald-700"
+                >
+                  {address}
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <h3
+                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
+              >
+                Opening Hours
+              </h3>
+              <ul class="mt-2 space-y-1 text-gray-900">
+                {
+                  hours.map((h) => (
+                    <li class="flex items-center gap-6">
+                      <small class="min-w-16 font-semibold">{h.label}:</small>
+                      <p class="">{h.value}</p>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- map -->
+        <div class="">
+          <!-- Option A: Simple embed using the mapLink from client.json
+          -->
+          <div class="overflow-hidden rounded-lg ring-1 ring-black/10">
+            <iframe
+              src={client.address.mapLink}
+              style="border:0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="h-[420px] w-full"></iframe>
+          </div>
+          <!--
+          Option B (commented): Using the Google Maps Embed API "search" pattern (no key needed for basic usage),
+          in case you want a fixed query independent of mapLink:
+          <iframe
+            src="https://www.google.com/maps?q=South+Gate+Mall,+Edmonton,+Alberta,+Canada&output=embed"
+            style="border:0"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="h-[420px] w-full"></iframe>
+
+        -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <form id="cs-form" name="Contact Form" method="post">
+        <div class="cs-content">
+          <span class="cs-topper">Contact</span>
+          <h2 class="cs-title">Get in Touch</h2>
+          <p class="cs-text">
+            Need to relax and recharge? Contact us today to book your massage
+            and feel rejuvenated.
+          </p>
+        </div>
+        <label>
+          Name
+          <input
+            required
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+          />
+        </label>
+        <label>
+          Email
+          <input
+            required
+            type="text"
+            id="email"
+            name="email"
+            placeholder="Email"
+          />
+        </label>
+        <label>
+          Phone
+          <input
+            required
+            type="text"
+            id="phone"
+            name="phone"
+            placeholder="Phone"
+          />
+        </label>
+        <label>
+          How Did You Find Us
+          <input
+            type="text"
+            id="find"
+            name="find-us"
+            placeholder="How did you find us?"
+          />
+        </label>
+        <label class="cs-label-message">
+          Message
+          <textarea
+            required
+            name="Message"
+            id="message"
+            placeholder="Write message..."></textarea>
+        </label>
+        <button class="cs-button-solid rounded-button" type="submit"
+          >Submit Message</button
+        >
+      </form> -->
+</BaseLayout>

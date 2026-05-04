@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/stone-massage-background1.png';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Hot Stone Massage',
+  image: services7Img,
+  alt: 'A soothing massage that uses warmed stones to relax tight muscles, improve blood flow, and deliver deep, calming relief.',
+  subtitle:
+    'A deeply soothing massage that uses warmed basalt stones to melt away tension, relieve stress, and promote full-body relaxation. The heat penetrates deep into muscles, easing stiffness, improving circulation, and restoring balance to both body and mind.',
+  highlights: [
+    {
+      title: 'Deep Muscle Relaxation',
+      body: 'Warm stones help loosen tight muscles and release built-up tension.',
+    },
+    {
+      title: 'Enhanced Circulation',
+      body: 'Heat stimulates blood flow, supporting faster recovery and reduced soreness.',
+    },
+    {
+      title: 'Stress & Anxiety Relief',
+      body: 'The calming warmth encourages deep relaxation and mental clarity.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Hot Stone Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Hot Stone Massage', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Hot Stone Massage.',
+  benefits: [
+    {
+      num: '01',
+      title: 'Melt away tension',
+      body: 'Heat-soaked stones ease chronic tightness and muscle stiffness.',
+    },
+    {
+      num: '02',
+      title: 'Boost circulation',
+      body: 'Encourages improved blood flow for better oxygen and nutrient delivery.',
+    },
+    {
+      num: '03',
+      title: 'Promote deep relaxation',
+      body: 'Helps the body shift into a restorative, stress-free state.',
+    },
+    {
+      num: '04',
+      title: 'Improve overall well-being',
+      body: 'Supports emotional balance, muscle recovery, and inner calm.',
+    },
+  ],
+  benefitsTagline:
+    'Warmth, relaxation, and deep restorative healing.',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Hot Stone Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/therapeutic.png';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Therapeutic Massage',
+  image: services7Img,
+  alt: 'A customized, hands-on treatment designed to reduce muscle tension, ease pain, and support overall mobility and recovery.',
+  subtitle:
+    'A restorative massage focused on relieving muscle tension, reducing pain, and improving mobility. Using targeted pressure and therapeutic techniques, this treatment helps release tight areas, enhance circulation, and promote overall physical well-being.',
+  highlights: [
+    {
+      title: 'Targeted Pain Relief',
+      body: 'Focuses on problem areas to reduce muscle tightness and discomfort.',
+    },
+    {
+      title: 'Therapeutic Pressure',
+      body: 'Uses firm, controlled techniques to address deep-seated tension.',
+    },
+    {
+      title: 'Improved Mobility',
+      body: 'Helps increase range of motion and support healthy muscle function.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Therapeutic Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Therapeutic Massage', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Therapeutic Massage.',
+  benefits: [
+    {
+      num: '01',
+      title: 'Reduce muscle pain',
+      body: 'Alleviates chronic tension, soreness, and tightness.',
+    },
+    {
+      num: '02',
+      title: 'Improve circulation',
+      body: 'Supports better blood flow for faster recovery.',
+    },
+    {
+      num: '03',
+      title: 'Enhance flexibility',
+      body: 'Loosens stiff muscles and improves mobility.',
+    },
+    {
+      num: '04',
+      title: 'Support overall wellness',
+      body: 'Promotes relaxation while aiding physical healing and balance.',
+    },
+  ],
+  benefitsTagline:
+    'Warm oils, deep relaxation, improved circulation, and holistic foot healing',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Therapeutic Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

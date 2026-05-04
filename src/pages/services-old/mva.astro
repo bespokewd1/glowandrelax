@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services8Img from '@assets/images/Services-8.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const mvaHero: HeroServiceProps = {
+  title: 'MVA (Motor Vehicle Accident) Massage',
+  image: services8Img,
+  alt: 'Registered massage therapist providing targeted care for motor vehicle accident injuries',
+  subtitle:
+    'Therapeutic treatment to address pain and soft tissue injuries resulting from car accidents, often covered by insurance.',
+  highlights: [
+    {
+      title: 'Targeted Post‑Collision Care',
+      body: 'Assessment‑informed treatment for whiplash, sprains/strains, and soft‑tissue pain.',
+    },
+    {
+      title: 'Restore Mobility',
+      body: 'Gentle to moderate techniques to reduce guarding, ease pain, and improve range of motion.',
+    },
+    {
+      title: 'Insurance‑Ready Support',
+      body: 'Documentation and coordination to align with MVA claim requirements where applicable.',
+    },
+  ],
+  ctaPrimary: { label: 'Book MVA Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About MVA Coverage', href: '/contact' },
+};
+
+export const mvaData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of MVA Massage Therapy',
+  benefits: [
+    {
+      num: '01',
+      title: 'Reduce pain and muscle guarding',
+      body: 'Calms irritated tissues, decreases protective tension, and supports comfortable movement.',
+    },
+    {
+      num: '02',
+      title: 'Support soft‑tissue healing',
+      body: 'Promotes circulation and tissue glide to aid recovery from sprains, strains, and whiplash.',
+    },
+    {
+      num: '03',
+      title: 'Improve range of motion',
+      body: 'Gentle, progressive work to restore neck, shoulder, and back mobility after a collision.',
+    },
+    {
+      num: '04',
+      title: 'Insurance‑aligned care',
+      body: 'Session planning and notes that complement your provider’s plan and MVA claim needs.',
+    },
+  ],
+  benefitsTagline:
+    'Relieve Pain, Restore Movement, and Support Your MVA Recovery',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book MVA Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...mvaHero} />
+  <PriceBenifits {...mvaData} />
+</BaseLayout>

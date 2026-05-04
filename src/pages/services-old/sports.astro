@@ -1,0 +1,73 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services6Img from '@assets/images/Services-6.LymphaticMassage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const sportHero: HeroServiceProps = {
+  title: 'Sports Massage',
+  image: services6Img,
+  alt: 'Sports massage focused on performance, injury prevention, and recovery',
+  subtitle:
+    'Focused therapy for athletes to enhance performance, prevent injury, and aid recovery.',
+  highlights: [
+    {
+      title: 'Performance-Focused',
+      body: 'Targeted techniques to address key muscle groups and movement patterns.',
+    },
+    {
+      title: 'Injury Prevention',
+      body: 'Helps reduce muscle imbalances, adhesions, and overuse strain.',
+    },
+    {
+      title: 'Faster Recovery',
+      body: 'Encourages circulation and tissue glide to ease soreness post‑training.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Sports Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Treatment Plans', href: '/contact' },
+};
+
+export const sportData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Sports Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Enhance performance',
+      body: 'Improves tissue quality and mobility for more efficient movement.',
+    },
+    {
+      num: '02',
+      title: 'Prevent overuse injuries',
+      body: 'Addresses tightness and trigger points before they limit training.',
+    },
+    {
+      num: '03',
+      title: 'Accelerate recovery',
+      body: 'Boosts circulation and helps clear post‑workout soreness and stiffness.',
+    },
+    {
+      num: '04',
+      title: 'Optimize range of motion',
+      body: 'Focused work on hips, shoulders, and back to support training demands.',
+    },
+  ],
+  benefitsTagline: 'Move Better, Recover Faster, and Train with Confidence',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Sports Massage Session',
+};
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...sportHero} />
+  <PriceBenifits {...sportData} />
+</BaseLayout>

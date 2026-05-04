@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/foot.png';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Foot Massage',
+  image: services7Img,
+  alt: 'A focused treatment that targets pressure points in the feet to relieve tension, improve circulation, and promote full-body relaxation.',
+  subtitle:
+    'A deeply relaxing foot massage that combines gentle to firm strokes with the healing warmth of natural oils. This treatment relieves tension, improves circulation, and restores balance to your feet and body.',
+  highlights: [
+    {
+      title: 'Traditional Foot Therapy',
+      body: 'Rooted in healing practices that focus on restoring natural energy flow and balance in the feet.',
+    },
+    {
+      title: 'Warm Herbal Oils',
+      body: 'Uses nourishing native oils such as Pau d’Arco to ease muscle tension and rejuvenate the skin.',
+    },
+    {
+      title: 'Full-Body Wellness',
+      body: 'Promotes relaxation, stress relief, and a renewed sense of vitality from head to toe.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Foot Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Foot Massage', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Foot Massage.',
+  benefits: [
+    {
+      num: '01',
+      title: 'Ease foot tension',
+      body: 'Warm oil and rhythmic strokes melt away stiffness and fatigue in the feet and ankles.',
+    },
+    {
+      num: '02',
+      title: 'Enhance circulation',
+      body: 'Encourages better blood flow and oxygen delivery throughout the lower body.',
+    },
+    {
+      num: '03',
+      title: 'Nourish skin and senses',
+      body: 'Natural oils hydrate the skin and offer a soothing, aromatic experience for your feet.',
+    },
+    {
+      num: '04',
+      title: 'Promote relaxation and balance',
+      body: 'Helps calm the mind while restoring the body’s natural harmony through foot reflex points.',
+    },
+  ],
+  benefitsTagline:
+    'Warm oils, deep relaxation, improved circulation, and holistic foot healing',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Foot Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

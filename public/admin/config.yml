@@ -1,0 +1,886 @@
+# Use DecapBridge PKCE auth (required)
+backend:
+  name: git-gateway
+  repo: bespokewd1/iMassage-Therapeutic-Clinique-
+  branch: main
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/99bffa98-7089-4cfc-b80b-82de26b15a82/pkce
+  auth_token_endpoint: /sites/99bffa98-7089-4cfc-b80b-82de26b15a82/token
+  gateway_url: https://gateway.decapbridge.com
+
+  # See who did what (optional)
+  commit_messages:
+    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+
+# Enable PKCE fields (optional, recommended)
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+# Better Decap + Bridge logo (optional)
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+
+# Add site links in Decap CMS (optional)
+site_url: https://imassage-therapeutic.ca
+
+# See full Decap documentation for further configuration: https://decapcms.org/docs/intro/
+local_backend: true
+media_folder: src/assets/images/blog # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
+public_folder: src/assets/images/blog # Ensure that this path is the same as the media_folder path above.
+# logo_url: https://codestitch.app/frontend/images/logo.png # change url to a link to the image you want to use, no file paths, must be a URL
+collections:
+  - name: 'blog' # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+    label: 'Blog' # Used in the admin dashboard UI
+    folder: 'src/content/blog' # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Author', name: 'author', widget: 'string' }
+      - { label: 'Date', name: 'date', widget: 'datetime' }
+      - { label: 'Featured Image', name: 'image', widget: 'image' }
+      - { label: 'Image Caption', name: 'imageAlt', widget: 'string' }
+      - { label: 'Tags', name: 'tags', widget: 'list', default: ['post'] }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'services'
+    label: 'Services'
+    folder: 'src/content/services'
+    editor:
+      preview: false
+    media_folder: /src/assets/images/services # Images uploaded for 'services' will go here
+    public_folder: /src/assets/images/services # The public path used in the content file
+    create: true
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - {
+          label: 'Service Short Description',
+          name: 'cardDescription',
+          widget: 'text',
+          required: false,
+          hint: 'Optional short description for the services list; will use the service description if empty.',
+        }
+      - {
+          label: 'Service Description',
+          name: 'subtitle',
+          widget: 'text',
+          hint: 'Main descriptive paragraph for the service.',
+        }
+      - {
+          label: 'Service Image',
+          name: 'image',
+          widget: 'image',
+          hint: 'Used for both the service image landing page and the card image on services list.',
+        }
+      - {
+          label: 'Serice Image Alt Text',
+          name: 'imageAlt',
+          widget: 'string',
+          hint: 'Used for accessibility purposes and SEO.',
+        }
+      - label: 'Service Feature'
+        name: 'hightlights'
+        widget: 'list'
+        min: 1
+        max: 3
+        hint: 'maximum of 3, used to display on the service landing page'
+        fields:
+          - { label: 'Feature Name', name: 'featName', widget: 'string' }
+          - { label: 'Feature Description', name: 'featBody', widget: 'text' }
+      - {
+          label: 'Benefits Title',
+          name: 'benefitsTitle',
+          widget: 'string',
+          default: 'Benefits',
+        }
+      - {
+          label: 'Benefits Tagline',
+          name: 'benefitsTagline',
+          widget: 'string',
+          hint: 'Short, one-line summary shown below the benefits section.',
+        }
+      - label: 'Benefits'
+        name: 'benefits'
+        widget: 'list'
+        hint: 'maximum of 4 benefits list'
+        max: 4
+        fields:
+          - { label: 'Benefit Name', name: 'benefitName', widget: 'string' }
+          - {
+              label: 'Benefit Description',
+              name: 'benefitBody',
+              widget: 'text',
+            }
+      - label: 'Prices'
+        name: 'prices'
+        widget: 'list'
+        required: false
+        hint: 'optional prices for the service'
+        fields:
+          - {
+              label: 'Session Duration',
+              name: 'duration',
+              widget: 'string',
+              hint: 'e.g. 45 minutes',
+            }
+          - {
+              label: 'Session Price',
+              name: 'price',
+              widget: 'string',
+              hint: 'e.g. $85',
+            }
+
+  - name: 'Site Settings'
+    label: 'Site Settings'
+    delete: false # Prevent deleting the file
+    editor:
+      preview: false
+    files:
+      - name: 'client'
+        label: 'Client Info'
+        file: 'src/data/client.json'
+        description: 'Global site information (Name, Phone, Address, etc.)'
+        fields:
+          - { label: 'Business Name', name: 'name', widget: 'string' }
+          - { label: 'Email', name: 'email', widget: 'string' }
+          - {
+              label: 'Phone Number',
+              name: 'phone',
+              widget: 'string',
+              hint: 'Enter in any format, e.g., 780-729-0978.',
+            }
+          - label: 'Address'
+            name: 'address'
+            widget: 'object'
+            fields:
+              - { label: 'Line One', name: 'lineOne', widget: 'string' }
+              - { label: 'Line Two', name: 'lineTwo', widget: 'string' }
+              - {
+                  label: 'City',
+                  name: 'city',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'State/Province',
+                  name: 'state',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'Zip/Postal',
+                  name: 'zip',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'Google Maps Link',
+                  name: 'mapLink',
+                  widget: 'string',
+                  required: false,
+                }
+          - label: 'Opening Hours'
+            name: 'openingHours'
+            widget: 'object'
+            fields:
+              - {
+                  label: 'Days Open',
+                  name: 'daysOpen',
+                  widget: 'string',
+                  hint: 'e.g. Monday – Sunday or Monday – Friday',
+                }
+              - {
+                  label: 'Hours',
+                  name: 'hours',
+                  widget: 'string',
+                  hint: 'e.g. 8:00 AM – 9:00 PM',
+                }
+          - label: 'Socials'
+            name: 'socials'
+            widget: 'object'
+            fields:
+              - { label: 'Facebook', name: 'facebook', widget: 'string' }
+              - { label: 'Instagram', name: 'instagram', widget: 'string' }
+              - { label: 'Twitter', name: 'twitter', widget: 'string' }
+              - { label: 'LinkedIn', name: 'linkedin', widget: 'string' }
+
+      - name: 'booking'
+        label: 'Booking Link'
+        file: 'src/data/booking.json'
+        description: 'Link to the booking page'
+        fields:
+          - {
+              label: 'Booking Button Text',
+              name: 'buttonText',
+              widget: 'string',
+            }
+          - {
+              label: 'Booking Button Link',
+              name: 'buttonLink',
+              widget: 'string',
+            }
+
+      - name: 'seo-pages'
+        label: 'SEO Settings (Global and Per Page Overrides)'
+        file: 'src/data/seo-pages.json'
+        media_folder: /src/assets/images/og # Images uploaded for 'services' will go here
+        public_folder: /src/assets/images/og # The public path used in the content file
+        description: 'SEO overrides for specific pages. Leave a field empty to use global defaults.'
+        editor:
+          preview: false
+        fields:
+          - label: 'Global/Default SEO'
+            name: 'global'
+            widget: 'object'
+            fields:
+              - {
+                  label: 'Default Meta Title',
+                  name: 'title',
+                  widget: 'string',
+                  hint: 'Site-wide default title (used when page-specific SEO is not provided).',
+                }
+              - {
+                  label: 'Default Meta Description',
+                  name: 'description',
+                  widget: 'text',
+                  hint: 'Site-wide default description.',
+                }
+              - {
+                  label: 'Default OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Home Page SEO'
+            name: 'home'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'About Page SEO'
+            name: 'about'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Services Page SEO'
+            name: 'services'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Contact Page SEO'
+            name: 'contact'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Direct Billing Page SEO'
+            name: 'directBilling'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Gallery Page SEO'
+            name: 'gallery'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+          - label: 'Reviews Page SEO'
+            name: 'reviews'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - {
+                  label: 'SEO Title',
+                  name: 'title',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'SEO Description',
+                  name: 'description',
+                  widget: 'text',
+                  required: false,
+                }
+              - {
+                  label: 'OG Image',
+                  name: 'ogImage',
+                  widget: 'image',
+                  required: false,
+                  hint: 'Recommended size: 1200×630 px (landscape), at least 600×315 px. Use JPG or PNG.',
+                }
+
+      - name: 'announcement'
+        label: 'Announcement Bar/Popup'
+        file: 'src/data/announcement.json'
+        description: 'Link to the booking page'
+        fields:
+          - {
+              label: 'Enabled By Default',
+              name: 'Enabled',
+              widget: 'boolean',
+              required: false,
+              default: true,
+              hint: 'this will trigger to whether show it or not',
+            }
+          - { label: 'Announcement Message', name: 'message', widget: 'text' }
+          - {
+              label: 'Booking Button Text',
+              name: 'buttonText',
+              widget: 'string',
+            }
+          - {
+              label: 'Booking Button Link',
+              name: 'buttonLink',
+              widget: 'string',
+            }
+
+  - name: 'pages'
+    label: 'Pages'
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: 'navigation'
+        label: 'Header/Footer Links And Site Icon'
+        file: 'src/data/navInfo.json'
+        media_folder: /src/assets/images/logo # Images uploaded for 'services' will go here
+        public_folder: /src/assets/images/logo # The public path used in the content file
+        description: 'Header navigation labels (URLs are fixed in code).'
+        editor:
+          preview: false
+        fields:
+          - {
+              label: 'Header Image/Icon',
+              name: 'image',
+              widget: 'image',
+              hint: 'Left side Icon ',
+            }
+          - {
+              label: 'Image Alt Text',
+              name: 'alt',
+              widget: 'string',
+              hint: 'use for the icon alt text for SEO',
+            }
+          - label: 'Home Link Label'
+            name: 'home'
+            widget: 'string'
+            default: 'Home'
+          - label: 'About Link Label'
+            name: 'about'
+            widget: 'string'
+            default: 'About Us'
+          - label: 'Services Link Label'
+            name: 'services'
+            widget: 'string'
+            default: 'Services'
+          - label: 'Contact Link Label'
+            name: 'contact'
+            widget: 'string'
+            default: 'Contact Us'
+          - label: 'Direct Billing Link Label'
+            name: 'directBilling'
+            widget: 'string'
+            default: 'Direct Billing'
+          - label: 'Book Appointment Link Label'
+            name: 'book'
+            widget: 'string'
+            default: 'Book Appointment'
+
+      - name: 'home'
+        label: 'Homepage'
+        file: 'src/data/home.json'
+        media_folder: /src/assets/images/home # Images uploaded for 'services' will go here
+        public_folder: /src/assets/images/home # The public path used in the content file
+        description: 'Edit content for the main homepage sections'
+        fields:
+          # Section 1: Hero
+          - label: 'Hero Section'
+            name: 'hero'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - { label: 'Main Heading', name: 'title', widget: 'string' }
+              - { label: 'Subtitle', name: 'subtitle', widget: 'text' }
+              - {
+                  label: 'Hero Image',
+                  name: 'image',
+                  widget: 'image',
+                  hint: 'Left side large image',
+                }
+              - { label: 'Image Alt Text', name: 'alt', widget: 'string' }
+
+          # Section 2: Welcome / About Intro
+          - label: 'Welcome Section'
+            name: 'welcome'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - { label: 'Section Heading', name: 'title', widget: 'string' }
+              - { label: 'Body Text', name: 'body', widget: 'text' }
+              - {
+                  label: 'Side Image',
+                  name: 'image',
+                  widget: 'image',
+                  hint: 'Right side square image',
+                }
+              - { label: 'Image Alt Text', name: 'alt', widget: 'string' }
+
+          # Section 3: Green CTA Band
+          - label: 'Green CTA Band'
+            name: 'greenCta'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - { label: 'Title', name: 'title', widget: 'string' }
+              - { label: 'Description', name: 'description', widget: 'string' }
+
+          # Section 4: Service Highlights (Connected to Services Collection)
+          - label: 'Service Highlights'
+            name: 'serviceHighlights'
+            widget: 'object'
+            collapsed: true
+            description: 'Select 2 services to feature on the homepage'
+            fields:
+              - {
+                  label: 'Intro Heading',
+                  name: 'heading',
+                  widget: 'string',
+                  default: 'Our Services',
+                }
+              - {
+                  label: 'Intro Description',
+                  name: 'description',
+                  widget: 'text',
+                }
+
+              # Feature 1 (Left) - a dropdown selection
+              - label: 'Highlight 1 (Left)'
+                name: 'highlight1'
+                widget: 'relation'
+                collection: 'services' # Target collection
+                search_fields: ['title'] # Search by title
+                value_field: 'title' # Save the Title to JSON
+                display_fields: ['title'] # Show the Title in dropdown
+                hint: 'Select a service. Image and text will be pulled automatically.'
+
+              # Feature 2 (Right) - a dropdown selection
+              - label: 'Highlight 2 (Right)'
+                name: 'highlight2'
+                widget: 'relation'
+                collection: 'services'
+                search_fields: ['title']
+                value_field: 'title'
+                display_fields: ['title']
+                hint: 'Select a service. Image and text will be pulled automatically.'
+
+          # Section 5: Why choose us section
+          - label: 'Why Choose Us'
+            name: 'whyChooseUs'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - { label: 'Title', name: 'title', widget: 'string' }
+              - { label: 'Description', name: 'description', widget: 'string' }
+              - {
+                  label: 'Side Image',
+                  name: 'image',
+                  widget: 'image',
+                  hint: 'Left side image',
+                }
+              - { label: 'Image Alt Text', name: 'alt', widget: 'string' }
+              - label: 'Benefit Points'
+                name: 'points'
+                widget: 'list'
+                max: 4
+                summary: '{{fields.text}}'
+                hint: 'Up to 4 short bullet points (e.g., “Registered, experienced therapists focused on results”).'
+                fields:
+                  - {
+                      label: 'Point Text',
+                      name: 'text',
+                      widget: 'string',
+                      hint: 'One short benefit, e.g., "Registered, experienced therapists focused on results".',
+                    }
+
+          # Section 6: Booking Steps
+          - label: 'Booking Steps'
+            name: 'bookingSteps'
+            widget: 'object'
+            collapsed: true
+            fields:
+              - { label: 'Main Title', name: 'title', widget: 'string' }
+              - label: 'Steps'
+                name: 'steps'
+                widget: 'list'
+                max: 3
+                fields:
+                  - { label: 'Step Number', name: 'num', widget: 'string' }
+                  - { label: 'Title', name: 'title', widget: 'string' }
+                  - {
+                      label: 'Description',
+                      name: 'description',
+                      widget: 'string',
+                    }
+              - {
+                  label: 'Direct Billing Text',
+                  name: 'billingText',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Direct Billing Subtext',
+                  name: 'billingSub',
+                  widget: 'string',
+                }
+
+  - name: 'faq'
+    label: 'FAQs'
+    folder: 'src/content/faq'
+    create: true
+    editor:
+      preview: false
+    sortable_fields: ['order', 'question']
+    fields:
+      - { label: 'Question', name: 'question', widget: 'string' }
+      - { label: 'Answer', name: 'answer', widget: 'text' }
+      - {
+          label: 'Active By Default',
+          name: 'active',
+          widget: 'boolean',
+          required: false,
+          default: false,
+          hint: 'If true, this FAQ will be open by default.',
+        }
+      - {
+          label: 'Order',
+          name: 'order',
+          widget: 'number',
+          value_type: 'int',
+          min: 0,
+          required: false,
+          hint: 'Optional sort order. Lower numbers appear first.',
+        }
+
+  - name: 'team'
+    label: 'Team Members'
+    folder: 'src/content/team'
+    media_folder: /src/assets/images/team # Images uploaded for 'services' will go here
+    public_folder: /src/assets/images/team # The public path used in the content file
+    create: true
+    editor:
+      preview: false
+    sortable_fields: ['role', 'name', 'occupation']
+    fields:
+      - {
+          label: 'Team Member Name',
+          name: 'name',
+          widget: 'string',
+          hint: 'Enter the full name of the therapist or founder.',
+        }
+      - label: 'Position / Role'
+        name: 'role'
+        widget: 'select'
+        options:
+          - { label: 'Founder RMT', value: 'founder' }
+          - { label: 'Therapist', value: 'therapist' }
+        default: 'therapist'
+        hint: 'Select whether this person is the founder or a therapist.'
+      - {
+          label: 'Team Member Photo',
+          name: 'photo',
+          widget: 'image',
+          required: false,
+          hint: 'Optional. The photo of the team member.',
+        }
+      - {
+          label: 'Professional Title',
+          name: 'occupation',
+          widget: 'string',
+          default: 'Licensed Massage Therapist',
+          hint: 'e.g., “Licensed Massage Therapist”, “Registered Massage Therapist (RMT)”.',
+        }
+      - {
+          label: 'Practicing Since',
+          name: 'since',
+          widget: 'string',
+          hint: 'e.g., “Since 2019” or “Practicing since 2020”.',
+        }
+      - {
+          label: 'Location / Credentials',
+          name: 'where',
+          widget: 'string',
+          required: false,
+          hint: 'Optional. e.g., “RMT, Alberta” or “BSPT, Philippines”.',
+        }
+      - {
+          label: 'Short Bio',
+          name: 'bio',
+          widget: 'text',
+          hint: 'A short paragraph about this person and their massage style.',
+        }
+      # - {
+      #     label: 'Display Order',
+      #     name: 'order',
+      #     widget: 'number',
+      #     value_type: 'int',
+      #     min: 0,
+      #     required: false,
+      #     hint: 'Optional. Lower numbers appear first. Founder will still be shown before therapists.',
+      #   }
+
+  - name: 'reviews'
+    label: 'Testimonials/Reviews'
+    folder: 'src/content/testimonials'
+    media_folder: /src/assets/images/testimonial # Images uploaded for 'reviews' will go here
+    public_folder: /src/assets/images/testimonial # The public path used in the content file
+    create: true
+    editor:
+      preview: false
+    sortable_fields: ['name', 'rating']
+    fields:
+      - {
+          label: 'Client Name',
+          name: 'name',
+          widget: 'string',
+          hint: 'Enter the full name of the Client',
+        }
+      - {
+          label: 'Client Role / Description',
+          name: 'desc',
+          widget: 'string',
+          required: false,
+          hint: 'e.g. “Homeowner”, “Regular Client”, “New Client”, etc.',
+        }
+      - {
+          label: 'Rating',
+          name: 'rating',
+          widget: 'number',
+          value_type: 'int',
+          max: 5,
+          default: 5,
+          hint: 'Set the Rate of the User',
+        }
+      - { label: 'Review Text', name: 'reviewText', widget: 'text' }
+      - {
+          label: 'Team Member Photo',
+          name: 'photo',
+          widget: 'image',
+          required: false,
+          hint: 'Optional. The photo of the client.',
+        }
+      - {
+          label: 'Review Link',
+          name: 'href',
+          widget: 'string',
+          required: false,
+          hint: 'Optional. Review Direct Url',
+        }
+
+  - name: 'promotions'
+    label: 'Promotions / Specials'
+    folder: 'src/content/promotions'
+    media_folder: /src/assets/images/promotions
+    public_folder: /src/assets/images/promotions
+    create: true
+    editor:
+      preview: false
+    sortable_fields: ['title', 'startDate', 'endDate']
+    fields:
+      - {
+          label: 'Title',
+          name: 'title',
+          widget: 'string',
+          hint: 'Short name of the promotion/special.',
+        }
+      - {
+          label: 'Description',
+          name: 'description',
+          widget: 'text',
+          hint: 'Details about the promotion.',
+        }
+      - {
+          label: 'Image',
+          name: 'image',
+          widget: 'image',
+          required: false,
+          hint: 'Optional visual for the promotion.',
+        }
+      - {
+          label: 'Start Date',
+          name: 'startDate',
+          widget: 'datetime',
+          hint: 'When this promo becomes valid.',
+        }
+      - {
+          label: 'End Date',
+          name: 'endDate',
+          widget: 'datetime',
+          required: false,
+          hint: 'Optional. Leave empty if open‑ended.',
+        }
+      - {
+          label: 'Active',
+          name: 'active',
+          widget: 'boolean',
+          default: true,
+          hint: 'Only active promotions will be shown on the site.',
+        }
+
+  - name: 'gallery'
+    label: 'Gallery'
+    folder: 'src/content/gallery'
+    media_folder: /src/assets/images/gallery
+    public_folder: /src/assets/images/gallery
+    create: true
+    identifier_field: caption
+    slug: '{{category}}-{{slug}}'
+    editor:
+      preview: false
+    sortable_fields: ['category', 'caption']
+    fields:
+      - {
+          label: 'Image',
+          name: 'image',
+          widget: 'image',
+          hint: 'Upload a gallery image.',
+        }
+      - {
+          label: 'Caption',
+          name: 'caption',
+          widget: 'string',
+          hint: 'Short description; also used as the image alt text for SEO.',
+        }
+      - label: 'Category'
+        name: 'category'
+        widget: 'select'
+        options:
+          - { label: 'Inside Our Clinic', value: 'inside-clinic' }
+          - { label: 'Client Experience', value: 'client-experience' }
+          - { label: 'Events & Specials', value: 'events-specials' }
+        default: 'inside-clinic'
+        hint: 'Select which gallery tab this image belongs to.'

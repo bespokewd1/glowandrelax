@@ -1,0 +1,75 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import services1Img from '@assets/images/Services-1.TherapeuticMassage.jpg';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services3Img from '@assets/images/Services-3.RelaxationMassage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const pregnancyHero: HeroServiceProps = {
+  title: 'Prenatal Massage',
+  image: services1Img,
+  alt: 'Prenatal massage with supportive positioning to ease prenatal discomfort',
+  subtitle:
+    'A soothing massage tailored to the needs of expectant mothers to ease discomfort and support prenatal wellness.',
+  highlights: [
+    {
+      title: 'Prenatal Comfort',
+      body: 'Side‑lying or supported positioning designed for safety and ease at every stage.',
+    },
+    {
+      title: 'Relieve Common Aches',
+      body: 'Focused care for low back, hips, legs, and shoulders to reduce day‑to‑day strain.',
+    },
+    {
+      title: 'Calm & Restore',
+      body: 'Gentle, flowing techniques to reduce stress and promote deeper rest.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Prenatal Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Prenatal Care', href: '/contact' },
+};
+
+export const pregnancyData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Prenatal Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Ease prenatal discomfort',
+      body: 'Targets tension in the low back, hips, and legs while respecting your changing body.',
+    },
+    {
+      num: '02',
+      title: 'Support circulation',
+      body: 'Gentle techniques encourage healthy blood flow and help reduce swelling.',
+    },
+    {
+      num: '03',
+      title: 'Reduce stress and improve sleep',
+      body: 'Calming touch helps settle the nervous system for better rest and recovery.',
+    },
+    {
+      num: '04',
+      title: 'Safe, supportive positioning',
+      body: 'Pillows and bolsters provide comfort for side‑lying or semi‑reclined sessions.',
+    },
+  ],
+  benefitsTagline:
+    'Soothe Aches, Support Circulation, and Promote Prenatal Calm',
+  prices: [
+    { duration: '45 minutes', price: '$80' },
+    { duration: '60 minutes', price: '$100' },
+    { duration: '90 minutes', price: '$140' },
+  ],
+  ctaLabel: 'Book Prenatal Massage Session',
+};
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...pregnancyHero} />
+  <PriceBenifits {...pregnancyData} />
+</BaseLayout>

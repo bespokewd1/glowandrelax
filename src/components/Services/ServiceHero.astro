@@ -1,0 +1,88 @@
+---
+// import { Image } from 'astro:assets';
+import { Image } from 'astro-lqip/components';
+
+export interface HeroServiceProps {
+  title: string;
+  image: ImageMetadata;
+  alt: string;
+  subtitle: string;
+  highlights: Array<{ title: string; body: string }>;
+  ctaPrimary: { label: string; href?: string };
+  ctaSecondary: { label?: string; href?: string };
+}
+
+const { title, image, alt, subtitle, highlights, ctaPrimary, ctaSecondary } =
+  Astro.props as HeroServiceProps;
+---
+
+<section class="bg-orange-50">
+  <div class="mx-auto max-w-5xl px-6 pt-16 md:pt-20 text-center">
+    <header>
+      <h1 class="font-serif text-3xl md:text-4xl text-gray-900">
+        {title}
+      </h1>
+      <!-- <p class="mt-2 text-sm text-emerald-900/80">{updated}</p> -->
+    </header>
+
+    <!-- Hero image -->
+    <div class="mt-8">
+      <!-- sizes="(min-width: 1024px) 900px, 100vw"
+        widths={[640, 960, 1280, 1600]}
+        loading="eager"
+        decoding="async" -->
+
+      <Image
+        src={image}
+        alt={alt}
+        class="mx-auto h-auto w-full max-w-4xl rounded-lg object-cover shadow-sm"
+        loading={'eager'}
+        decoding="sync"
+        fetchpriority="high"
+        lqip="base64"
+        lqipSize={10}
+      />
+      <!-- <Image
+        src={image}
+        alt={alt}
+      /> -->
+    </div>
+
+    <!-- Supporting subtitle -->
+    <p class="mt-6 text-base md:text-lg text-gray-800 max-w-3xl mx-auto">
+      {subtitle}
+    </p>
+
+    <!-- Quick highlights -->
+    <div
+      class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 text-sm text-gray-800 max-w-4xl mx-auto"
+    >
+      {
+        highlights.map((h) => (
+          <div class="rounded-lg bg-orange-100/50 p-4 ring-1 ring-black/10">
+            <p class="font-semibold text-emerald-900">{h.title}</p>
+            <p class="mt-1">{h.body}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- CTA -->
+    <!-- <div
+      class="mt-10 flex items-center justify-center gap-3 sm:flex-row flex-col hidden"
+    >
+      <a
+        href={ctaPrimary.href ?? '/booking'}
+        class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+      >
+        {ctaPrimary.label}
+      </a>
+      <a
+        href={ctaSecondary.href ?? '/contact'}
+        class="inline-flex items-center rounded-full border-2 border-emerald-900 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+      >
+        {ctaSecondary.label ?? 'Ask a Question'}
+      </a>
+    </div> -->
+  </div>
+</section>

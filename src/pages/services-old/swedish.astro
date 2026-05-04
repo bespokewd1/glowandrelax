@@ -1,0 +1,73 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services3Img from '@assets/images/swedish-massage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const relaxHero: HeroServiceProps = {
+  title: 'Swedish Massage',
+  image: services3Img,
+  alt: 'Swedish massage with gentle, flowing techniques for full‑body calm',
+  subtitle:
+    'A relaxing full-body massage that uses smooth, gentle strokes to improve circulation, relieve muscle tension, and promote overall relaxation and well-being. Ideal for stress relief and general relaxation.',
+  highlights: [
+    {
+      title: 'Full‑Body Calm',
+      body: 'Long, soothing strokes help quiet the nervous system and melt stress.',
+    },
+    {
+      title: 'Ease Everyday Tension',
+      body: 'Gentle pressure to release tightness in the neck, shoulders, and back.',
+    },
+    {
+      title: 'Restorative Experience',
+      body: 'Unwind with a tranquil pace that supports deeper breathing and rest.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Swedish Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Session Options', href: '/contact' },
+};
+
+export const relaxData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Swedish Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Reduce stress',
+      body: 'Calming techniques help settle the mind and support a sense of ease.',
+    },
+    {
+      num: '02',
+      title: 'Relieve muscle tension',
+      body: 'Gentle, flowing work softens tight areas without overwhelming pressure.',
+    },
+    {
+      num: '03',
+      title: 'Improve overall well‑being',
+      body: 'Encourages better sleep, mood, and day‑to‑day resilience.',
+    },
+    {
+      num: '04',
+      title: 'Promote circulation',
+      body: 'Smooth, rhythmic strokes support healthy blood flow and tissue comfort.',
+    },
+  ],
+  benefitsTagline: 'Unwind, Release Tension, and Restore a Sense of Calm',
+  prices: [
+    { duration: '45 minutes', price: '$80' },
+    { duration: '60 minutes', price: '$100' },
+    { duration: '90 minutes', price: '$140' },
+  ],
+  ctaLabel: 'Book Swedish Massage Session',
+};
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...relaxHero} />
+  <PriceBenifits {...relaxData} />
+</BaseLayout>

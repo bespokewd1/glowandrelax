@@ -1,0 +1,443 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+// import { Image } from 'astro:assets';
+import { Image } from 'astro-lqip/components';
+import clientData from '@data/clientData';
+
+import serviceIcon1 from '@assets/images/service-icons-transparent/deep-tissue.png';
+import serviceIcon2 from '@assets/images/service-icons-transparent/hot-stone.png';
+import serviceIcon3 from '@assets/images/service-icons-transparent/cupping.png';
+import serviceIcon4 from '@assets/images/service-icons-transparent/thai-oil.png';
+
+import benefitImg from '@assets/images/About-Section.TherapistImage.jpg';
+
+import { getOptimizedImage } from '@js/utils';
+import MapPinFilled from '@components/Icons/Utility/MapPinFilled.astro';
+import PhoneIcon from '@components/Icons/Utility/PhoneIcon.astro';
+import CheckIconFilled from '@components/Icons/Utility/CheckIconFilled.astro';
+import CtaLink from '@components/CtaLink.astro';
+import { getCollection } from 'astro:content';
+
+import { resolveImage } from '@js/imageUtils';
+import type { GetImageResult } from 'astro';
+import seoSetting from '@data/seo-pages.json';
+const seo = seoSetting.services;
+const ogImg = await resolveImage(seo.ogImage);
+let ogImage: GetImageResult | null = null;
+if (ogImg) {
+  ogImage = await getOptimizedImage(ogImg);
+}
+
+type Service = {
+  title: string;
+  blurb: string;
+  cta?: string;
+  img: ImageMetadata;
+  href: string;
+};
+
+const services: Service[] = (await getCollection('services'))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title))
+  .map((service) => {
+    return {
+      title: service.data.title,
+      blurb: service.data.cardDescription || service.data.subtitle,
+      cta: 'Read More',
+      img: service.data.image,
+      href: `/services/${service.id}`,
+    };
+  });
+
+type Benefit = {
+  title: string;
+  icon: ImageMetadata;
+  body: string;
+};
+
+const benefits: Benefit[] = [
+  {
+    title: 'Deep‑Tissue Massage',
+    icon: serviceIcon1,
+    body: 'Ideal for individuals experiencing chronic tension or post‑exercise soreness. Focused techniques reach deeper muscle layers to provide effective relief and improved mobility.',
+  },
+  {
+    title: 'Prenatal Massage',
+    icon: serviceIcon2,
+    body: 'A gentle, therapeutic massage designed for expectant mothers to relieve muscle tension, reduce swelling, and promote relaxation during pregnancy.',
+  },
+  {
+    title: 'Cupping Massage',
+    icon: serviceIcon3,
+    body: 'A targeted technique using gentle negative pressure to lift fascia, improve tissue glide, and release tight areas. When paired with hands‑on work, it helps reduce tension and supports recovery.',
+  },
+  {
+    title: 'Swedish Massage',
+    icon: serviceIcon4,
+    body: 'Grounded in relaxation, this therapy uses long, flowing strokes, gentle kneading, and circular movements to ease muscle tension, improve circulation, and promote a deep sense of calm and rejuvenation.',
+  },
+];
+
+type BenefitPoint = {
+  title: string;
+  body: string;
+};
+
+const benefitPoints: BenefitPoint[] = [
+  {
+    title: 'Individuals with Chronic Pain or Muscle Tension',
+    body: 'Persistent discomfort can improve with targeted therapeutic massage—focused work to release tight areas and support easier movement.',
+  },
+  {
+    title: 'People Experiencing Stress or Anxiety',
+    body: 'Massage provides a calm, restorative reset that helps lower stress levels, settle the nervous system, and promote better sleep.',
+  },
+  {
+    title: 'Active Individuals Needing Muscle Recovery',
+    body: 'Regular sessions aid recovery between workouts, enhance performance, and help reduce the risk of overuse injuries.',
+  },
+  {
+    title: 'Anyone Seeking Relaxation and Self‑Care',
+    body: 'A rejuvenating way to prioritize well‑being—feel lighter, more balanced, and ready for the rest of your day.',
+  },
+];
+
+type Step = {
+  num: string;
+  title: string;
+  body: string;
+};
+
+const steps: Step[] = [
+  {
+    num: '1',
+    title: 'Choose Your Service',
+    body: 'Select from our therapeutic treatments: deep‑tissue, hot stone, Swedish, cupping, or lymphatic massage—delivered in‑clinic.',
+  },
+  {
+    num: '2',
+    title: 'Pick Your Time',
+    body: 'Use our online booking to find a time that suits your schedule. You’ll receive a confirmation once your appointment is set.',
+  },
+  {
+    num: '3',
+    title: 'Schedule Your Appointment',
+    body: 'Prefer to speak with us? Call or message and we’ll help you secure your preferred date and time.',
+  },
+  {
+    num: '4',
+    title: 'Confirm & Relax',
+    body: 'Arrive a few minutes early, settle in, and enjoy your session—focused, restorative care tailored to your goals.',
+  },
+];
+
+const phoneDisplay = clientData.phoneFormatted?.trim() || '(587) 938-0458';
+const phoneHref = `tel:${clientData.phoneForTel?.replace(/\s+/g, '') || '5879380458'}`;
+const email = clientData.email || 'info@yourclinic.ca';
+const bookingHref = '/booking'; // change to your actual booking link if different
+const mapNote =
+  'We offer in‑clinic massage services at Southgate Centre (Southgate Mall), Edmonton, Alberta. See our contact page for directions and parking details.';
+
+async function reloadImages() {
+  return Promise.all(services.map(async (s) => await getOptimizedImage(s.img)));
+}
+
+const preloadedImages = await reloadImages();
+---
+
+<BaseLayout
+  ogImage={ogImage}
+  title={seo.title}
+  description={seo.description}
+  preloadedImage={preloadedImages}
+>
+  <section class="bg-orange-50">
+    <div class="mx-auto max-w-[120rem] px-6 py-16 md:py-20">
+      <!-- Header -->
+      <header class="mx-auto max-w-3xl text-center">
+        <h1 class="font-serif text-3xl text-gray-900 md:text-4xl">
+          Our Services
+        </h1>
+        <p class="mt-4 leading-7 text-gray-700">
+          We offer massage therapy for pain relief, stress reduction, and
+          relaxation. Our licensed therapists specialize in deep‑tissue, hot
+          stone, Swedish, cupping, and lymphatic‑focused treatments delivered
+          in‑clinic. Experience attentive care designed to restore balance and
+          well‑being.
+        </p>
+      </header>
+
+      <!-- Cards -->
+      <div
+        class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(min(450px,100%),1fr))] gap-6 lg:gap-8 xl:px-16"
+      >
+        {
+          services.map((s) => (
+            <article class="relative grid grid-rows-[min-content,1fr] overflow-hidden rounded-xl bg-transparent ring-1 ring-black/10 sm:grid-cols-2 sm:grid-rows-1">
+              {/* <div class="absolute  inset-0 bg-gradient-to-l from-emerald-900 from-35% via-emerald-900/80 via-55% to-emerald-900/10" /> */}
+              <div class="">
+                <Image
+                  src={s.img}
+                  alt={s.title ?? 'Service Image'}
+                  class="relative block aspect-square size-full w-full object-cover"
+                  loading={'eager'}
+                  decoding="sync"
+                  fetchpriority="high"
+                  lqip="base64"
+                  lqipSize={10}
+                />
+                {/* <Picture
+                  src={s.img}
+                  alt={s.title ?? 'Service Image'}
+                  formats={['avif', 'webp']}
+                  class="relative block w-full aspect-square size-full object-cover"
+                  loading={'eager'}
+                  decoding="sync"
+                  fetchpriority="high"
+                /> */}
+              </div>
+
+              <div class="z-10 h-full place-content-center space-y-4 bg-emerald-200 p-5 text-emerald-50">
+                <h3 class="text-shadow-md text-xl font-semibold text-balance text-emerald-950">
+                  {s.title}
+                </h3>
+                <p class="text-sm/6 text-pretty text-emerald-900">{s.blurb}</p>
+                <div class="mt-4">
+                  <a
+                    href={s.href}
+                    class="inline-flex items-center rounded-full bg-orange-200 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-orange-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                  >
+                    {s.cta ?? 'Read More'}
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-orange-100">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <header class="text-center">
+        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
+          Service Benefits
+        </h2>
+      </header>
+
+      <div
+        class="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12"
+      >
+        {
+          benefits.map((b) => (
+            <div class="text-center">
+              <div
+                class="mx-auto mb-6 flex size-25 items-center justify-center rounded-full bg-orange-200 text-2xl text-emerald-800"
+                aria-hidden="true"
+              >
+                {/* {b.icon} */}
+                <Image src={b.icon} alt={b.title} class={'drop-shadow-lg'} />
+              </div>
+              <h3 class="font-semibold text-emerald-900">{b.title}</h3>
+              <p class="mt-3 text-sm leading-6 text-gray-700">{b.body}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-gray-800">
+          Ready to experience therapeutic care—tailored to your goals?
+        </p>
+        <div
+          class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+        >
+          <CtaLink
+            class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          />
+          <a
+            href="/contact"
+            class="inline-flex items-center rounded-full border-2 border-emerald-900 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+          >
+            Ask a Question
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-orange-50">
+    <div class="mx-auto flex max-w-[120rem] flex-col md:flex-row">
+      <!-- Left image -->
+      <div class="relative">
+        <Image
+          src={benefitImg}
+          alt="Therapeutic massage providing relief and relaxation"
+          class="aspect-video h-full object-cover"
+        />
+        <div
+          class="pointer-events-none absolute top-6 left-6 hidden max-w-[24ch] text-white drop-shadow-md lg:block"
+        >
+          <h2
+            class="font-serif text-4xl/[1.1] drop-shadow-md md:text-5xl/[1.1]"
+          >
+            Who Can
+            <br />
+            Benefit?
+          </h2>
+        </div>
+      </div>
+
+      <!-- Right content -->
+      <div class="bg-orange-50 px-6 py-12 md:px-10">
+        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl lg:hidden">
+          Who Can Benefit?
+        </h2>
+
+        <ul class="mt-6 space-y-8">
+          {
+            benefitPoints.map((p) => (
+              <li class="flex gap-4">
+                <span
+                  class="mt-2 inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-700"
+                  aria-hidden="true"
+                />
+                <div>
+                  <p class="font-semibold text-emerald-900">{p.title}</p>
+                  <p class="mt-1 text-gray-800">{p.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-orange-100">
+    <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
+      <header class="text-center">
+        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
+          How to Book an Appointment
+        </h2>
+        <p class="mt-4 leading-7 text-gray-700">
+          Booking a therapeutic massage at iMassage Therapeutic Clinique is
+          simple. Follow these steps to reserve your in‑clinic session.
+        </p>
+
+        <span
+          class="mt-5 inline-block rounded-full bg-emerald-900 px-4 py-1 text-xs font-semibold tracking-wide text-emerald-50"
+        >
+          Steps to Book Your Massage
+        </span>
+      </header>
+
+      <ol class="mt-12 space-y-10">
+        {
+          steps.map((s) => (
+            <li class="grid grid-cols-[4rem_1fr] items-start gap-6">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#3b3a2f] font-serif text-2xl text-white">
+                {s.num}
+              </div>
+
+              <div>
+                <h3 class="font-semibold text-[#3b3a2f]">{s.title}</h3>
+                <p class="mt-2 text-gray-700">{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-6 pb-16">
+      <!-- Service Locations -->
+      <div class="mt-6 space-y-2">
+        <p class="flex items-start gap-2 text-gray-800">
+          <span class="mt-1 inline-flex size-6 flex-none" aria-hidden="true">
+            <MapPinFilled />
+          </span>
+          <span>
+            <span class="font-semibold text-emerald-900">Service Location</span>
+            – {mapNote}
+          </span>
+        </p>
+      </div>
+
+      <!-- Book Now -->
+      <div class="mt-8">
+        <h3 class="text-lg font-semibold text-gray-900">
+          <span
+            class="mt-1 inline-flex size-6 flex-none items-center"
+            aria-hidden="true"
+          >
+            <PhoneIcon class="text-red-500" />
+          </span>
+          Book Now!
+        </h3>
+
+        <ul class="mt-3 space-y-3 text-gray-800">
+          <li class="flex items-start gap-2">
+            <span class="inline-flex flex-none" aria-hidden="true">
+              <CheckIconFilled class="size-6 text-green-500" />
+            </span>
+            <span>
+              <span class="font-semibold">Call/Text:</span>
+              <a
+                href={phoneHref}
+                class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
+              >
+                {phoneDisplay}
+              </a>
+            </span>
+          </li>
+
+          <li class="flex items-start gap-2">
+            <span class="inline-flex flex-none" aria-hidden="true">
+              <CheckIconFilled class="size-6 text-green-500" />
+            </span>
+            <span class="font-semibold">WhatsApp:</span>
+            <a
+              href={phoneHref}
+              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
+            >
+              {phoneDisplay}
+            </a>
+          </li>
+
+          <li class="flex items-start gap-2">
+            <span class="inline-flex flex-none" aria-hidden="true">
+              <CheckIconFilled class="size-6 text-green-500" />
+            </span>
+            <span class="font-semibold">Online Booking:</span>
+            <a
+              href={bookingHref}
+              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
+            >
+              Book Appointment
+            </a>
+          </li>
+
+          <li class="flex items-start gap-2">
+            <span class="inline-flex flex-none" aria-hidden="true">
+              <CheckIconFilled class="size-6 text-green-500" />
+            </span>
+            <span class="font-semibold">Email:</span>
+            <a
+              href={`mailto:${email}`}
+              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
+            >
+              {email}
+            </a>
+          </li>
+        </ul>
+
+        <p class="mt-6 font-medium text-gray-800">
+          Don’t wait—experience therapeutic massage for pain relief, stress
+          reduction, and relaxation today!
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

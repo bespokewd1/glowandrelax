@@ -1,0 +1,66 @@
+{
+  "hero": {
+    "title": "Your Path to Relaxation Starts Here",
+    "subtitle": "Experience soothing, professional massage therapy designed to relieve stress, restore balance, and renew your body and mind.",
+    "image": "/src/assets/images/home/hero-img1.jpg",
+    "alt": "Lady in a stone massage"
+  },
+  "welcome": {
+    "title": "Welcome to iMassage Therapeutic Clinique",
+    "body": "At iMassage Therapeutic Clinique, we focus on restorative, evidence‑based massage care tailored to your body’s needs. From deep tissue and hot stone to relaxation-focused treatments, our goal is to reduce pain, release tension, and renew your overall well‑being. Proud to be local, Canadian Business.",
+    "image": "/src/assets/images/home/welcome.jpg",
+    "alt": "Welcome image"
+  },
+  "greenCta": {
+    "title": "Restore Balance. Feel Renewed",
+    "description": "Expert therapeutic massage tailored to your needs."
+  },
+  "serviceHighlights": {
+    "heading": "Our Services",
+    "description": "From deep tissue and hot stone to relaxing Swedish massage, each session at iMassage Therapeutic Clinique is customized to your goals.",
+    "highlight1": "Deep Tissue Massage",
+    "highlight2": "Swedish Massage"
+  },
+  "whyChooseUs": {
+    "title": "Why Choose iMassage?",
+    "description": "We deliver thoughtful, therapeutic care tailored to your body—so you leave lighter, looser, and genuinely restored.",
+    "image": "/src/assets/images/home/why-choose.webp",
+    "alt": "Client receiving relaxing massage treatment",
+    "points": [
+      {
+        "text": "Registered, experienced therapists focused on results"
+      },
+      {
+        "text": "Personalized treatment plans for pain relief and relaxation"
+      },
+      {
+        "text": "Evidence-based techniques: deep tissue, hot stone, Swedish, and more"
+      },
+      {
+        "text": "Welcoming clinic with easy booking and flexible hours"
+      }
+    ]
+  },
+  "bookingSteps": {
+    "title": "Booking Made Simple",
+    "steps": [
+      {
+        "num": "1",
+        "title": "Find Your Treatment",
+        "description": "Deep tissue, hot stone, Swedish—choose the care your body needs."
+      },
+      {
+        "num": "2",
+        "title": "Schedule in Minutes",
+        "description": "Pick the date and time that works best for you."
+      },
+      {
+        "num": "3",
+        "title": "Confirm & Enjoy",
+        "description": "Secure your spot and let us take care of the rest."
+      }
+    ],
+    "billingText": "Direct Billing Available",
+    "billingSub": "Check with us for accepted providers."
+  }
+}

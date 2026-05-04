@@ -1,0 +1,90 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+// Use your best deep‑tissue hero image here
+import deepTissueHero from '@assets/images/Services-2.DeepTissueMassage.jpg';
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type {
+  PriceBenefitsProps,
+  ServiceBenefit,
+  ServicePriceRow,
+} from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+
+const deepTissue: HeroServiceProps = {
+  title: 'Deep Tissue Massage',
+  image: deepTissueHero,
+  alt: 'Therapeutic deep‑tissue massage focused on relieving stubborn muscle tension',
+  subtitle: `Targets deeper muscle layers to relieve chronic tension, muscle tightness, and pain.`,
+  highlights: [
+    {
+      title: 'Targeted Relief',
+      body: `Addresses deeper muscle layers to release chronic tightness and trigger points.`,
+    },
+    {
+      title: 'Improve Mobility',
+      body: `Restores range of motion for everyday movement and training recovery.`,
+    },
+    {
+      title: 'Licensed Care',
+      body: ` Delivered in‑clinic by experienced therapists in a calm, supportive setting. `,
+    },
+  ],
+  ctaPrimary: {
+    label: 'Book Deep‑Tissue Session',
+    href: '/booking',
+  },
+  ctaSecondary: {
+    href: '/contact',
+    label: 'Ask a Question',
+  },
+};
+
+const benefits: ServiceBenefit[] = [
+  {
+    num: '01',
+    title: 'Pain relief',
+    body: 'Targets deep muscle layers to ease chronic tightness and discomfort from overuse or posture.',
+  },
+  {
+    num: '02',
+    title: 'Stress reduction',
+    body: 'Helps calm the nervous system, lower tension, and promote deeper relaxation and sleep.',
+  },
+  {
+    num: '03',
+    title: 'Anxiety relief',
+    body: 'Supports emotional balance and a sense of calm through slow, focused therapeutic work.',
+  },
+  {
+    num: '04',
+    title: 'Improved mobility',
+    body: 'Releases knots and adhesions to restore range of motion for day‑to‑day movement and training.',
+  },
+];
+
+const prices: ServicePriceRow[] = [
+  { duration: '45 minutes', price: '$85' },
+  { duration: '60 minutes', price: '$105' },
+  { duration: '75 minutes', price: '$125' },
+  { duration: '90 minutes', price: '$145' },
+  { duration: '120 minutes', price: '$200' },
+];
+
+const priceBenefits: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Deep‑Tissue Massage',
+  benefits: benefits,
+  benefitsTagline: 'Relieve Pain, Reduce Stress & Restore Balance',
+  prices: prices,
+  ctaLabel: 'Book Deep‑Tissue Session',
+};
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...deepTissue} />
+  <PriceBenifits {...priceBenefits} />
+</BaseLayout>

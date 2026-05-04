@@ -1,0 +1,75 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import services1Img from '@assets/images/Services-1.TherapeuticMassage.jpg';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services4Img from '@assets/images/Services-4.CuppingMassage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+
+export const cuppingHero: HeroServiceProps = {
+  title: 'Cupping',
+  image: services4Img,
+  alt: 'Therapeutic cupping massage applying negative pressure to release fascia',
+  subtitle:
+    'An ancient therapy using suction cups to improve circulation, relieve muscle tension, and promote healing.',
+  highlights: [
+    {
+      title: 'Fascial Release',
+      body: 'Helps free restricted tissues and reduce stubborn tightness.',
+    },
+    {
+      title: 'Better Glide',
+      body: 'Improves tissue mobility to support movement and comfort.',
+    },
+    {
+      title: 'Clinically Guided',
+      body: 'Delivered in‑clinic by trained therapists for safe, effective results.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Cupping Session', href: '/booking' },
+  ctaSecondary: { label: 'Ask a Question', href: '/contact' },
+};
+
+export const cuppingData: PriceBenefitsProps = {
+  benefitsTitle: 'Therapeutic Cupping Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Fascia release',
+      body: 'Gentle negative pressure lifts and mobilizes tissue to improve glide and ease restrictions.',
+    },
+    {
+      num: '02',
+      title: 'Tension relief',
+      body: 'Helps reduce stubborn tightness when paired with targeted hands‑on therapy.',
+    },
+    {
+      num: '03',
+      title: 'Localized focus',
+      body: 'Excellent for addressing specific areas that need a bit more attention.',
+    },
+    {
+      num: '04',
+      title: 'Supports recovery',
+      body: 'Can assist with post‑training soreness and movement quality over time.',
+    },
+  ],
+  benefitsTagline: 'Lift Fascia, Free Movement & Relieve Stubborn Tightness',
+  prices: [
+    { duration: '45 minutes', price: '$90' },
+    { duration: '60 minutes', price: '$110' },
+    { duration: '75 minutes', price: '$130' },
+  ],
+  ctaLabel: 'Book Cupping Massage Session',
+};
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...cuppingHero} />
+  <PriceBenifits {...cuppingData} />
+</BaseLayout>

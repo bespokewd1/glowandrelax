@@ -1,0 +1,12 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import booking from '@data/booking.json';
+
+type Props = Omit<HTMLAttributes<'a'>, 'href'>;
+
+const { ...props } = Astro.props;
+---
+
+<a href={booking.buttonLink} {...props}>
+  {booking.buttonText}
+</a>

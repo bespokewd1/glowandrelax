@@ -1,0 +1,63 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+
+  return services.map((entry) => ({
+    params: { service: entry.id },
+    props: { service: entry },
+  }));
+}
+
+const { service } = Astro.props;
+
+const data = service.data;
+
+const highlights = data.hightlights.map((h) => ({
+  title: h.featName,
+  body: h.featBody,
+}));
+
+const heroData: HeroServiceProps = {
+  title: data.title,
+  image: data.image,
+  alt: data.imageAlt,
+  subtitle: data.subtitle,
+  highlights,
+  ctaPrimary: { label: 'Book A Massage', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Session Options', href: '/contact' },
+};
+
+const benefits = data.benefits.map((b, i) => ({
+  num: `0${i + 1}`,
+  title: b.benefitName,
+  body: b.benefitBody,
+}));
+
+const benefitsData: PriceBenefitsProps = {
+  benefitsTitle: data.benefitsTitle,
+  benefits,
+  benefitsTagline: data.benefitsTagline,
+  prices: data.prices ?? [],
+  ctaLabel: 'Book A Massage Session',
+};
+
+const serviceImage = await getOptimizedImage(data.image);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.cardDescription}
+  ogImage={serviceImage}
+  preloadedImage={serviceImage}
+>
+  <ServiceHero {...heroData} />
+  <PriceBenifits {...benefitsData} />
+</BaseLayout>

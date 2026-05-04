@@ -1,0 +1,76 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/Services-7.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Craniosacral Massage',
+  image: services7Img,
+  alt: 'Craniosacral therapy with light touch to support the central nervous system',
+  subtitle:
+    'A light-touch technique that releases tension in the central nervous system to improve overall health and well-being.',
+  highlights: [
+    {
+      title: 'Light-Touch Precision',
+      body: 'Subtle, gentle contact to ease restrictions in cranial and sacral rhythms.',
+    },
+    {
+      title: 'Nervous System Balance',
+      body: 'Encourages a parasympathetic state to calm the body and mind.',
+    },
+    {
+      title: 'Whole-Body Effects',
+      body: 'Supports overall ease, helping reduce tension, headaches, and stress.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Craniosacral Session', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Craniosacral Care', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Craniosacral Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Release subtle tension',
+      body: 'Gentle techniques help unwind restrictions that can affect comfort and function.',
+    },
+    {
+      num: '02',
+      title: 'Support the CNS',
+      body: 'Light-touch work encourages balance in the central nervous system.',
+    },
+    {
+      num: '03',
+      title: 'Calm and restore',
+      body: 'Promotes deep relaxation and stress relief for overall well-being.',
+    },
+    {
+      num: '04',
+      title: 'Complementary care',
+      body: 'Can integrate with broader wellness plans; consult your provider as needed.',
+    },
+  ],
+  benefitsTagline: 'Light Touch, Nervous System Ease, Whole-Body Well-Being',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Craniosacral Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

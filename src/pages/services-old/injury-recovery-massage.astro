@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/injury.png';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Injury Recovery Massage',
+  image: services7Img,
+  alt: 'Targeted therapeutic massage focused on healing injured muscles, reducing pain, and restoring mobility',
+  subtitle:
+    'A focused treatment designed to support recovery from injuries by easing muscle tension, improving circulation, and promoting faster healing. Ideal for those recovering from strains, sprains, or post-surgical stiffness.',
+  highlights: [
+    {
+      title: 'Targeted Healing Focus',
+      body: 'Concentrates on affected areas to reduce inflammation, ease soreness, and restore normal function.',
+    },
+    {
+      title: 'Improved Circulation',
+      body: 'Encourages blood and oxygen flow to accelerate tissue repair and recovery.',
+    },
+    {
+      title: 'Mobility Restoration',
+      body: 'Helps regain flexibility and range of motion while minimizing scar tissue buildup.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Injury Recovery Session', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Injury Recovery Care', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Injury Recovery Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Accelerate healing',
+      body: 'Boosts circulation to deliver nutrients and remove waste from injured tissues.',
+    },
+    {
+      num: '02',
+      title: 'Reduce pain and stiffness',
+      body: 'Relieves tension and minimizes discomfort during the recovery process.',
+    },
+    {
+      num: '03',
+      title: 'Restore movement',
+      body: 'Improves flexibility, range of motion, and functional strength.',
+    },
+    {
+      num: '04',
+      title: 'Prevent future strain',
+      body: 'Supports balanced muscle recovery to reduce risk of re-injury.',
+    },
+  ],
+  benefitsTagline:
+    'Faster healing, pain relief, improved mobility, and long-term recovery support',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Recovery Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

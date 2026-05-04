@@ -1,0 +1,77 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import type { HeroServiceProps } from '@components/Services/ServiceHero.astro';
+import { getOptimizedImage } from '@js/utils';
+import ServiceHero from '@components/Services/ServiceHero.astro';
+import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
+import PriceBenifits from '@components/Services/PriceBenifits.astro';
+import services7Img from '@assets/images/bucal-massage.jpg';
+
+const optimizedImage = await getOptimizedImage(landingImage);
+export const craniHero: HeroServiceProps = {
+  title: 'Bucal Massage',
+  image: services7Img,
+  alt: 'Gentle intra-oral and external facial massage to release jaw tension and improve facial circulation',
+  subtitle:
+    'A focused facial and jaw therapy that uses gentle intra-oral and external techniques to relieve muscular tightness, reduce TMJ-related discomfort, and boost local circulation for healthier skin and facial function.',
+  highlights: [
+    {
+      title: 'Precision Jaw Release',
+      body: 'Targeted, careful work inside and around the mouth to ease tight jaw muscles and unlock restricted movement.',
+    },
+    {
+      title: 'Circulation & Lymphatic Support',
+      body: 'Gentle strokes encourage blood flow and lymph drainage to reduce puffiness and accelerate tissue recovery.',
+    },
+    {
+      title: 'Calm & Restorative Relief',
+      body: 'Promotes deep relaxation, helps reduce tension headaches, and restores a more comfortable, balanced facial expression.',
+    },
+  ],
+  ctaPrimary: { label: 'Book Bucal Massage Session', href: '/booking' },
+  ctaSecondary: { label: 'Ask About Bucal Massage Care', href: '/contact' },
+};
+
+export const craniData: PriceBenefitsProps = {
+  benefitsTitle: 'Benefits of Bucal Massage',
+  benefits: [
+    {
+      num: '01',
+      title: 'Release jaw and facial tension',
+      body: 'Soothes muscle knots and reduces clenching and grinding.',
+    },
+    {
+      num: '02',
+      title: 'Reduce TMJ pain and headaches',
+      body: 'Targeted work can lower discomfort linked to temporomandibular issues.',
+    },
+    {
+      num: '03',
+      title: 'Improve circulation and skin tone',
+      body: 'Increased blood flow supports tissue health and a more radiant complexion.',
+    },
+    {
+      num: '04',
+      title: 'Aid lymphatic drainage and de-swelling',
+      body: 'Gentle techniques help move fluid and reduce facial puffiness.',
+    },
+  ],
+  benefitsTagline:
+    'Jaw relief, improved circulation, calmer facial muscles, and renewed comfort',
+  prices: [
+    { duration: '45 minutes', price: '$95' },
+    { duration: '60 minutes', price: '$115' },
+    { duration: '75 minutes', price: '$135' },
+  ],
+  ctaLabel: 'Book Bucal Massage Session',
+};
+
+// availabilityNote:
+//   'In‑clinic sessions only. If you have specific medical conditions, please consult your healthcare provider first.',
+---
+
+<BaseLayout preloadedImage={optimizedImage}>
+  <ServiceHero {...craniHero} />
+  <PriceBenifits {...craniData} />
+</BaseLayout>

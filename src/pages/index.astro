@@ -1,0 +1,622 @@
+---
+import BaseLayout from 'src/layouts/BaseLayout.astro';
+import CTA from '@components/CTA.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro-lqip/components';
+import client from '@data/clientData';
+import homeData from '@data/home.json';
+import '@styles/blog.less';
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import { getOptimizedImage } from '@js/utils';
+import { resolveImage } from '@js/imageUtils';
+import type { GetImageResult } from 'astro';
+import seoSetting from '@data/seo-pages.json';
+const seo = seoSetting.home;
+const ogImg = await resolveImage(seo.ogImage);
+let ogImage: GetImageResult | null = null;
+if (ogImg) {
+  ogImage = await getOptimizedImage(ogImg);
+}
+
+// import heroImg from '@assets/images/home/hero-img1.jpg';
+import FacebookIcon from '@components/Icons/Socials/FacebookIcon.astro';
+import InstagramIcon from '@components/Icons/Socials/InstagramIcon.astro';
+import LinkedInIcon from '@components/Icons/Socials/LinkedInIcon.astro';
+import TwitterIcon from '@components/Icons/Socials/TwitterIcon.astro';
+import WhyChooseUs from '@components/why-choose-us.astro';
+import CtaLink from '@components/CtaLink.astro';
+
+const posts = await getCollection('blog');
+posts.sort(
+  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+
+const heroImg = await resolveImage(homeData.hero.image);
+const welcomeImage = await resolveImage(homeData.welcome.image);
+
+const heroImage = await getOptimizedImage(heroImg);
+const aboutImg2 = await getOptimizedImage(welcomeImage);
+
+const allServices = await getCollection('services');
+
+// Look for the service where the Title matches what was saved in home.json
+const highlight1 = allServices.find(
+  (s) => s.data.title === homeData.serviceHighlights.highlight1
+);
+const highlight2 = allServices.find(
+  (s) => s.data.title === homeData.serviceHighlights.highlight2
+);
+---
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<BaseLayout
+  title={seoSetting.home.title}
+  description={seoSetting.home.description}
+  ogImage={ogImage}
+  preloadedImage={[heroImage, aboutImg2]}
+>
+  <!-- ============================================ -->
+  <!--                    Hero                      -->
+  <!-- ============================================ -->
+
+  <section id="hero" class="bg-orange-50 px-0">
+    <div class="mx-auto grid grid-cols-2 items-stretch gap-0">
+      <!-- Left: edge-to-edge image -->
+      <div class="relative col-span-2 md:col-span-1">
+        {
+          heroImg && (
+            <Image
+              src={heroImg}
+              class="block aspect-video h-full w-full object-cover lg:min-h-[550px]"
+              alt={homeData.hero.alt}
+              loading={'eager'}
+              decoding="sync"
+              fetchpriority="high"
+              lqip="base64"
+              lqipSize={10}
+            />
+          )
+        }
+      </div>
+
+      <!-- Right: text block on light card -->
+      <div
+        class="relative col-span-2 flex items-center justify-center px-6 py-1 md:col-span-1"
+      >
+        <div class="w-full max-w-xl">
+          <div class="p-2 md:p-10">
+            <!-- Big serif headline -->
+            <h1
+              class="text-left font-serif text-3xl leading-tight text-gray-950 md:text-4xl lg:text-5xl"
+            >
+              {homeData.hero.title}
+            </h1>
+
+            <!-- Supporting paragraph -->
+            <p class="mt-6 text-left text-base leading-7 text-gray-700">
+              {homeData.hero.subtitle}
+            </p>
+
+            <!-- CTAs -->
+            <div class="mt-8 flex flex-col items-start gap-3">
+              <CtaLink
+                class="inline-flex items-center justify-center rounded-full border-2 border-emerald-200 bg-emerald-200 px-6 py-3 text-sm font-semibold text-gray-950 transition-colors hover:bg-emerald-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 active:border-transparent"
+              />
+            
+              <a
+                href="https://imassagetherapeuticclinique.massagespotlight.com/firstvisit"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex  items-center justify-center rounded-full border-2 border-gray-900 px-6 py-3 text-center text-sm font-semibold leading-snug text-gray-950 transition-colors hover:bg-orange-100"
+              >
+                Get 20% OFF Your First Visit!
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- second content -->
+    <div
+      class="relative mx-auto mt-4 grid min-h-[28.125rem] grid-cols-6 items-stretch gap-0"
+    >
+      <!-- Left: edge-to-edge image -->
+      <div
+        class="relative col-span-full xl:col-start-2 xl:col-end-4 xl:justify-self-end"
+      >
+        {
+          welcomeImage && (
+            <Image
+              loading={'eager'}
+              src={welcomeImage}
+              class="mx-auto block aspect-square w-full max-w-[600px] object-cover lg:h-full xl:ms-0"
+              alt={homeData.welcome.alt}
+              decoding="sync"
+              fetchpriority="high"
+              lqip="base64"
+              lqipSize={10}
+            />
+          )
+        }
+      </div>
+
+      <!-- Right: text block on light card -->
+      <div
+        class="relative inset-0 col-span-full flex items-center justify-center py-12 md:px-6 xl:absolute xl:col-start-4 xl:col-end-7 xl:justify-self-start"
+      >
+        <div
+          class="w-full max-w-[680px] rounded-xl bg-orange-200 shadow-[0_10px_25px_rgba(0,0,0,0.15)] ring-1 ring-black/10"
+        >
+          <div class="p-6 sm:p-8 md:p-10">
+            <!-- text-2xl sm:text-3xl md:text-4xl -->
+            <h3
+              class="font-serif text-[clamp(var(--text-2xl),5vw,var(--text-4xl))] leading-snug text-gray-950"
+            >
+              {homeData.welcome.title}
+            </h3>
+
+            <p class="mt-5 leading-7 text-gray-700">
+              {homeData.welcome.body}
+            </p>
+
+            <div class="mt-8">
+              <a
+                href="/about"
+                class="inline-flex items-center rounded-full border-2 border-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-orange-100"
+              >
+                Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA (Green band) ================ -->
+  <CTA
+    title={homeData.greenCta.title}
+    description={homeData.greenCta.description}
+  />
+
+  <!-- ================= Services ================= -->
+  <section class="bg-orange-50">
+    <!-- Intro -->
+    <div class="mx-auto max-w-6xl px-6 py-16 lg:py-20">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="font-serif text-3xl text-gray-950 md:text-4xl">
+          {homeData.serviceHighlights.heading}
+        </h2>
+        <p class="mt-4 leading-7 text-gray-700">
+          {homeData.serviceHighlights.description}
+        </p>
+      </div>
+    </div>
+
+    <!-- Image row with overlay card on orange-200 -->
+    <div class="mx-auto max-w-7xl px-0">
+      <div class="grid grid-cols-1 items-stretch md:grid-cols-12">
+        <!-- Left image -->
+        {
+          highlight1 && (
+            <>
+              <div class="md:col-span-6">
+                <Image
+                  src={highlight1.data.image}
+                  alt={highlight1.data.imageAlt}
+                  class="block aspect-[16/10] w-full object-cover md:aspect-auto md:h-[420px]"
+                  lqip="base64"
+                  lqipSize={10}
+                />
+              </div>
+
+              <div class="flex items-center justify-center bg-orange-200 px-6 py-10 md:col-span-6">
+                <div class="w-full max-w-xl text-center md:text-left">
+                  <h3 class="font-semibold tracking-wide text-gray-900">
+                    {highlight1.data.title}
+                  </h3>
+                  <p class="mt-4 leading-7 text-gray-700">
+                    {highlight1.data.subtitle}
+                  </p>
+                  <div class="mt-6">
+                    <a
+                      href="/services"
+                      class="inline-flex items-center rounded-full border-2 border-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-orange-100"
+                    >
+                      View Services
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </>
+          )
+        }
+
+        <!-- Right image (stretches full width on small, aligns in grid on md+) -->
+        {
+          highlight2 && (
+            <>
+              <div class="md:col-span-12">
+                <div class="grid grid-cols-1 md:grid-cols-12">
+                  <div class="order-2 md:order-1 md:col-span-6">
+                    <div class="flex h-full w-full items-center justify-center bg-orange-200 px-6 py-10">
+                      <div class="w-full max-w-xl text-center md:text-left">
+                        <h3 class="font-semibold tracking-wide text-gray-900">
+                          {highlight2.data.title}
+                        </h3>
+                        <p class="mt-4 leading-7 text-gray-700">
+                          {highlight2.data.subtitle}
+                        </p>
+                        <div class="mt-6">
+                          <a
+                            href="/services"
+                            class="inline-flex items-center rounded-full border-2 border-gray-900 px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-orange-100"
+                          >
+                            Learn More
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="order-1 md:order-2 md:col-span-6">
+                    <Image
+                      src={highlight2.data.image}
+                      alt={highlight2.data.imageAlt}
+                      class="block aspect-[16/10] w-full object-cover md:aspect-auto md:h-[420px]"
+                      lqip="base64"
+                      lqipSize={10}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Why Choose Us ================= -->
+  <WhyChooseUs />
+
+  <!-- ================= How to Book (Steps) ================= -->
+  <section class="bg-orange-50">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <h2 class="text-center font-serif text-3xl text-gray-950 md:text-4xl">
+        {homeData.bookingSteps.title}
+      </h2>
+
+      <!-- Steps -->
+      <div
+        class="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-3 md:gap-8"
+      >
+        {
+          homeData.bookingSteps.steps.map((step) => (
+            <div class="rounded-lg bg-orange-200/90 px-8 py-10 text-center shadow-sm ring-1 ring-black/5">
+              <div class="font-serif text-6xl text-gray-900">{step.num}</div>
+              <h3 class="mt-4 font-serif text-3xl text-gray-900">
+                {step.title}
+              </h3>
+              <p class="mt-3 leading-7 text-gray-700">{step.description}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Direct billing + CTA -->
+      <div class="mt-10 text-center">
+        <p class="font-serif text-lg text-gray-900">
+          {homeData.bookingSteps.billingText}
+        </p>
+        <p class="mt-1 text-gray-700">
+          {homeData.bookingSteps.billingSub}
+        </p>
+
+        <CtaLink
+          class="mt-6 inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Contact / Get in Touch ================= -->
+  <section id="contact" class="bg-orange-50">
+    <!-- max-w-7xl  -->
+    <div class="mx-auto grid grid-cols-1 lg:grid-cols-12">
+      <!-- Left: Info panel (green) -->
+      <div
+        class="flex flex-col items-center justify-center bg-emerald-200 px-8 py-12 text-emerald-50 md:px-12 md:py-16 lg:col-span-4"
+      >
+        <div class="mt-8 space-y-5 text-emerald-100">
+          <h2 class="font-serif text-3xl text-emerald-950 md:text-4xl">
+            Get in Touch
+          </h2>
+
+          <div class="space-y-3">
+            <p class="text-lg">{client.name}</p>
+            <p>
+              {client.address.lineOne},
+              {client.address.lineTwo}
+            </p>
+            <p>
+              {client.phoneFormatted}
+              <br />
+              {client.email}
+            </p>
+            <p>
+              {client.openingHours.daysOpen}: {client.openingHours.hours}
+            </p>
+            <p>
+              Direct Billing Available. Please ask about eligible providers.
+            </p>
+          </div>
+
+          <!-- Socials -->
+          <div class="mt-8 flex items-center gap-4 text-emerald-50/90">
+            <a
+              href={client.socials.facebook}
+              aria-label="Facebook"
+              class="hover:text-white"
+            >
+              <FacebookIcon class:list={['text-emerald-950']} />
+            </a>
+            <a
+              href={client.socials.instagram}
+              aria-label="Instagram"
+              class="hover:text-white"
+            >
+              <InstagramIcon class:list={['text-emerald-950']} />
+            </a>
+            <a
+              href={client.socials.linkedin}
+              aria-label="LinkedIn"
+              class="hover:text-white"
+            >
+              <LinkedInIcon class:list={['text-emerald-950']} />
+            </a>
+            <a
+              href={client.socials.twitter}
+              aria-label="LinkedIn"
+              class="hover:text-white"
+            >
+              <TwitterIcon class:list={['text-emerald-950']} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="bg-orange-50 px-8 py-12 md:px-12 md:py-16 lg:col-span-8">
+        <form class="mx-auto max-w-2xl">
+          <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+            <div>
+              <label class="mb-2 block text-sm text-gray-700">First Name</label>
+              <input
+                type="text"
+                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                placeholder="First name"
+              />
+            </div>
+            <div>
+              <label class="mb-2 block text-sm text-gray-700">Last Name</label>
+              <input
+                type="text"
+                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                placeholder="Last name"
+              />
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <label class="mb-2 block text-sm text-gray-700">Email *</label>
+            <input
+              type="email"
+              required
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div class="mt-5">
+            <label class="mb-2 block text-sm text-gray-700">Message</label>
+            <textarea
+              rows="5"
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="How can we help?"></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="mt-6 w-full rounded bg-emerald-200 px-8 py-3 font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 md:w-auto"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--               Services                    -->
+  <!-- ============================================ -->
+
+  <!-- <section
+    id="massage-services"
+    class="relative overflow-hidden p-(--sectionPadding) lg:max-w-[80rem] mx-auto gap-4 flex flex-col md:gap-8"
+  >
+    <h2 class="cs-title">Our Services</h2>
+    <ServiceGrid services={massageServiceData} />
+
+    <Picture
+      src={serviceBgImg}
+      alt="stone arrangement with rolled towel"
+      formats={['avif', 'webp']}
+      pictureAttributes={{
+        class: 'absolute -z-10 inset-0 w-full h-full lg:hidden ',
+      }}
+      class="object-cover w-full h-full"
+    />
+  </section> -->
+
+  <!-- <FAQ /> -->
+  <!-- ============================================ -->
+  <!--                 Blog Section                 -->
+  <!-- ============================================ -->
+  <!-- <section id="blog" class="glass-bg">
+    <div class="cs-container">
+      <div class="cs-content">
+        <span class="cs-topper">Our Blog</span>
+        <h2 class="cs-title">Wellness Tips & Massage Insights</h2>
+        <p class="cs-text">
+          Explore expert advice on relaxation, pain relief, and self-care.
+        </p>
+      </div>
+      <div class="main-content">
+        {posts.length === 0 && <h1>No Recent Posts</h1>}
+        {
+          posts.length >= 1 &&
+            posts.map((post) => (
+              <article class="recent-articles">
+                <picture class="blog-mainImage">
+                  <Image
+                    src={post.data.image}
+                    alt={post.data.imageAlt}
+                    width="795"
+                    height="400"
+                    decoding="async"
+                  />
+                </picture>
+
+                <div class="article-group">
+                  <div class="blog-authorGroup">
+                    <picture class="blog-author-img">
+                      <img
+                        src="/assets/favicons/favicon-stone-massage.jpg"
+                        alt="house"
+                        width="32"
+                        height="32"
+                        decoding="async"
+                      />
+                    </picture>
+                    {/* <span class="blog-author">{post.data.author}</span>
+                    <span aria-hidden="true" class="blog-dot" />
+                    <span class="blog-date">{formatDate(post.data.date)}</span> */}
+                    <span class="blog-author">Stone Massage Admin</span>
+                    <span aria-hidden="true" class="blog-dot" />
+                    <span class="blog-date">Jun 14, 2025</span>
+                  </div>
+                  <h2 class="blog-h1">{post.data.title}</h2>
+                  <p class="blog-desc">{post.data.description}</p>
+                  <a href={'/blog/' + post.id} class="blog-link">
+                    Continue Reading
+                  </a>
+                </div>
+              </article>
+            ))
+        }
+      </div>
+    </div>
+  </section> -->
+
+  <!-- ============================================ -->
+  <!--            Extra Content To Rank             -->
+  <!-- ============================================ -->
+
+  <!-- <section id="sbs-r">
+    <div class="cs-container">
+      <div class="cs-left">
+        <picture class="cs-picture cs-picture1">
+          <source
+            media="(max-width: 600px)"
+            srcset="/assets/images/stone-massage-feet.png"
+          />
+          <source
+            media="(min-width: 601px)"
+            srcset="/assets/images/stone-massage-feet.png"
+          />
+          <img
+            aria-hidden="true"
+            decoding="async"
+            src="/assets/images/stone-massage-feet.png"
+            alt="house"
+            loading="lazy"
+            width="400"
+            height="560"
+          />
+        </picture>
+        <picture class="cs-picture cs-picture2">
+          <source
+            media="(max-width: 600px)"
+            srcset="/assets/images/stone-massage-back.png"
+          />
+          <source
+            media="(min-width: 601px)"
+            srcset="/assets/images/stone-massage-back.png"
+          />
+          <img
+            aria-hidden="true"
+            decoding="async"
+            src="/assets/images/stone-massage-back.png"
+            alt="cabinets"
+            loading="lazy"
+            width="400"
+            height="560"
+          />
+        </picture>
+      </div>
+      <div class="cs-right">
+        <span class="cs-topper">Benefits of Massage Therapy</span>
+        <h2 class="cs-title">Reap the Benefits of Massage Therapy Today</h2>
+        <p class="cs-text">
+          Massage therapy is a proven way to relieve stress, ease muscle
+          tension, and improve overall well-being. At Healing Touch Massage
+          Therapy, we offer various techniques tailored to your needs, from
+          relaxation to therapeutic treatments.
+        </p>
+        <p class="cs-text">
+          <strong>1. Reduces Stress</strong><br />
+          Massage helps lower stress hormones and boost relaxation, leaving you feeling
+          calm and rejuvenated.
+        </p>
+        <p class="cs-text">
+          <strong>2. Eases Muscle Tension</strong><br />
+          Deep tissue and Swedish massage techniques target tight muscles, alleviating
+          pain and discomfort.
+        </p>
+        <p class="cs-text">
+          <strong>3. Enhances Circulation</strong><br />
+          Improved blood flow helps reduce inflammation, promote healing, and increase
+          energy levels.
+        </p>
+        <p class="cs-text">
+          <strong>4. Improves Flexibility</strong><br />
+          Regular massage can increase joint mobility and flexibility, promoting
+          better movement and posture.
+        </p>
+        <p class="cs-text">
+          Experience the therapeutic benefits of massage and improve your
+          quality of life. Book your appointment today!
+        </p>
+        <a href="/booking" class="cs-button-solid rounded-button"
+          >Book Your Massage Today</a
+        >
+      </div>
+    </div>
+  </section> -->
+
+  <!-- <CTA /> -->
+</BaseLayout>
+
+<style lang="less">
+  /* Add smooth scrolling to the entire HTML document */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
