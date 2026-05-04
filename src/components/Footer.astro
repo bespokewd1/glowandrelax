@@ -3,7 +3,7 @@ import client from '@data/clientData';
 import { getNavData } from '@data/navData';
 import { getCurrentYear } from '@js/utils';
 // import MainLogo from '@components/Icons/MainLogo.astro';
-import MainLogo from '@assets/images/logo/updated-logo.png';
+import MainLogo from '@assets/images/logo/glow-n-relax.png';
 import { Image } from 'astro:assets';
 import { Picture } from 'astro:assets';
 import googleReviewsLogo from '@assets/images/google-reviews-banner.png';
@@ -33,7 +33,7 @@ const services = Array.isArray(servicesNode?.children)
 
         <Image
           src={MainLogo}
-          class="object-fill w-40 h-auto"
+          class="h-auto w-40 object-fill"
           alt="Main logo massage"
         />
       </a>
