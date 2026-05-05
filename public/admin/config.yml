@@ -1,7 +1,7 @@
 # Use DecapBridge PKCE auth (required)
 backend:
   name: git-gateway
-  repo: bespokewd1/iMassage-Therapeutic-Clinique-
+  repo: bespokewd1/glowandrelax
   branch: main
   auth_type: pkce
   base_url: https://auth.decapbridge.com
@@ -29,7 +29,7 @@ auth:
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
 # Add site links in Decap CMS (optional)
-site_url: https://imassage-therapeutic.ca
+site_url: https://glowandrelax.netlify.app
 
 # See full Decap documentation for further configuration: https://decapcms.org/docs/intro/
 local_backend: true

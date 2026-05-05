@@ -41,7 +41,7 @@ const socials: Social[] = [
   { name: 'Instagram', href: client.socials.instagram, Icon: InstagramIcon },
 ];
 
-const clinicName = client.name || 'iMassage Therapeutic Clinique';
+const clinicName = client.name || 'Glow and Relax';
 const address =
   client.address.lineOne?.trim() + ', ' + client.address.lineTwo?.trim();
 const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -207,11 +207,11 @@ const reasons = [
           <div class="text-cream-100/90 mt-8 space-y-4">
             <p class="text-cream-50 font-serif text-xl italic">{clinicName}</p>
             <div class="space-y-2 text-sm leading-6">
-              <p>
+              <p class="text-cream-100/85">
                 {client.address.lineOne}<br />
                 {client.address.lineTwo}
               </p>
-              <p>
+              <p class="text-cream-100/85">
                 <a
                   href={phoneHref}
                   class="hover:text-copper-200 block transition"

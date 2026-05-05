@@ -287,17 +287,17 @@ const highlight2 = allServices.find(
               {client.name}
             </p>
             <div class="space-y-2 text-sm leading-6">
-              <p>
+              <p class="text-cream-100/85">
                 {client.address.lineOne}<br />
                 {client.address.lineTwo}
               </p>
-              <p>
+              <p class="text-cream-100/85">
                 <span class="text-copper-300">P.</span>
                 {client.phoneFormatted}<br />
                 <span class="text-copper-300">E.</span>
                 {client.email}
               </p>
-              <p class="border-cream-100/15 border-t pt-3">
+              <p class="border-cream-100/15 text-cream-100/85 border-t pt-3">
                 <span class="text-copper-300">Hours.</span>
                 {client.openingHours.daysOpen}: {client.openingHours.hours}
               </p>
@@ -588,7 +588,7 @@ const highlight2 = allServices.find(
           Experience the therapeutic benefits of massage and improve your
           quality of life. Book your appointment today!
         </p>
-        <a href="/booking" class="cs-button-solid rounded-button"
+        <a href="/direct-billing/" class="cs-button-solid rounded-button"
           >Book Your Massage Today</a
         >
       </div>

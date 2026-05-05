@@ -11,6 +11,7 @@ import CtaLink from '@components/CtaLink.astro';
 import { resolveImage } from '@js/imageUtils';
 import type { GetImageResult } from 'astro';
 import seoSetting from '@data/seo-pages.json';
+import Button from '@components/Button.astro';
 const seo = seoSetting.directBilling;
 const ogImg = await resolveImage(seo.ogImage);
 let ogImage: GetImageResult | null = null;
@@ -93,9 +94,9 @@ const mvaPoints = [
         and recover.
       </p>
       <p class="text-taupe-700 mx-auto mt-4 max-w-2xl leading-7">
-        At iMassage Therapeutic Clinique, we simplify the paperwork. Whether
-        you're covered by private insurance or being treated after a motor
-        vehicle accident, we'll guide you through the process.
+        At Glow and Relax, we simplify the paperwork. Whether you're covered by
+        private insurance or being treated after a motor vehicle accident, we'll
+        guide you through the process.
       </p>
     </div>
   </section>
@@ -261,10 +262,10 @@ const mvaPoints = [
           MVA <em class="text-copper-600 italic">Therapy</em>
         </h2>
         <p class="text-taupe-700 mt-4 leading-7">
-          Selected Registered Massage Therapists at iMassage Therapeutic
-          Clinique provide treatment for motor vehicle accident clients. If
-          you've been injured in a car accident, we can assist with direct
-          billing to your auto insurance.
+          Selected Registered Massage Therapists at Glow and Relax provide
+          treatment for motor vehicle accident clients. If you've been injured
+          in a car accident, we can assist with direct billing to your auto
+          insurance.
         </p>
       </div>
 
@@ -294,16 +295,10 @@ const mvaPoints = [
           <div
             class="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
           >
-            <a
-              href="/contact"
-              class="group bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 focus-visible:ring-copper-700 inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2"
-            >
+            <Button as="a" href="/contact" variant="outline">
               Contact Us
-              <span
-                aria-hidden="true"
-                class="transition-transform group-hover:translate-x-1">→</span
-              >
-            </a>
+            </Button>
+
             <CtaLink />
           </div>
         </div>

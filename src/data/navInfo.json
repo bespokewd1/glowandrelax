@@ -1,9 +1,9 @@
 {
   "image": "/src/assets/images/logo/glow-n-relax.png",
-  "alt": "iMassage Main logo",
+  "alt": "Glow and Relax main logo",
   "home": "Home",
   "about": "About Us",
   "services": "Services",
-  "contact": "Contact Us",
-  "book": "Book Appointment"
+ "directBilling": "Direct Billing",
+  "contact": "Contact Us"
 }

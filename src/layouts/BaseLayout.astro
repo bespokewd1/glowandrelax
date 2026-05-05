@@ -20,6 +20,10 @@ if (ogImg) {
   defaultOgImg = await getOptimizedImage(ogImg);
 }
 
+const siteOrigin = client.domain.startsWith('http')
+  ? client.domain.replace(/\/+$/, '')
+  : `https://${client.domain.replace(/^\/+|\/+$/g, '')}`;
+
 type Props = {
   description?: string;
   title?: string;
@@ -28,8 +32,8 @@ type Props = {
 };
 
 const {
-  description = 'Discover relaxation at iMassage Therapeutic Clinique. Our professional massage therapy relieves stress, restores balance, and rejuvenates your body and mind. Book your session today.',
-  title = 'iMassage Therapeutic Clinique | Professional Massage Therapy in Edmonton',
+  description = 'Discover relaxation at Glow and Relax. Our professional massage therapy relieves stress, restores balance, and rejuvenates your body and mind. Book your session today.',
+  title = 'Glow and Relax | Professional Massage Therapy in Edmonton',
   preloadedImage,
   ogImage = defaultOgImg,
 } = Astro.props;
@@ -62,7 +66,7 @@ const preloadedImages = !preloadedImage
 
     <link
       rel="canonical"
-      href={`https://${client.domain}${Astro.url.pathname}`}
+      href={`${siteOrigin}${Astro.url.pathname}`}
     />
 
     <!-- Preloads the image passed as a prop -->
@@ -79,7 +83,7 @@ const preloadedImages = !preloadedImage
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content={`https://${client.domain}${Astro.url.pathname}`}
+      content={`${siteOrigin}${Astro.url.pathname}`}
     />
     {
       ogImage && (
@@ -94,21 +98,21 @@ const preloadedImages = !preloadedImage
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/assets/favicons/favicon-updated-imassage.png"
+      href="/assets/favicons/apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/assets/favicons/favicon-updated-imassage.png"
+      href="/assets/favicons/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="/assets/favicons/favicon-updated-imassage.png"
+      href="/assets/favicons/favicon-16x16.png"
     />
-    <link rel="manifest" href="/assets/favicons/favicon-updated-imassage.png" />
+    <link rel="manifest" href="/assets/favicons/site.webmanifest" />
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
 

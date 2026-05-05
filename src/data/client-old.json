@@ -1,15 +1,15 @@
 {
-	"name": "iMassage Therapeutic Massage",
-	"email": "imassageclinique@gmail.com",
+	"name": "Glow and Relax",
+	"email": "glowandrelax@gmail.com",
 	"phoneForTel": "+1-780-729-0978",
 	"phoneFormatted": "+1 780-729-0978",
 	"address": {
-		"lineOne": "10625 40 Ave NW",
-		"lineTwo": "Edmonton, AB T6J 2M4",
-		"city": "",
-		"state": "",
+		"lineOne": "102-9807 34 Ave NW",
+		"lineTwo": "Edmonton, AB T6E 5X9",
+		"city": "Edmonton",
+		"state": "AB",
 		"zip": "",
-		"mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2374.612255174883!2d-113.51141142262637!3d53.475389472326924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53a01f3c749cbe89%3A0x6a72e2d6f72946d0!2s10625%2040%20Ave%20NW%2C%20Edmonton%2C%20AB%20T6J%202M4%2C%20Canada!5e0!3m2!1sen!2sph!4v1760976071430!5m2!1sen!2sph"
+		"mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4004.8485484345174!2d-113.48465012235977!3d53.46709816568051!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53a01f298a2c0721%3A0xb719662017397b27!2s9807%2034%20Ave%20NW%20%23102%2C%20Edmonton%2C%20AB%20T6N%201C6%2C%20Canada!5e1!3m2!1sen!2sph!4v1770723838838!5m2!1sen!2sph"
 	},
-	"domain": "https://imassage-therapeutic.ca/"
+	"domain": "glowandrelax.netlify.app"
 }
