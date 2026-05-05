@@ -64,7 +64,7 @@ const benefits: Benefit[] = [
   {
     title: 'Prenatal Massage',
     icon: serviceIcon2,
-    body: 'A gentle, therapeutic massage designed for expectant mothers to relieve muscle tension, reduce swelling, and promote relaxation during pregnancy.',
+    body: 'A gentle, therapeutic massage designed for expectant mothers to relieve muscle tension, reduce swelling, and promote relaxation during pregnancy.',
   },
   {
     title: 'Cupping Massage',
@@ -151,14 +151,25 @@ const preloadedImages = await reloadImages();
   description={seo.description}
   preloadedImage={preloadedImages}
 >
-  <section class="bg-orange-50">
-    <div class="mx-auto max-w-[120rem] px-6 py-16 md:py-20">
-      <!-- Header -->
+  <!-- ============================== Intro + Service Grid ============================== -->
+  <section class="bg-cream-50">
+    <div class="mx-auto max-w-7xl px-6 pt-16 pb-12 md:pt-20 md:pb-16 lg:px-12">
       <header class="mx-auto max-w-3xl text-center">
-        <h1 class="font-serif text-3xl text-gray-900 md:text-4xl">
-          Our Services
+        <div class="mb-4 flex items-center justify-center gap-3">
+          <span class="h-px w-8 bg-copper-500"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          >
+            Treatments
+          </span>
+          <span class="h-px w-8 bg-copper-500"></span>
+        </div>
+        <h1
+          class="font-serif text-4xl tracking-[-0.01em] text-taupe-900 md:text-5xl lg:text-6xl"
+        >
+          Our <em class="font-serif italic text-copper-600">Services</em>
         </h1>
-        <p class="mt-4 leading-7 text-gray-700">
+        <p class="mx-auto mt-5 max-w-2xl leading-7 text-taupe-700">
           We offer massage therapy for pain relief, stress reduction, and
           relaxation. Our licensed therapists specialize in deep‑tissue, hot
           stone, Swedish, cupping, and lymphatic‑focused treatments delivered
@@ -166,48 +177,67 @@ const preloadedImages = await reloadImages();
           well‑being.
         </p>
       </header>
+    </div>
 
-      <!-- Cards -->
-      <div
-        class="mt-10 grid grid-cols-[repeat(auto-fit,minmax(min(450px,100%),1fr))] gap-6 lg:gap-8 xl:px-16"
-      >
+    <!-- Cards -->
+    <div class="mx-auto max-w-7xl px-6 pb-20 lg:px-12">
+      <div class="grid grid-cols-1 gap-8 lg:gap-10">
         {
-          services.map((s) => (
-            <article class="relative grid grid-rows-[min-content,1fr] overflow-hidden rounded-xl bg-transparent ring-1 ring-black/10 sm:grid-cols-2 sm:grid-rows-1">
-              {/* <div class="absolute  inset-0 bg-gradient-to-l from-emerald-900 from-35% via-emerald-900/80 via-55% to-emerald-900/10" /> */}
-              <div class="">
-                <Image
-                  src={s.img}
-                  alt={s.title ?? 'Service Image'}
-                  class="relative block aspect-square size-full w-full object-cover"
-                  loading={'eager'}
-                  decoding="sync"
-                  fetchpriority="high"
-                  lqip="base64"
-                  lqipSize={10}
+          services.map((s, i) => (
+            <article class="group relative grid grid-cols-1 overflow-hidden rounded-sm border border-taupe-200 bg-cream-50 transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)] md:grid-cols-12">
+              <!-- Image w/ offset frame -->
+              <div class="relative md:col-span-5">
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute -inset-0 -translate-x-3 -translate-y-3 hidden border border-copper-400/60 md:block"
                 />
-                {/* <Picture
-                  src={s.img}
-                  alt={s.title ?? 'Service Image'}
-                  formats={['avif', 'webp']}
-                  class="relative block w-full aspect-square size-full object-cover"
-                  loading={'eager'}
-                  decoding="sync"
-                  fetchpriority="high"
-                /> */}
+                <div class="relative h-full overflow-hidden">
+                  <Image
+                    src={s.img}
+                    alt={s.title ?? 'Service Image'}
+                    class="block aspect-[4/3] h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] md:aspect-auto md:min-h-[22rem]"
+                    loading={'eager'}
+                    decoding="sync"
+                    fetchpriority="high"
+                    lqip="base64"
+                    lqipSize={10}
+                  />
+                </div>
               </div>
 
-              <div class="z-10 h-full place-content-center space-y-4 bg-emerald-200 p-5 text-emerald-50">
-                <h3 class="text-shadow-md text-xl font-semibold text-balance text-emerald-950">
+              <!-- Content -->
+              <div class="relative flex flex-col justify-center px-6 py-10 md:col-span-7 md:px-10 md:py-12">
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute top-4 right-6 font-serif text-[5rem] leading-none italic text-copper-500/10 select-none"
+                >
+                  {`0${i + 1}`}
+                </div>
+                <span class="font-serif text-2xl italic text-copper-600">
+                  {`0${i + 1}`}
+                </span>
+                <div class="mt-3 flex items-center gap-3">
+                  <span class="h-px w-8 bg-copper-500" />
+                  <span class="text-[0.65rem] font-medium tracking-[0.4em] text-copper-700 uppercase">
+                    Therapy
+                  </span>
+                </div>
+                <h3 class="mt-4 font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
                   {s.title}
                 </h3>
-                <p class="text-sm/6 text-pretty text-emerald-900">{s.blurb}</p>
-                <div class="mt-4">
+                <p class="mt-4 leading-7 text-taupe-700">{s.blurb}</p>
+                <div class="mt-7">
                   <a
                     href={s.href}
-                    class="inline-flex items-center rounded-full bg-orange-200 px-4 py-2 text-sm font-semibold text-gray-900 transition-colors hover:bg-orange-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+                    class="group/link inline-flex items-center gap-2 rounded-full border border-taupe-900 px-5 py-2.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
                   >
                     {s.cta ?? 'Read More'}
+                    <span
+                      aria-hidden="true"
+                      class="transition-transform group-hover/link:translate-x-1"
+                    >
+                      →
+                    </span>
                   </a>
                 </div>
               </div>
@@ -218,225 +248,339 @@ const preloadedImages = await reloadImages();
     </div>
   </section>
 
-  <section class="bg-orange-100">
-    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-      <header class="text-center">
-        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
-          Service Benefits
+  <!-- ============================== Service Benefits ============================== -->
+  <section class="bg-cream-100">
+    <div class="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-12">
+      <header class="mx-auto max-w-3xl text-center">
+        <div class="mb-4 flex items-center justify-center gap-3">
+          <span class="h-px w-8 bg-copper-500"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          >
+            Why book
+          </span>
+          <span class="h-px w-8 bg-copper-500"></span>
+        </div>
+        <h2
+          class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+        >
+          Service <em class="font-serif italic text-copper-600">Benefits</em>
         </h2>
       </header>
 
       <div
-        class="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12"
+        class="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8"
       >
         {
           benefits.map((b) => (
             <div class="text-center">
               <div
-                class="mx-auto mb-6 flex size-25 items-center justify-center rounded-full bg-orange-200 text-2xl text-emerald-800"
+                class="mx-auto mb-6 flex size-20 items-center justify-center rounded-full border border-copper-400 bg-cream-50"
                 aria-hidden="true"
               >
-                {/* {b.icon} */}
-                <Image src={b.icon} alt={b.title} class={'drop-shadow-lg'} />
+                <Image
+                  src={b.icon}
+                  alt={b.title}
+                  class="size-12 object-contain drop-shadow-md"
+                />
               </div>
-              <h3 class="font-semibold text-emerald-900">{b.title}</h3>
-              <p class="mt-3 text-sm leading-6 text-gray-700">{b.body}</p>
+              <h3 class="font-serif text-lg font-semibold text-taupe-900 md:text-xl">
+                {b.title}
+              </h3>
+              <p class="mt-3 text-sm leading-6 text-taupe-700">{b.body}</p>
             </div>
           ))
         }
       </div>
 
-      <div class="mt-12 text-center">
-        <p class="text-gray-800">
+      <div class="mt-14 text-center">
+        <p class="font-serif text-xl text-taupe-900 italic md:text-2xl">
           Ready to experience therapeutic care—tailored to your goals?
         </p>
         <div
-          class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+          class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row"
         >
           <CtaLink
-            class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100"
           />
           <a
             href="/contact"
-            class="inline-flex items-center rounded-full border-2 border-emerald-900 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-6 py-3 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
           >
             Ask a Question
+            <span
+              aria-hidden="true"
+              class="transition-transform group-hover:translate-x-1">→</span
+            >
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="bg-orange-50">
-    <div class="mx-auto flex max-w-[120rem] flex-col md:flex-row">
-      <!-- Left image -->
-      <div class="relative">
-        <Image
-          src={benefitImg}
-          alt="Therapeutic massage providing relief and relaxation"
-          class="aspect-video h-full object-cover"
-        />
-        <div
-          class="pointer-events-none absolute top-6 left-6 hidden max-w-[24ch] text-white drop-shadow-md lg:block"
-        >
-          <h2
-            class="font-serif text-4xl/[1.1] drop-shadow-md md:text-5xl/[1.1]"
+  <!-- ============================== Who Can Benefit ============================== -->
+  <section class="bg-cream-50">
+    <div class="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-12">
+      <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <!-- Image with offset sage frame + corner ornament -->
+        <div class="relative lg:col-span-6">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute -inset-0 -translate-x-5 -translate-y-5 -z-10 hidden border border-sage-400/70 lg:block"
           >
-            Who Can
-            <br />
-            Benefit?
-          </h2>
+          </div>
+          <div
+            class="relative overflow-hidden rounded-sm shadow-[0_30px_60px_-25px_rgba(60,49,40,0.4)]"
+          >
+            <Image
+              src={benefitImg}
+              alt="Therapeutic massage providing relief and relaxation"
+              class="block aspect-[4/5] h-full w-full object-cover lg:aspect-[4/5]"
+            />
+          </div>
+          <!-- Concentric circles ornament -->
+          <svg
+            aria-hidden="true"
+            class="pointer-events-none absolute -right-6 -bottom-6 hidden h-28 w-28 text-copper-500/40 lg:block"
+            viewBox="0 0 200 200"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+          >
+            <circle cx="100" cy="100" r="80"></circle>
+            <circle cx="100" cy="100" r="60"></circle>
+            <circle cx="100" cy="100" r="40"></circle>
+          </svg>
         </div>
-      </div>
 
-      <!-- Right content -->
-      <div class="bg-orange-50 px-6 py-12 md:px-10">
-        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl lg:hidden">
-          Who Can Benefit?
-        </h2>
+        <!-- Right copy -->
+        <div class="bg-cream-100 px-8 py-12 md:px-10 md:py-14 lg:col-span-6">
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-500"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+            >
+              Who benefits
+            </span>
+          </div>
+          <h2
+            class="mt-4 font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+          >
+            Who Can <em class="font-serif italic text-copper-600">Benefit?</em>
+          </h2>
 
-        <ul class="mt-6 space-y-8">
-          {
-            benefitPoints.map((p) => (
-              <li class="flex gap-4">
-                <span
-                  class="mt-2 inline-block h-2.5 w-2.5 flex-none rounded-full bg-emerald-700"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p class="font-semibold text-emerald-900">{p.title}</p>
-                  <p class="mt-1 text-gray-800">{p.body}</p>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+          <ul class="mt-7 space-y-5 text-taupe-800">
+            {
+              benefitPoints.map((p, i) => (
+                <li class="flex items-start gap-4">
+                  <span
+                    aria-hidden="true"
+                    class={`mt-2 h-1 w-6 flex-none ${i % 2 === 0 ? 'bg-copper-500' : 'bg-sage-500'}`}
+                  />
+                  <div>
+                    <p class="font-serif text-lg text-taupe-900 md:text-xl">
+                      {p.title}
+                    </p>
+                    <p class="mt-1 text-sm leading-6 text-taupe-700">
+                      {p.body}
+                    </p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="bg-orange-100">
-    <div class="mx-auto max-w-4xl px-6 py-16 md:py-20">
-      <header class="text-center">
-        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
-          How to Book an Appointment
-        </h2>
-        <p class="mt-4 leading-7 text-gray-700">
-          Booking a therapeutic massage at iMassage Therapeutic Clinique is
-          simple. Follow these steps to reserve your in‑clinic session.
-        </p>
-
-        <span
-          class="mt-5 inline-block rounded-full bg-emerald-900 px-4 py-1 text-xs font-semibold tracking-wide text-emerald-50"
-        >
-          Steps to Book Your Massage
-        </span>
-      </header>
-
-      <ol class="mt-12 space-y-10">
-        {
-          steps.map((s) => (
-            <li class="grid grid-cols-[4rem_1fr] items-start gap-6">
-              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[#3b3a2f] font-serif text-2xl text-white">
-                {s.num}
-              </div>
-
-              <div>
-                <h3 class="font-semibold text-[#3b3a2f]">{s.title}</h3>
-                <p class="mt-2 text-gray-700">{s.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
+  <!-- ============================== How to Book + Contact band ============================== -->
+  <section
+    class="relative isolate overflow-hidden bg-sage-700 text-cream-50"
+  >
+    <!-- Decorative concentric circles -->
+    <svg
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-20 -right-20 -z-10 h-80 w-80 text-cream-50/10 lg:h-96 lg:w-96"
+      viewBox="0 0 200 200"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+    >
+      <circle cx="100" cy="100" r="80"></circle>
+      <circle cx="100" cy="100" r="60"></circle>
+      <circle cx="100" cy="100" r="40"></circle>
+    </svg>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-32 -left-32 -z-10 h-[28rem] w-[28rem] rounded-full bg-copper-500/20 blur-3xl"
+    >
     </div>
 
-    <div class="mx-auto max-w-4xl px-6 pb-16">
-      <!-- Service Locations -->
-      <div class="mt-6 space-y-2">
-        <p class="flex items-start gap-2 text-gray-800">
-          <span class="mt-1 inline-flex size-6 flex-none" aria-hidden="true">
-            <MapPinFilled />
+    <div class="relative mx-auto max-w-7xl px-6 py-16 md:py-24 lg:px-12">
+      <header class="mx-auto max-w-3xl text-center">
+        <div class="mb-4 flex items-center justify-center gap-3">
+          <span class="h-px w-8 bg-copper-300"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+          >
+            Four steps
           </span>
-          <span>
-            <span class="font-semibold text-emerald-900">Service Location</span>
-            – {mapNote}
-          </span>
+          <span class="h-px w-8 bg-copper-300"></span>
+        </div>
+        <h2
+          class="font-serif text-3xl tracking-[-0.01em] text-cream-50 md:text-4xl lg:text-5xl"
+        >
+          How to <em class="font-serif italic text-copper-300">Book</em>
+        </h2>
+        <p class="mx-auto mt-5 max-w-2xl leading-7 text-cream-100/85">
+          Booking a therapeutic massage is simple. Follow these steps to reserve
+          your in‑clinic session.
         </p>
+      </header>
+
+      <!-- Steps -->
+      <div
+        class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+      >
+        {
+          steps.map((s) => (
+            <div class="group relative overflow-hidden rounded-sm border border-cream-50/15 bg-sage-700/40 px-7 py-9 text-center backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-copper-300/60">
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute -top-3 -right-1 font-serif text-[6.5rem] leading-none italic text-copper-500/15 select-none"
+              >
+                {s.num}
+              </div>
+              <div class="relative">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-copper-300 font-serif text-xl italic text-copper-200">
+                  {s.num}
+                </div>
+                <h3 class="mt-5 font-serif text-xl tracking-tight text-cream-50 md:text-2xl">
+                  {s.title}
+                </h3>
+                <p class="mt-3 text-sm leading-6 text-cream-100/85">{s.body}</p>
+              </div>
+            </div>
+          ))
+        }
       </div>
 
-      <!-- Book Now -->
-      <div class="mt-8">
-        <h3 class="text-lg font-semibold text-gray-900">
-          <span
-            class="mt-1 inline-flex size-6 flex-none items-center"
-            aria-hidden="true"
+      <!-- Location + Booking split -->
+      <div class="mt-16 grid grid-cols-1 gap-10 border-t border-cream-50/15 pt-12 md:grid-cols-2 md:gap-14">
+        <!-- Location -->
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-300"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+            >
+              Location
+            </span>
+          </div>
+          <h3
+            class="mt-4 font-serif text-2xl text-cream-50 md:text-3xl"
           >
-            <PhoneIcon class="text-red-500" />
-          </span>
-          Book Now!
-        </h3>
-
-        <ul class="mt-3 space-y-3 text-gray-800">
-          <li class="flex items-start gap-2">
-            <span class="inline-flex flex-none" aria-hidden="true">
-              <CheckIconFilled class="size-6 text-green-500" />
-            </span>
-            <span>
-              <span class="font-semibold">Call/Text:</span>
-              <a
-                href={phoneHref}
-                class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
-              >
-                {phoneDisplay}
-              </a>
-            </span>
-          </li>
-
-          <li class="flex items-start gap-2">
-            <span class="inline-flex flex-none" aria-hidden="true">
-              <CheckIconFilled class="size-6 text-green-500" />
-            </span>
-            <span class="font-semibold">WhatsApp:</span>
-            <a
-              href={phoneHref}
-              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
+            Service <em class="font-serif italic text-copper-300">Location</em>
+          </h3>
+          <div class="mt-5 flex items-start gap-3">
+            <span
+              class="mt-1 inline-flex size-6 flex-none text-copper-300"
+              aria-hidden="true"
             >
-              {phoneDisplay}
-            </a>
-          </li>
-
-          <li class="flex items-start gap-2">
-            <span class="inline-flex flex-none" aria-hidden="true">
-              <CheckIconFilled class="size-6 text-green-500" />
+              <MapPinFilled />
             </span>
-            <span class="font-semibold">Online Booking:</span>
-            <a
-              href={bookingHref}
-              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
-            >
-              Book Appointment
-            </a>
-          </li>
+            <p class="leading-7 text-cream-100/90">{mapNote}</p>
+          </div>
+        </div>
 
-          <li class="flex items-start gap-2">
-            <span class="inline-flex flex-none" aria-hidden="true">
-              <CheckIconFilled class="size-6 text-green-500" />
+        <!-- Book Now -->
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-300"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+            >
+              Book now
             </span>
-            <span class="font-semibold">Email:</span>
-            <a
-              href={`mailto:${email}`}
-              class="ml-1 underline decoration-emerald-700 underline-offset-2 hover:text-emerald-800"
-            >
-              {email}
-            </a>
-          </li>
-        </ul>
+          </div>
+          <h3 class="mt-4 flex items-center gap-3 font-serif text-2xl text-cream-50 md:text-3xl">
+            <span class="inline-flex size-6 flex-none text-copper-300" aria-hidden="true">
+              <PhoneIcon />
+            </span>
+            Reach <em class="font-serif italic text-copper-300">Us</em>
+          </h3>
 
-        <p class="mt-6 font-medium text-gray-800">
-          Don’t wait—experience therapeutic massage for pain relief, stress
-          reduction, and relaxation today!
+          <ul class="mt-5 space-y-3 text-cream-100/90">
+            <li class="flex items-start gap-3">
+              <span class="inline-flex flex-none text-sage-300" aria-hidden="true">
+                <CheckIconFilled class="size-6" />
+              </span>
+              <span>
+                <span class="font-medium text-cream-50">Call/Text:</span>{' '}
+                <a
+                  href={phoneHref}
+                  class="text-copper-200 underline decoration-copper-300/60 underline-offset-4 transition-colors hover:text-copper-100"
+                >
+                  {phoneDisplay}
+                </a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="inline-flex flex-none text-sage-300" aria-hidden="true">
+                <CheckIconFilled class="size-6" />
+              </span>
+              <span>
+                <span class="font-medium text-cream-50">WhatsApp:</span>{' '}
+                <a
+                  href={phoneHref}
+                  class="text-copper-200 underline decoration-copper-300/60 underline-offset-4 transition-colors hover:text-copper-100"
+                >
+                  {phoneDisplay}
+                </a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="inline-flex flex-none text-sage-300" aria-hidden="true">
+                <CheckIconFilled class="size-6" />
+              </span>
+              <span>
+                <span class="font-medium text-cream-50">Online Booking:</span>{' '}
+                <a
+                  href={bookingHref}
+                  class="text-copper-200 underline decoration-copper-300/60 underline-offset-4 transition-colors hover:text-copper-100"
+                >
+                  Book Appointment
+                </a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="inline-flex flex-none text-sage-300" aria-hidden="true">
+                <CheckIconFilled class="size-6" />
+              </span>
+              <span>
+                <span class="font-medium text-cream-50">Email:</span>{' '}
+                <a
+                  href={`mailto:${email}`}
+                  class="text-copper-200 underline decoration-copper-300/60 underline-offset-4 transition-colors hover:text-copper-100"
+                >
+                  {email}
+                </a>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer line: italic Fraunces tagline + final CTA -->
+      <div class="mt-16 flex flex-col items-center justify-center gap-6 border-t border-cream-50/15 pt-10 text-center md:flex-row md:justify-between md:text-left">
+        <p class="max-w-xl font-serif text-xl text-cream-50 italic md:text-2xl">
+          Don't wait — experience therapeutic massage for pain relief, stress
+          reduction, and relaxation today.
         </p>
+        <CtaLink
+          class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-700/40 transition-all hover:-translate-y-0.5 hover:bg-copper-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-200"
+        />
       </div>
     </div>
   </section>

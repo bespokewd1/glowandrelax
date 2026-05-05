@@ -1,5 +1,4 @@
 ---
-// import { Image } from 'astro:assets';
 import { Image } from 'astro-lqip/components';
 
 export interface HeroServiceProps {
@@ -14,75 +13,155 @@ export interface HeroServiceProps {
 
 const { title, image, alt, subtitle, highlights, ctaPrimary, ctaSecondary } =
   Astro.props as HeroServiceProps;
+
+// Split title — italicize last word for editorial accent
+const titleWords = title.trim().split(/\s+/);
+const titleAccent = titleWords.length > 1 ? titleWords.pop()! : title;
+const titleLead = titleWords.join(' ');
 ---
 
-<section class="bg-orange-50">
-  <div class="mx-auto max-w-5xl px-6 pt-16 md:pt-20 text-center">
-    <header>
-      <h1 class="font-serif text-3xl md:text-4xl text-gray-900">
-        {title}
+<section
+  id="service-hero"
+  class="relative isolate overflow-hidden bg-cream-50 text-taupe-800"
+>
+  <!-- Ambient color washes -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 -left-40 -z-10 h-[36rem] w-[36rem] rounded-full bg-copper-200/40 blur-3xl"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-40 -bottom-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-sage-200/40 blur-3xl"
+  >
+  </div>
+
+  <!-- Vertical brand label -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute top-1/2 right-4 z-20 hidden -translate-y-1/2 rotate-180 text-[0.65rem] font-medium tracking-[0.45em] text-copper-700/70 uppercase [writing-mode:vertical-rl] lg:block"
+  >
+    Glow · Relax · Restore
+  </div>
+
+  <div
+    class="relative mx-auto grid max-w-7xl grid-cols-12 items-center gap-y-14 px-6 pt-14 pb-20 lg:gap-x-12 lg:px-16 lg:pt-20 lg:pb-28"
+  >
+    <!-- LEFT: copy -->
+    <div class="relative col-span-12 lg:col-span-6">
+      <!-- Eyebrow -->
+      <div class="flex items-center gap-3">
+        <span class="h-px w-10 bg-copper-500"></span>
+        <span
+          class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+        >
+          Therapeutic Care
+        </span>
+      </div>
+
+      <!-- Headline -->
+      <h1
+        class="mt-6 font-serif text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-[-0.01em] text-taupe-900"
+      >
+        {titleLead && <span class="block">{titleLead}</span>}
+        <em class="block font-serif italic text-copper-600">{titleAccent}</em>
       </h1>
-      <!-- <p class="mt-2 text-sm text-emerald-900/80">{updated}</p> -->
-    </header>
 
-    <!-- Hero image -->
-    <div class="mt-8">
-      <!-- sizes="(min-width: 1024px) 900px, 100vw"
-        widths={[640, 960, 1280, 1600]}
-        loading="eager"
-        decoding="async" -->
+      <!-- Subtitle -->
+      <p class="mt-6 max-w-xl text-base leading-7 text-taupe-700">
+        {subtitle}
+      </p>
 
-      <Image
-        src={image}
-        alt={alt}
-        class="mx-auto h-auto w-full max-w-4xl rounded-lg object-cover shadow-sm"
-        loading={'eager'}
-        decoding="sync"
-        fetchpriority="high"
-        lqip="base64"
-        lqipSize={10}
-      />
-      <!-- <Image
-        src={image}
-        alt={alt}
-      /> -->
-    </div>
+      <!-- CTAs -->
+      <div class="mt-9 flex flex-wrap items-center gap-3">
+        <a
+          href={ctaPrimary.href ?? '/booking'}
+          class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
+        >
+          {ctaPrimary.label}
+          <span
+            aria-hidden="true"
+            class="transition-transform group-hover:translate-x-1">→</span
+          >
+        </a>
+        <a
+          href={ctaSecondary.href ?? '/contact'}
+          class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-7 py-3.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
+        >
+          {ctaSecondary.label ?? 'Ask a Question'}
+          <span
+            aria-hidden="true"
+            class="transition-transform group-hover:translate-x-1">→</span
+          >
+        </a>
+      </div>
 
-    <!-- Supporting subtitle -->
-    <p class="mt-6 text-base md:text-lg text-gray-800 max-w-3xl mx-auto">
-      {subtitle}
-    </p>
-
-    <!-- Quick highlights -->
-    <div
-      class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 text-sm text-gray-800 max-w-4xl mx-auto"
-    >
+      <!-- Highlights — 3-col DL: serif italic copper number + uppercase taupe label + small body -->
       {
-        highlights.map((h) => (
-          <div class="rounded-lg bg-orange-100/50 p-4 ring-1 ring-black/10">
-            <p class="font-semibold text-emerald-900">{h.title}</p>
-            <p class="mt-1">{h.body}</p>
-          </div>
-        ))
+        highlights.length > 0 && (
+          <dl class="mt-12 grid grid-cols-3 gap-4 border-t border-taupe-200 pt-7">
+            {highlights.slice(0, 3).map((h, i) => (
+              <div>
+                <dt class="font-serif text-2xl italic text-copper-600">
+                  {`0${i + 1}`}
+                </dt>
+                <dd class="mt-2 text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase">
+                  {h.title}
+                </dd>
+                <dd class="mt-1 hidden text-xs leading-5 text-taupe-700 md:block">
+                  {h.body}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )
       }
     </div>
 
-    <!-- CTA -->
-    <!-- <div
-      class="mt-10 flex items-center justify-center gap-3 sm:flex-row flex-col hidden"
-    >
-      <a
-        href={ctaPrimary.href ?? '/booking'}
-        class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+    <!-- RIGHT: image with offset copper frame + corner ornament -->
+    <div class="relative col-span-12 lg:col-span-6">
+      <!-- offset frame -->
+      <div
+        aria-hidden="true"
+        class="absolute -inset-0 -translate-x-5 -translate-y-5 -z-10 hidden border border-copper-400/70 lg:block"
       >
-        {ctaPrimary.label}
-      </a>
-      <a
-        href={ctaSecondary.href ?? '/contact'}
-        class="inline-flex items-center rounded-full border-2 border-emerald-900 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+      </div>
+
+      <div
+        class="relative overflow-hidden rounded-sm shadow-[0_30px_70px_-25px_rgba(60,49,40,0.45)]"
       >
-        {ctaSecondary.label ?? 'Ask a Question'}
-      </a>
-    </div> -->
+        <Image
+          src={image}
+          alt={alt}
+          class="block aspect-[4/5] h-full w-full object-cover lg:aspect-[5/6]"
+          loading={'eager'}
+          decoding="sync"
+          fetchpriority="high"
+          lqip="base64"
+          lqipSize={10}
+        />
+      </div>
+
+      <!-- corner ornament L-shape -->
+      <svg
+        aria-hidden="true"
+        class="absolute -top-6 -left-6 hidden h-16 w-16 text-copper-500/40 lg:block"
+        viewBox="0 0 64 64"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+      >
+        <path d="M2 2 L2 30 M2 2 L30 2"></path>
+        <circle cx="2" cy="2" r="2" fill="currentColor" stroke="none"></circle>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Decorative /01 watermark -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute right-6 -bottom-4 font-serif text-[7rem] leading-none italic text-copper-500/15 select-none lg:right-16 lg:text-[10rem]"
+  >
+    /01
   </div>
 </section>

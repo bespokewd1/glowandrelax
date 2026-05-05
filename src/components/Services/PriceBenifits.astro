@@ -1,5 +1,6 @@
 ---
 import CtaLink from '@components/CtaLink.astro';
+import clientData from '@data/clientData';
 
 export interface ServiceBenefit {
   num: string;
@@ -22,93 +23,167 @@ export interface PriceBenefitsProps {
 
 const { benefitsTitle, benefits, benefitsTagline, prices, ctaLabel } =
   Astro.props as PriceBenefitsProps;
+
+// Italic accent on last word of benefits title
+const titleWords = benefitsTitle.trim().split(/\s+/);
+const titleAccent = titleWords.length > 1 ? titleWords.pop()! : benefitsTitle;
+const titleLead = titleWords.join(' ');
+
+const phoneDisplay = clientData.phoneFormatted?.trim() || '(587) 938-0458';
+const phoneHref = `tel:${clientData.phoneForTel?.replace(/\s+/g, '') || '5879380458'}`;
+const email = clientData.email || 'info@yourclinic.ca';
 ---
 
-<section class="bg-orange-50">
-  <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-    <!-- Benefits -->
-    <div class="rounded-xl bg-orange-100 p-6 md:p-10 ring-1 ring-black/5">
-      <header class="mb-8 md:mb-10">
-        <!-- <p class="text-sm text-emerald-900/80">{updatedNote}</p> -->
-        <h2 class="mt-2 font-serif text-2xl md:text-3xl text-gray-900">
-          {benefitsTitle}
-        </h2>
-      </header>
-
-      <div
-        class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12"
-      >
-        {
-          benefits.map((b) => (
-            <article>
-              <p class="text-sm font-bold text-emerald-900">{b.num}</p>
-              <h3 class="mt-1 font-semibold text-gray-900">{b.title}</h3>
-              <p class="mt-2 text-sm text-gray-800">{b.body}</p>
-            </article>
-          ))
-        }
+<!-- ============================== Benefits ============================== -->
+<section class="bg-cream-100">
+  <div class="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-12">
+    <header class="mx-auto max-w-3xl text-center">
+      <div class="mb-4 flex items-center justify-center gap-3">
+        <span class="h-px w-8 bg-copper-500"></span>
+        <span
+          class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+        >
+          Benefits
+        </span>
+        <span class="h-px w-8 bg-copper-500"></span>
       </div>
+      <h2
+        class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+      >
+        {titleLead}{' '}
+        <em class="font-serif italic text-copper-600">{titleAccent}</em>
+      </h2>
+    </header>
+
+    <div
+      class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8"
+    >
+      {
+        benefits.map((b) => (
+          <article class="group relative overflow-hidden rounded-sm border border-taupe-200 bg-cream-50 px-8 py-10 text-center transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute top-2 right-2 font-serif text-[6rem] leading-none italic text-copper-500/10 select-none"
+            >
+              {b.num}
+            </div>
+            <div class="relative">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-copper-500 font-serif text-xl italic text-copper-600">
+                {b.num}
+              </div>
+              <h3
+                class="mt-5 font-serif text-xl tracking-tight text-taupe-900 md:text-2xl"
+              >
+                {b.title}
+              </h3>
+              <p class="mt-3 text-sm leading-6 text-taupe-700">{b.body}</p>
+            </div>
+          </article>
+        ))
+      }
     </div>
 
     <!-- Tagline -->
-    <p class="mt-10 text-center font-serif text-xl text-emerald-900">
+    <p
+      class="mx-auto mt-12 max-w-2xl text-center font-serif text-xl text-taupe-900 italic md:text-2xl"
+    >
       {benefitsTagline}
     </p>
-    <!-- Pricing -->
-    {
-      prices.length > 0 && (
-        <div class="mt-8 rounded-xl bg-orange-100 p-6 md:p-10 ring-1 ring-black/5">
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div class="md:col-span-1">
-              <h3 class="font-serif text-2xl text-gray-900">
-                Duration & Pricing
-              </h3>
-              <p class="mt-2 text-gray-800">
-                All prices are tax‑included.
-                <br />
-                <span class="text-sm text-gray-700">
-                  Rates reflect in‑clinic sessions by licensed therapists.
-                </span>
-              </p>
-            </div>
+  </div>
+</section>
 
-            <div class="md:col-span-2">
-              <ul class="divide-y divide-emerald-900/10 bg-white/90 rounded-lg ring-1 ring-black/5">
-                {prices.map((row) => (
-                  <li class="flex items-center justify-between px-5 py-4 bg-orange-50">
-                    <span class="text-gray-900">{row.duration}</span>
-                    <span class="font-semibold text-emerald-900">
-                      {row.price}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <p class="mt-3 text-xs text-gray-700">
-                Need a different duration? Contact us and we’ll help tailor a
-                session to your needs.
-              </p>
-            </div>
+<!-- ============================== Prices ============================== -->
+{
+  prices.length > 0 && (
+    <section class="bg-cream-50">
+      <div class="mx-auto max-w-3xl px-6 py-16 md:py-20">
+        <header class="text-center">
+          <div class="mb-4 flex items-center justify-center gap-3">
+            <span class="h-px w-8 bg-sage-600" />
+            <span class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase">
+              Investment
+            </span>
+            <span class="h-px w-8 bg-sage-600" />
           </div>
-        </div>
-      )
-    }
-    <!-- Availability note -->
-    <p class="mt-6 text-center text-sm text-emerald-900">
-      In‑clinic appointments available. Book online or call us for assistance.
-    </p>
+          <h3 class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl">
+            Session{' '}
+            <em class="font-serif italic text-copper-600">Options</em>
+          </h3>
+          <p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-taupe-700">
+            All prices are tax-included. Rates reflect in-clinic sessions by
+            licensed therapists.
+          </p>
+        </header>
 
-    <!-- CTA -->
+        <ul class="mx-auto mt-10 max-w-2xl">
+          {prices.map((row) => (
+            <li class="flex items-baseline justify-between gap-6 border-b border-taupe-200 py-5">
+              <span class="font-serif text-lg italic text-copper-600 md:text-xl">
+                {row.duration}
+              </span>
+              <span class="font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
+                {row.price}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p class="mx-auto mt-6 max-w-xl text-center text-xs leading-5 text-taupe-600">
+          Need a different duration? Contact us and we'll help tailor a session
+          to your needs.
+        </p>
+
+        <div class="mt-10 flex justify-center">
+          <CtaLink class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50">
+            {ctaLabel}
+          </CtaLink>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<!-- ============================== Contact strip ============================== -->
+<section class="bg-cream-100">
+  <div class="mx-auto max-w-5xl px-6 py-12 md:py-14">
     <div
-      class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+      class="flex flex-col items-center gap-6 text-center md:flex-row md:justify-between md:text-left"
     >
-      <CtaLink
-        class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-      />
+      <div>
+        <p
+          class="text-[0.65rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+        >
+          Questions?
+        </p>
+        <p class="mt-2 font-serif text-xl text-taupe-900 italic md:text-2xl">
+          We're here to help you choose the right session.
+        </p>
+        <p class="mt-2 text-sm text-taupe-700">
+          Call or text{' '}
+          <a
+            href={phoneHref}
+            class="text-copper-700 underline decoration-copper-400 underline-offset-4 transition-colors hover:text-copper-600"
+          >
+            {phoneDisplay}
+          </a>{' '}
+          ·{' '}
+          <a
+            href={`mailto:${email}`}
+            class="text-copper-700 underline decoration-copper-400 underline-offset-4 transition-colors hover:text-copper-600"
+          >
+            {email}
+          </a>
+        </p>
+      </div>
       <a
         href="/contact"
-        class="inline-flex items-center rounded-full border-2 border-emerald-900 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+        class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-6 py-3 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
       >
         Ask a Question
+        <span
+          aria-hidden="true"
+          class="transition-transform group-hover:translate-x-1">→</span
+        >
       </a>
     </div>
   </div>
