@@ -1,4 +1,5 @@
 ---
+import Button from '@components/Button.astro';
 import { Image } from 'astro-lqip/components';
 
 export interface HeroServiceProps {
@@ -22,24 +23,24 @@ const titleLead = titleWords.join(' ');
 
 <section
   id="service-hero"
-  class="relative isolate overflow-hidden bg-cream-50 text-taupe-800"
+  class="bg-cream-50 text-taupe-800 relative isolate overflow-hidden"
 >
   <!-- Ambient color washes -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -top-40 -left-40 -z-10 h-[36rem] w-[36rem] rounded-full bg-copper-200/40 blur-3xl"
+    class="bg-copper-200/40 pointer-events-none absolute -top-40 -left-40 -z-10 h-[36rem] w-[36rem] rounded-full blur-3xl"
   >
   </div>
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -right-40 -bottom-48 -z-10 h-[34rem] w-[34rem] rounded-full bg-sage-200/40 blur-3xl"
+    class="bg-sage-200/40 pointer-events-none absolute -right-40 -bottom-48 -z-10 h-[34rem] w-[34rem] rounded-full blur-3xl"
   >
   </div>
 
   <!-- Vertical brand label -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute top-1/2 right-4 z-20 hidden -translate-y-1/2 rotate-180 text-[0.65rem] font-medium tracking-[0.45em] text-copper-700/70 uppercase [writing-mode:vertical-rl] lg:block"
+    class="text-copper-700/70 pointer-events-none absolute top-1/2 right-4 z-20 hidden -translate-y-1/2 rotate-180 text-[0.65rem] font-medium tracking-[0.45em] uppercase [writing-mode:vertical-rl] lg:block"
   >
     Glow · Relax · Restore
   </div>
@@ -51,9 +52,9 @@ const titleLead = titleWords.join(' ');
     <div class="relative col-span-12 lg:col-span-6">
       <!-- Eyebrow -->
       <div class="flex items-center gap-3">
-        <span class="h-px w-10 bg-copper-500"></span>
+        <span class="bg-copper-500 h-px w-10"></span>
         <span
-          class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          class="text-copper-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
         >
           Therapeutic Care
         </span>
@@ -61,54 +62,40 @@ const titleLead = titleWords.join(' ');
 
       <!-- Headline -->
       <h1
-        class="mt-6 font-serif text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-[-0.01em] text-taupe-900"
+        class="text-taupe-900 mt-6 font-serif text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-[-0.01em]"
       >
         {titleLead && <span class="block">{titleLead}</span>}
-        <em class="block font-serif italic text-copper-600">{titleAccent}</em>
+        <em class="text-copper-600 block font-serif italic">{titleAccent}</em>
       </h1>
 
       <!-- Subtitle -->
-      <p class="mt-6 max-w-xl text-base leading-7 text-taupe-700">
+      <p class="text-taupe-700 mt-6 max-w-xl text-base leading-7">
         {subtitle}
       </p>
 
       <!-- CTAs -->
       <div class="mt-9 flex flex-wrap items-center gap-3">
-        <a
-          href={ctaPrimary.href ?? '/booking'}
-          class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50"
-        >
+        <Button as="a" href={ctaPrimary.href ?? '/booking'}>
           {ctaPrimary.label}
-          <span
-            aria-hidden="true"
-            class="transition-transform group-hover:translate-x-1">→</span
-          >
-        </a>
-        <a
-          href={ctaSecondary.href ?? '/contact'}
-          class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-7 py-3.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
-        >
+        </Button>
+        <Button as="a" href={ctaSecondary.href ?? '/contact'} variant="outline">
           {ctaSecondary.label ?? 'Ask a Question'}
-          <span
-            aria-hidden="true"
-            class="transition-transform group-hover:translate-x-1">→</span
-          >
-        </a>
+        </Button>
       </div>
 
       <!-- Highlights — 3-col DL: serif italic copper number + uppercase taupe label + small body -->
       {
         highlights.length > 0 && (
-          <dl class="mt-12 grid grid-cols-3 gap-4 border-t border-taupe-200 pt-7">
+          <dl class="border-taupe-200 mt-12 grid grid-cols-3 gap-4 border-t pt-7">
             {highlights.slice(0, 3).map((h, i) => (
               <div>
-                <dt class="font-serif text-2xl italic text-copper-600">
+                <dt class="text-copper-600 font-serif text-2xl italic">
                   {`0${i + 1}`}
                 </dt>
-                <dd class="mt-2 text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase">
+                <dd class="text-taupe-600 mt-2 text-[0.65rem] font-medium tracking-[0.3em] uppercase">
                   {h.title}
                 </dd>
-                <dd class="mt-1 hidden text-xs leading-5 text-taupe-700 md:block">
+                <dd class="text-taupe-700 mt-1 hidden text-xs leading-5 md:block">
                   {h.body}
                 </dd>
               </div>
@@ -123,7 +110,7 @@ const titleLead = titleWords.join(' ');
       <!-- offset frame -->
       <div
         aria-hidden="true"
-        class="absolute -inset-0 -translate-x-5 -translate-y-5 -z-10 hidden border border-copper-400/70 lg:block"
+        class="border-copper-400/70 absolute -inset-0 -z-10 hidden -translate-x-5 -translate-y-5 border lg:block"
       >
       </div>
 
@@ -145,7 +132,7 @@ const titleLead = titleWords.join(' ');
       <!-- corner ornament L-shape -->
       <svg
         aria-hidden="true"
-        class="absolute -top-6 -left-6 hidden h-16 w-16 text-copper-500/40 lg:block"
+        class="text-copper-500/40 absolute -top-6 -left-6 hidden h-16 w-16 lg:block"
         viewBox="0 0 64 64"
         fill="none"
         stroke="currentColor"
@@ -160,7 +147,7 @@ const titleLead = titleWords.join(' ');
   <!-- Decorative /01 watermark -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute right-6 -bottom-4 font-serif text-[7rem] leading-none italic text-copper-500/15 select-none lg:right-16 lg:text-[10rem]"
+    class="text-copper-500/15 pointer-events-none absolute right-6 -bottom-4 font-serif text-[7rem] leading-none italic select-none lg:right-16 lg:text-[10rem]"
   >
     /01
   </div>

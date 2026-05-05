@@ -58,7 +58,7 @@ const variantClasses: Record<
 const v = variantClasses[variant];
 
 const baseBtn = [
-  'group relative inline-flex items-center overflow-hidden font-medium text-sm',
+  'group/button relative inline-flex items-center overflow-hidden font-medium text-sm',
   'h-[2.8em] tracking-[0.05em] rounded-[0.9em] ',
   'pl-[1.2em] pr-[3.3em] py-[0.35em] cursor-pointer ',
   'border-0 font-sans transition-colors duration-200',
@@ -67,10 +67,10 @@ const iconWrap =
   'icon-wrapper absolute right-[0.3em] top-1/2 -translate-y-1/2 ' +
   'flex items-center justify-center h-[2.2em] w-[2.2em] rounded-[0.7em] ' +
   'transition-all duration-300 ease-out ' +
-  'group-hover:w-[calc(100%-0.6em)] group-active:scale-95';
+  'group-hover/button:w-[calc(100%-0.6em)] group-active/button:scale-95';
 
 const iconSvg =
-  'w-[1.1em] transition-transform duration-300 ease-out group-hover:translate-x-[0.1em]';
+  'w-[1.1em] transition-transform duration-300 ease-out group-hover/button:translate-x-[0.1em]';
 ---
 
 <Tag class={cn(baseBtn, v.btn, className)} {...rest as Record<string, unknown>}>

@@ -329,16 +329,9 @@ const { heroImg, welcomeImage } = Astro.props;
         </li>
       </ul>
 
-      <a
-        href="/about"
-        class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 mt-9 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-colors"
-      >
+      <Button as="a" class="mt-8" href="/about" variant="outline">
         Learn More
-        <span
-          aria-hidden="true"
-          class="transition-transform group-hover:translate-x-1">→</span
-        >
-      </a>
+      </Button>
     </div>
   </div>
 </section>

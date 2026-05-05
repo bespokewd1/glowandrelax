@@ -1,4 +1,5 @@
 ---
+import Button from '@components/Button.astro';
 import CtaLink from '@components/CtaLink.astro';
 import clientData from '@data/clientData';
 
@@ -170,16 +171,7 @@ const email = clientData.email || 'info@yourclinic.ca';
           </a>
         </p>
       </div>
-      <a
-        href="/contact"
-        class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-colors"
-      >
-        Ask a Question
-        <span
-          aria-hidden="true"
-          class="transition-transform group-hover:translate-x-1">→</span
-        >
-      </a>
+      <Button as="a" href="/contact" variant="outline"> Ask a Question </Button>
     </div>
   </div>
 </section>
