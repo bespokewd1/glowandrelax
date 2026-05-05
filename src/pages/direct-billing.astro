@@ -19,6 +19,35 @@ if (ogImg) {
 }
 
 const optimizedImage = await getOptimizedImage(allLogos);
+
+const steps = [
+  {
+    num: '01',
+    title: 'Book',
+    description: 'Schedule your appointment — in‑clinic or mobile massage.',
+  },
+  {
+    num: '02',
+    title: 'Share details',
+    description: 'Provide your insurance details when you arrive.',
+  },
+  {
+    num: '03',
+    title: 'We submit',
+    description: 'We send the claim directly to your provider.',
+  },
+  {
+    num: '04',
+    title: 'Settle',
+    description: 'You only pay the remaining balance, if any.',
+  },
+];
+
+const mvaPoints = [
+  'Selected RMTs treat MVA clients',
+  'Direct billing to auto insurance',
+  'Help with claim paperwork and next steps',
+];
 ---
 
 <BaseLayout
@@ -27,78 +56,256 @@ const optimizedImage = await getOptimizedImage(allLogos);
   ogImage={ogImage}
   preloadedImage={optimizedImage}
 >
-  <section class="bg-orange-50">
-    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
-      <!-- Header -->
-      <header class="mx-auto max-w-3xl text-center">
-        <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
-          Direct Billing
-        </h2>
-        <p class="mt-3 font-semibold text-emerald-900">
-          We offer direct billing to leading insurance providers in Canada.
-        </p>
-        <p class="mt-4 leading-7 text-gray-700">
-          At iMassage Therapeutic Clinique, we submit claims directly to your
-          insurer—so you can focus on rest and recovery. Whether you’re covered
-          by private insurance or being treated after an accident (MVA), we’ll
-          help simplify the process.
-        </p>
-      </header>
+  <!-- ============================================ -->
+  <!--                 S1 Header                    -->
+  <!-- ============================================ -->
+  <section class="relative isolate overflow-hidden bg-cream-50">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-copper-200/40 blur-3xl"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-24 -bottom-24 h-96 w-96 rounded-full bg-sage-200/50 blur-3xl"
+    >
+    </div>
 
-      <!-- Content -->
-      <div
-        class="mx-auto mt-10 flex max-w-3xl flex-col gap-6 lg:max-w-6xl lg:flex-row lg:items-stretch"
+    <div
+      class="relative mx-auto max-w-4xl px-6 py-20 text-center md:py-24"
+    >
+      <div class="mb-4 flex items-center justify-center gap-3">
+        <span class="h-px w-8 bg-copper-500"></span>
+        <span
+          class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+        >
+          Insurance billing
+        </span>
+        <span class="h-px w-8 bg-copper-500"></span>
+      </div>
+      <h1
+        class="font-serif text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] tracking-[-0.01em] text-taupe-900"
       >
-        <!-- Left: Panel -->
-        <div
-          class="place-content-center rounded-xl bg-orange-200/80 p-6 ring-1 ring-black/5 lg:w-[44%] lg:shrink-0 lg:p-8"
-        >
-          <h3 class="font-serif text-2xl text-gray-900 md:text-3xl">
-            📌 How Direct Billing Works
-          </h3>
-          <p class="mt-3 text-gray-800">
-            Fast, simple, and hassle‑free—so you can leave feeling your best.
-          </p>
+        Direct <em class="text-copper-600 italic">Billing</em>
+      </h1>
+      <p
+        class="mx-auto mt-6 max-w-2xl font-serif text-xl text-taupe-900 italic"
+      >
+        We submit claims directly to leading Canadian insurers — so you can rest
+        and recover.
+      </p>
+      <p class="mx-auto mt-4 max-w-2xl leading-7 text-taupe-700">
+        At iMassage Therapeutic Clinique, we simplify the paperwork. Whether
+        you're covered by private insurance or being treated after a motor
+        vehicle accident, we'll guide you through the process.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--             S2 How It Works                  -->
+  <!-- ============================================ -->
+  <section class="relative bg-cream-100">
+    <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
+      <div class="text-center">
+        <div class="mb-4 flex items-center justify-center gap-3">
+          <span class="h-px w-8 bg-sage-600"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase"
+          >
+            Four steps
+          </span>
+          <span class="h-px w-8 bg-sage-600"></span>
         </div>
-
-        <!-- Right: Steps -->
-        <div
-          class="rounded-xl bg-white/90 p-6 ring-1 ring-black/10 lg:flex-1 lg:p-8"
+        <h2
+          class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
         >
-          <ol class="space-y-5 text-gray-900">
-            <li class="flex gap-3">
-              <span
-                class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-700 text-xs text-white"
-                >1</span
-              >
-              <span>Book your appointment (In‑Clinic or Mobile Massage).</span>
-            </li>
-            <li class="flex gap-3">
-              <span
-                class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-700 text-xs text-white"
-                >2</span
-              >
-              <span>Provide your insurance details when you arrive.</span>
-            </li>
-            <li class="flex gap-3">
-              <span
-                class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-700 text-xs text-white"
-                >3</span
-              >
-              <span>We submit the claim directly to your provider.</span>
-            </li>
-            <li class="flex gap-3">
-              <span
-                class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-full bg-emerald-700 text-xs text-white"
-                >4</span
-              >
-              <span>You only pay any remaining balance, if applicable.</span>
-            </li>
-          </ol>
+          How <em class="text-copper-600 italic">it works</em>
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl leading-7 text-taupe-700">
+          Fast, simple, and hassle‑free — so you can leave feeling your best.
+        </p>
+      </div>
 
-          <div class="mt-8 flex justify-center">
+      <div
+        class="mt-12 grid grid-cols-1 gap-6 md:mt-14 md:grid-cols-2 lg:grid-cols-4"
+      >
+        {
+          steps.map((step) => (
+            <div class="group relative overflow-hidden rounded-sm border border-taupe-200 bg-cream-50 px-6 py-8 text-center transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute -top-2 -right-2 font-serif text-[7rem] leading-none italic text-copper-500/10 select-none"
+              >
+                {step.num}
+              </div>
+              <div class="relative">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-copper-500 font-serif text-xl text-copper-600 italic">
+                  {step.num}
+                </div>
+                <h3 class="mt-5 font-serif text-2xl tracking-tight text-taupe-900">
+                  {step.title}
+                </h3>
+                <p class="mt-3 leading-7 text-taupe-700">{step.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-14 text-center">
+        <p class="font-serif text-xl text-taupe-900 italic">
+          Ready to book your treatment?
+        </p>
+        <p class="mt-1 text-sm text-taupe-600">
+          We'll handle the insurance — you focus on recovery.
+        </p>
+
+        <CtaLink
+          class="group mt-6 inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--           S3 Providers Logo Strip            -->
+  <!-- ============================================ -->
+  <section class="relative overflow-hidden bg-sage-700 py-16 text-cream-50 md:py-20">
+    <svg
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-10 -right-10 h-72 w-72 text-sage-500/30"
+      viewBox="0 0 200 200"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+    >
+      <circle cx="100" cy="100" r="80"></circle>
+      <circle cx="100" cy="100" r="60"></circle>
+      <circle cx="100" cy="100" r="40"></circle>
+    </svg>
+    <svg
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-16 -left-12 h-72 w-72 text-sage-500/20"
+      viewBox="0 0 200 200"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1"
+    >
+      <circle cx="100" cy="100" r="80"></circle>
+      <circle cx="100" cy="100" r="60"></circle>
+    </svg>
+
+    <div class="relative mx-auto max-w-6xl px-6">
+      <div class="text-center">
+        <div class="mb-4 flex items-center justify-center gap-3">
+          <span class="h-px w-8 bg-copper-300"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+          >
+            Insurance partners
+          </span>
+          <span class="h-px w-8 bg-copper-300"></span>
+        </div>
+        <h2
+          class="font-serif text-3xl tracking-[-0.01em] text-cream-50 md:text-4xl lg:text-5xl"
+        >
+          Trusted <em class="text-copper-300 italic">providers</em>
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl leading-7 text-cream-100/85">
+          We are pleased to offer direct billing for these providers.
+        </p>
+      </div>
+
+      <div
+        class="mx-auto mt-12 max-w-5xl rounded-sm bg-cream-50 p-8 shadow-[0_30px_60px_-25px_rgba(0,0,0,0.45)] md:p-10"
+      >
+        <Image
+          src={allLogos}
+          alt="Logos of insurance providers we direct bill"
+          widths={[640, 960, 1280, 1600, 1920]}
+          sizes="(min-width: 1280px) 1100px, (min-width: 768px) 90vw, 100vw"
+          format="avif"
+          class="mx-auto h-auto w-full"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      <p class="mx-auto mt-10 max-w-2xl text-center text-sm leading-6 text-cream-100/80 italic">
+        We also support less common insurance providers. Contact us to verify
+        if your plan qualifies for direct billing.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--             S4 MVA + CTAs                    -->
+  <!-- ============================================ -->
+  <section class="bg-cream-50">
+    <div
+      class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 md:py-20 lg:grid-cols-12 lg:px-16"
+    >
+      <div class="lg:col-span-5">
+        <div class="flex items-center gap-3">
+          <span class="h-px w-8 bg-sage-600"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase"
+          >
+            After an accident
+          </span>
+        </div>
+        <h2
+          class="mt-4 font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+        >
+          MVA <em class="text-copper-600 italic">Therapy</em>
+        </h2>
+        <p class="mt-4 leading-7 text-taupe-700">
+          Selected Registered Massage Therapists at iMassage Therapeutic
+          Clinique provide treatment for motor vehicle accident clients. If
+          you've been injured in a car accident, we can assist with direct
+          billing to your auto insurance.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div
+          class="rounded-sm border border-taupe-200 bg-cream-100 p-8 md:p-10"
+        >
+          <span
+            class="block text-[0.65rem] font-medium tracking-[0.3em] text-copper-700 uppercase"
+          >
+            What we cover
+          </span>
+          <ul class="mt-5 space-y-3 text-taupe-900">
+            {
+              mvaPoints.map((point) => (
+                <li class="flex items-start gap-3 leading-7">
+                  <span
+                    aria-hidden="true"
+                    class="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-copper-500"
+                  />
+                  <span>{point}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div
+            class="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center"
+          >
+            <a
+              href="/contact"
+              class="group inline-flex items-center justify-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700"
+            >
+              Contact Us
+              <span
+                aria-hidden="true"
+                class="transition-transform group-hover:translate-x-1">→</span
+              >
+            </a>
             <CtaLink
-              class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              class="inline-flex items-center justify-center rounded-full border-2 border-taupe-900 px-7 py-3.5 text-sm font-semibold text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-taupe-700"
             />
           </div>
         </div>
@@ -106,211 +313,10 @@ const optimizedImage = await getOptimizedImage(allLogos);
     </div>
   </section>
 
-  <section class="">
-    <div class="">
-      <h3
-        class="bg-orange-200/50 py-12 text-center font-serif text-xl text-gray-900 md:py-16 md:text-2xl lg:text-3xl"
-      >
-        We are pleased to offer direct billing for these providers:
-      </h3>
-
-      <div class="mx-auto mt-8 max-w-6xl px-6">
-        <Image
-          src={allLogos}
-          alt="Logos of insurance providers we can direct bill"
-          widths={[640, 960, 1280, 1600, 1920]}
-          sizes="(min-width: 1280px) 1100px, (min-width: 768px) 90vw, 100vw"
-          format="avif"
-          class="mx-auto h-auto w-full max-w-5xl"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </div>
+  <!-- ============================================ -->
+  <!--                  S5 FAQ                      -->
+  <!-- ============================================ -->
+  <section class="bg-cream-100 py-16 md:py-20">
+    <FAQ />
   </section>
-  <section class="bg-orange-100/70">
-    <div class="mx-auto max-w-6xl px-6 py-12 text-center md:py-16">
-      <p class="text-gray-800">
-        We also support less common insurance providers.
-        <br class="hidden sm:block" />
-        Contact us to verify if your plan qualifies for direct billing.
-      </p>
-
-      <h3
-        class="mt-6 font-serif text-2xl text-gray-900 md:text-3xl lg:text-4xl"
-      >
-        MVA (Motor Vehicle Accident) Massage Therapy
-      </h3>
-
-      <p class="mx-auto mt-4 max-w-3xl leading-7 text-gray-700">
-        Selected Registered Massage Therapists (RMTs) at iMassage Therapeutic
-        Clinique provide treatment for MVA clients. If you’ve been injured in a
-        car accident, we can assist you with direct billing to your auto
-        insurance. Reach out for details and next steps.
-      </p>
-
-      <div
-        class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-      >
-        <a
-          href="/contact"
-          class="inline-flex items-center rounded-full bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-        >
-          Contact Us
-        </a>
-        <CtaLink
-          class="inline-flex items-center rounded-full border-2 border-emerald-800 px-6 py-3 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
-        />
-      </div>
-    </div>
-  </section>
-
-  <FAQ />
 </BaseLayout>
-
-<style lang="less">
-  /*-- -------------------------- -->
-  <---          Reviews           -->
-  <--- -------------------------- --*/
-
-  /* Mobile - 360px */
-  @media only screen and (min-width: 0em) {
-    #reviews {
-      /* Centers the button */
-      text-align: center;
-      padding: var(--sectionPadding);
-
-      .cs-container {
-        width: 100%;
-        max-width: (1104/16rem);
-        margin: auto;
-      }
-
-      .cs-topper {
-        text-align: center;
-        margin-bottom: (16/16rem);
-      }
-
-      .cs-title {
-        text-align: center;
-        max-width: (700/16rem);
-      }
-
-      .cs-text {
-        text-align: center;
-        max-width: (650/16rem);
-        /* 88px - 104px */
-        margin-bottom: clamp(5.5em, 10.2vw, 6.5em);
-      }
-
-      .cs-card-group {
-        /* 48px - 64px */
-        margin: 0 auto clamp(3rem, 5vw, 4rem);
-        padding: 0;
-      }
-
-      .cs-item {
-        text-align: left;
-        list-style: none;
-        width: 100%;
-        max-width: (542/16rem);
-        margin: 0 auto (64/16rem);
-        /* Prevents padding from affecting height & width */
-        box-sizing: border-box;
-        /* Padding L & R - 16px - 32px */
-        padding: (60/16rem) clamp(1rem, 3.2vw, 2rem) 0;
-        /* 32px - 40px */
-        padding-bottom: clamp(2rem, 5.4vw, 2.5rem);
-        background: #fff;
-        box-shadow: 0px 20px 39px 0px rgba(0, 0, 0, 0.05);
-        border-radius: (4/16rem);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        position: relative;
-
-        &:last-of-type {
-          margin-bottom: 0;
-        }
-      }
-
-      .cs-item-img {
-        width: (80/16rem);
-        height: (80/16rem);
-        position: absolute;
-        top: (-40/16rem);
-      }
-
-      .cs-item-p {
-        font-size: (16/16rem);
-        line-height: 1.5em;
-        margin: 0 0 (20/16rem);
-        padding-bottom: (20/16rem);
-        color: var(--bodyTextColor);
-        border-bottom: 1px solid #e8e9ec;
-      }
-
-      .cs-reviewer {
-        font-size: (16/16rem);
-        font-weight: 700;
-        line-height: 1.5em;
-        width: 40%;
-        margin: 0 auto 0 0;
-        color: var(--headerColor);
-        display: block;
-      }
-
-      .cs-desc {
-        font-size: (14/16rem);
-        font-weight: 400;
-        color: var(#353535);
-        display: block;
-      }
-
-      .cs-item-stars {
-        width: (96/16rem);
-        height: (16/16rem);
-      }
-    }
-  }
-
-  /* Tablet - 768px */
-  @media only screen and (min-width: 48em) {
-    #reviews {
-      .cs-card-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: (16/16rem);
-      }
-
-      .cs-item {
-        /* reset margin so it won't interfere with flexbox */
-        margin: 0;
-      }
-    }
-  }
-
-  /* Dark Mode */
-  @media only screen and (min-width: 0em) {
-    body.dark-mode {
-      #reviews {
-        .cs-title,
-        .cs-text,
-        .cs-item-p,
-        .cs-reviewer {
-          color: var(--bodyTextColorWhite);
-        }
-
-        .cs-item {
-          background: var(--medium);
-        }
-
-        .cs-desc {
-          color: var(--primaryLight);
-        }
-      }
-    }
-  }
-</style>

@@ -1,12 +1,10 @@
 ---
 import BaseLayout from 'src/layouts/BaseLayout.astro';
 import client from '@data/clientData';
-import Landing from '@components/Landing.astro';
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import { getOptimizedImage } from '@js/utils';
-import landingImage from '@assets/images/stone-massage-background1.png'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import landingImage from '@assets/images/stone-massage-background1.png';
 import FacebookIcon from '@components/Icons/Socials/FacebookIcon.astro';
-import type { AstroComponentDirectives } from 'astro';
 import TwitterIcon from '@components/Icons/Socials/TwitterIcon.astro';
 import LinkedInIcon from '@components/Icons/Socials/LinkedInIcon.astro';
 import InstagramIcon from '@components/Icons/Socials/InstagramIcon.astro';
@@ -22,9 +20,6 @@ let ogImage: GetImageResult | null = null;
 if (ogImg) {
   ogImage = await getOptimizedImage(ogImg);
 }
-
-// type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
-// type IconComponent = AstroComponentDirectives;
 
 type Social = {
   name: string;
@@ -47,12 +42,20 @@ const socials: Social[] = [
 
 const clinicName = client.name || 'iMassage Therapeutic Clinique';
 const address =
-  client.address.lineOne?.trim() + ',' + client.address.lineTwo?.trim();
-const mapHref = client.address.lineOne + client.address.lineTwo;
+  client.address.lineOne?.trim() + ', ' + client.address.lineTwo?.trim();
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+  client.address.lineOne + ' ' + client.address.lineTwo
+)}`;
 
 const hours = [
   { label: 'Mon – Sat', value: '10:00 am – 10:00 pm' },
   { label: 'Sunday', value: '3:00 pm – 10:00 pm' },
+];
+
+const reasons = [
+  'Same‑day bookings may be available',
+  'Secure online payments and multiple payment options',
+  'Registered, professional massage therapists',
 ];
 ---
 
@@ -62,160 +65,283 @@ const hours = [
   ogImage={ogImage}
   preloadedImage={optimizedImage}
 >
-  <section
-    class="relative grid grid-cols-5 bg-orange-50 lg:max-h-[900px] lg:grid-cols-6 lg:grid-rows-5 xl:grid-rows-4"
-  >
-    <!-- Background image band -->
-    <div class="relative col-span-6 lg:row-span-2">
-      <img
-        src={optimizedImage.src}
-        width={optimizedImage.attributes.width}
-        height={optimizedImage.attributes.height}
-        alt="Green plants and soft light through a window"
-        class="w-full object-cover lg:h-full"
-        loading="eager"
-        decoding="async"
-      />
+  <!-- ============================================ -->
+  <!--                S1 Hero / Intro               -->
+  <!-- ============================================ -->
+  <section class="relative isolate overflow-hidden bg-cream-50">
+    <!-- Ambient washes -->
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-copper-200/40 blur-3xl"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -bottom-32 -left-24 h-96 w-96 rounded-full bg-sage-200/50 blur-3xl"
+    >
     </div>
 
-    <!-- Content -->
     <div
-      class="relative col-span-6 mx-auto h-full max-w-6xl border-b lg:absolute lg:inset-0 lg:col-start-2 lg:col-end-6 lg:row-start-2 lg:pb-4"
+      class="relative mx-auto grid max-w-7xl grid-cols-1 gap-y-10 px-6 pt-14 pb-20 lg:grid-cols-12 lg:gap-x-12 lg:px-16"
     >
-      <!-- lg:shadow-xl lg:ring-1 lg:ring-black/10 -->
+      <!-- Left: image with offset frame -->
+      <div class="relative lg:col-span-7">
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 -top-5 -left-5 hidden border border-copper-400/70 lg:block"
+        >
+        </div>
+        <img
+          src={optimizedImage.src}
+          width={optimizedImage.attributes.width}
+          height={optimizedImage.attributes.height}
+          alt="Warm stones arranged on a folded towel beside a softly lit window"
+          class="relative block aspect-[4/3] w-full rounded-sm object-cover shadow-[0_30px_70px_-25px_rgba(60,49,40,0.45)] md:aspect-[16/10] lg:aspect-auto lg:h-[520px]"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Right: copy -->
+      <div class="lg:col-span-5 lg:flex lg:flex-col lg:justify-center">
+        <div class="flex items-center gap-3">
+          <span class="h-px w-8 bg-copper-500"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          >
+            Get in touch
+          </span>
+        </div>
+        <h1
+          class="mt-5 font-serif text-[clamp(2.4rem,5vw,3.75rem)] leading-[1.05] tracking-[-0.01em] text-taupe-900"
+        >
+          Book Your <em class="text-copper-600 italic">Massage</em> Today
+        </h1>
+        <p class="mt-5 leading-7 text-taupe-700">
+          Have questions about our therapeutic massage services, pricing, or
+          mobile availability? Our team is happy to assist. Reach out to book an
+          appointment or ask about the best treatment for your needs.
+        </p>
+
+        <ul class="mt-7 space-y-3 text-taupe-800">
+          {
+            reasons.map((reason) => (
+              <li class="flex items-start gap-3">
+                <CheckIcon class="mt-1 text-copper-500" />
+                <span class="leading-7">{reason}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <a
+            href={phoneHref}
+            class="group rounded-sm border border-taupe-200 bg-cream-50 px-5 py-4 transition-all hover:-translate-y-0.5 hover:border-copper-400 hover:shadow-[0_20px_40px_-20px_rgba(60,49,40,0.3)]"
+          >
+            <span
+              class="block text-[0.65rem] font-medium tracking-[0.3em] text-copper-700 uppercase"
+              >Phone</span
+            >
+            <span
+              class="mt-1 block font-serif text-lg text-taupe-900 group-hover:text-copper-700"
+              >{phoneDisplay}</span
+            >
+          </a>
+          <a
+            href={emailHref}
+            class="group rounded-sm border border-taupe-200 bg-cream-50 px-5 py-4 transition-all hover:-translate-y-0.5 hover:border-copper-400 hover:shadow-[0_20px_40px_-20px_rgba(60,49,40,0.3)]"
+          >
+            <span
+              class="block text-[0.65rem] font-medium tracking-[0.3em] text-copper-700 uppercase"
+              >Email</span
+            >
+            <span
+              class="mt-1 block truncate font-serif text-lg text-taupe-900 group-hover:text-copper-700"
+              >{email}</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--           S2 Contact Info + Form             -->
+  <!-- ============================================ -->
+  <section id="contact" class="bg-cream-50">
+    <div class="mx-auto grid grid-cols-1 lg:grid-cols-12">
+      <!-- Left: Sage info panel -->
       <div
-        class="grid h-full grid-cols-1 gap-8 rounded-xl bg-orange-50/85 p-6 backdrop-blur-md md:grid-cols-2 md:p-10"
+        class="relative flex flex-col justify-center overflow-hidden bg-sage-700 px-8 py-14 text-cream-50 md:px-12 md:py-20 lg:col-span-5"
       >
-        <!-- Left: text -->
-        <div class="flex flex-col gap-6 md:col-span-2 lg:col-span-1 lg:pr-6">
-          <h2 class="font-serif text-3xl text-gray-900 md:text-4xl">
-            Book Your Massage Today!
+        <svg
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-10 -right-10 h-64 w-64 text-sage-500/30"
+          viewBox="0 0 200 200"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1"
+        >
+          <circle cx="100" cy="100" r="80"></circle>
+          <circle cx="100" cy="100" r="60"></circle>
+          <circle cx="100" cy="100" r="40"></circle>
+        </svg>
+
+        <div class="relative max-w-md">
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-300"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+            >
+              Reach out
+            </span>
+          </div>
+          <h2
+            class="mt-5 font-serif text-3xl tracking-[-0.01em] text-cream-50 md:text-4xl lg:text-5xl"
+          >
+            We're here to <em class="text-copper-300 italic">help</em>
           </h2>
-          <p class="leading-7 text-gray-700">
-            Have questions about our therapeutic massage services, pricing, or
-            mobile availability? Our team is happy to assist. Reach out to book
-            an appointment or ask about the best treatment for your needs.
-          </p>
 
-          <ul class="space-y-2 text-gray-800">
-            <li class="flex items-center gap-3">
-              <CheckIcon class="text-green-700" />
-              <span>Same‑day bookings may be available</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <CheckIcon class="text-green-700" />
-              <span>Secure online payments and multiple payment options</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <CheckIcon class="text-green-700" />
-              <span>Registered, professional massage therapists</span>
-            </li>
-          </ul>
-
-          <div class="mt-4 grid gap-x-4 gap-y-6 sm:grid-cols-2">
-            <div class="xs:col-span-1">
-              <h3
-                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
-              >
-                Phone
-              </h3>
-              <a
-                href={phoneHref}
-                class="mt-1 block text-gray-900 hover:text-emerald-700"
-              >
-                {phoneDisplay}
-              </a>
-            </div>
-
-            <div class="">
-              <h3
-                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
-              >
-                Email
-              </h3>
-              <a
-                href={emailHref}
-                class="mt-1 block text-gray-900 hover:text-emerald-700"
-              >
-                {email}
-              </a>
-            </div>
-
-            <div class="xs:col-span-2">
-              <h3
-                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
-              >
-                Social Media
-              </h3>
-              <div class="mt-2 flex items-center gap-1">
-                {
-                  socials.map(({ name, href, Icon }) => (
-                    <a
-                      href={href}
-                      aria-label={name}
-                      class="inline-flex h-8 w-8 items-center justify-center rounded-full text-emerald-900 transition-colors duration-300 hover:bg-emerald-800 hover:text-emerald-50"
-                    >
-                      {/* <i class="" /> */}
-                      <Icon />
-                    </a>
-                  ))
-                }
+          <div class="mt-8 space-y-4 text-cream-100/90">
+            <p class="font-serif text-xl text-cream-50 italic">{clinicName}</p>
+            <div class="space-y-2 text-sm leading-6">
+              <p>
+                {client.address.lineOne}<br />
+                {client.address.lineTwo}
+              </p>
+              <p>
+                <a
+                  href={phoneHref}
+                  class="block transition hover:text-copper-200"
+                >
+                  <span class="text-copper-300">P.</span>
+                  {phoneDisplay}
+                </a>
+                <a
+                  href={emailHref}
+                  class="block transition hover:text-copper-200"
+                >
+                  <span class="text-copper-300">E.</span>
+                  {email}
+                </a>
+              </p>
+              <div class="border-t border-cream-100/15 pt-3">
+                <p class="text-xs tracking-[0.3em] text-copper-200 uppercase">
+                  Hours
+                </p>
+                <ul class="mt-2 space-y-1">
+                  {
+                    hours.map((h) => (
+                      <li class="flex items-center gap-4">
+                        <span class="min-w-20 font-medium text-cream-50">
+                          {h.label}
+                        </span>
+                        <span class="text-cream-100/90">{h.value}</span>
+                      </li>
+                    ))
+                  }
+                </ul>
               </div>
+              <p class="text-xs leading-5 text-cream-100/70 italic">
+                Direct billing available. Please ask about eligible providers.
+              </p>
             </div>
           </div>
-        </div>
 
-        <!-- Right: form -->
-        <div class="md:col-span-2 lg:col-span-1">
-          <form
-            class="grid grid-cols-1 gap-4"
-            onsubmit="event.preventDefault();"
+          <!-- Socials -->
+          <div class="mt-10 flex items-center gap-3">
+            {
+              socials.map(({ name, href, Icon }) => (
+                <a
+                  href={href}
+                  aria-label={name}
+                  class="flex h-10 w-10 items-center justify-center rounded-full border border-cream-50/30 transition hover:border-copper-300 hover:bg-copper-300/10"
+                >
+                  <Icon class:list={['text-cream-50']} />
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="bg-cream-50 px-8 py-14 md:px-12 md:py-20 lg:col-span-7">
+        <div class="mx-auto max-w-2xl">
+          <div class="flex items-center gap-3">
+            <span class="h-px w-8 bg-copper-500"></span>
+            <span
+              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+            >
+              Send a message
+            </span>
+          </div>
+          <h3
+            class="mt-4 font-serif text-2xl tracking-[-0.01em] text-taupe-900 md:text-3xl"
           >
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            Tell us how we can help.
+          </h3>
+
+          <form class="mt-8" onsubmit="event.preventDefault();">
+            <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div>
-                <label class="mb-1 block text-sm text-gray-700"
+                <label
+                  class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
                   >First Name</label
                 >
                 <input
                   type="text"
-                  class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  placeholder="First name"
+                  class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                  placeholder="Jane"
                 />
               </div>
               <div>
-                <label class="mb-1 block text-sm text-gray-700">Last Name</label
+                <label
+                  class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                  >Last Name</label
                 >
                 <input
                   type="text"
-                  class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                  placeholder="Last name"
+                  class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                  placeholder="Doe"
                 />
               </div>
             </div>
 
-            <div>
-              <label class="mb-1 block text-sm text-gray-700">Email *</label>
+            <div class="mt-6">
+              <label
+                class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                >Email *</label
+              >
               <input
                 type="email"
                 required
-                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
                 placeholder="you@example.com"
               />
             </div>
 
-            <div>
-              <label class="mb-1 block text-sm text-gray-700">Message</label>
+            <div class="mt-6">
+              <label
+                class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                >Message</label
+              >
               <textarea
                 rows="5"
-                class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                class="w-full resize-none border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
                 placeholder="How can we help?"></textarea>
             </div>
 
             <button
               type="submit"
-              class="inline-flex w-full items-center justify-center rounded bg-emerald-200 px-6 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-300 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500"
+              class="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-copper-500 px-8 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 md:w-auto"
             >
-              Send
+              Send Message
+              <span
+                aria-hidden="true"
+                class="transition-transform group-hover:translate-x-1">→</span
+              >
             </button>
           </form>
         </div>
@@ -223,155 +349,107 @@ const hours = [
     </div>
   </section>
 
-  <section class="bg-orange-50">
-    <div class="mx-auto max-w-3xl px-6 py-16 md:px-10 md:py-20 xl:max-w-6xl">
-      <div class="mx-auto">
-        <h2 class="font-serif text-3xl text-gray-950 md:text-4xl">
-          Visit Us In‑Clinic
+  <!-- ============================================ -->
+  <!--             S3 Visit Us + Map                -->
+  <!-- ============================================ -->
+  <section class="bg-cream-100">
+    <div
+      class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-16 md:py-20 lg:grid-cols-12 lg:px-16"
+    >
+      <!-- Left: address + hours -->
+      <div class="lg:col-span-5">
+        <div class="flex items-center gap-3">
+          <span class="h-px w-8 bg-sage-600"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase"
+          >
+            Visit us
+          </span>
+        </div>
+        <h2
+          class="mt-4 font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+        >
+          Find us <em class="text-copper-600 italic">in‑clinic</em>
         </h2>
-        <p class="mt-4 leading-7 text-gray-700">
-          Our licensed therapists provide personalized therapeutic
-          care—including deep‑tissue, relaxation massage, and hot stone
-          therapy—in a calm, welcoming space. We’re easy to find and always
-          happy to help you feel your best.
+        <p class="mt-4 leading-7 text-taupe-700">
+          Our licensed therapists provide personalized therapeutic care—deep
+          tissue, relaxation, and hot stone therapy—in a calm, welcoming space.
+          Easy to find, always happy to help you feel your best.
         </p>
-      </div>
 
-      <div class="mt-8 flex flex-col gap-6">
-        <!-- left info -->
-        <div class="">
-          <div class="space-y-6">
-            <div>
-              <h3
-                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
-              >
-                Address
-              </h3>
-              <div class="mt-2 pl-2 text-gray-900">
-                <p class="inline-flex items-center gap-2 font-medium">
-                  <span>
-                    <MapPinFilled />
-                  </span>
-                  {clinicName}
-                </p>
-                <a
-                  href={mapHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-1 block text-emerald-800 underline underline-offset-2 hover:text-emerald-700"
-                >
-                  {address}
-                </a>
-              </div>
-            </div>
+        <div class="mt-8 space-y-5">
+          <!-- Address card -->
+          <div
+            class="group rounded-sm border border-taupe-200 bg-cream-50 p-6 transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]"
+          >
+            <span
+              class="block text-[0.65rem] font-medium tracking-[0.3em] text-copper-700 uppercase"
+              >Address</span
+            >
+            <p
+              class="mt-3 inline-flex items-center gap-2 font-serif text-lg text-taupe-900"
+            >
+              <span class="text-copper-500">
+                <MapPinFilled />
+              </span>
+              {clinicName}
+            </p>
+            <a
+              href={mapHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 block text-copper-700 underline-offset-4 transition hover:text-copper-600 hover:underline"
+            >
+              {address}
+            </a>
+          </div>
 
-            <div>
-              <h3
-                class="text-sm font-semibold tracking-wide text-gray-700 uppercase"
-              >
-                Opening Hours
-              </h3>
-              <ul class="mt-2 space-y-1 text-gray-900">
-                {
-                  hours.map((h) => (
-                    <li class="flex items-center gap-6">
-                      <small class="min-w-16 font-semibold">{h.label}:</small>
-                      <p class="">{h.value}</p>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
+          <!-- Hours card -->
+          <div
+            class="group rounded-sm border border-taupe-200 bg-cream-50 p-6 transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]"
+          >
+            <span
+              class="block text-[0.65rem] font-medium tracking-[0.3em] text-copper-700 uppercase"
+              >Opening Hours</span
+            >
+            <ul class="mt-3 space-y-2 text-taupe-900">
+              {
+                hours.map((h) => (
+                  <li class="flex items-center gap-6">
+                    <span class="min-w-20 font-serif text-base font-semibold">
+                      {h.label}
+                    </span>
+                    <span class="text-taupe-700">{h.value}</span>
+                  </li>
+                ))
+              }
+            </ul>
           </div>
         </div>
+      </div>
 
-        <!-- map -->
-        <div class="">
-          <!-- Option A: Simple embed using the mapLink from client.json
-          -->
-          <div class="overflow-hidden rounded-lg ring-1 ring-black/10">
+      <!-- Right: map -->
+      <div class="lg:col-span-7">
+        <div class="relative">
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 -top-4 -left-4 hidden border border-copper-400/70 lg:block"
+          >
+          </div>
+          <div
+            class="relative overflow-hidden rounded-sm shadow-[0_30px_60px_-25px_rgba(60,49,40,0.4)] ring-1 ring-taupe-200"
+          >
             <iframe
               src={client.address.mapLink}
               style="border:0"
               allowfullscreen=""
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              class="h-[420px] w-full"></iframe>
+              class="h-[420px] w-full lg:h-[520px]"
+              title="Map showing clinic location"></iframe>
           </div>
-          <!--
-          Option B (commented): Using the Google Maps Embed API "search" pattern (no key needed for basic usage),
-          in case you want a fixed query independent of mapLink:
-          <iframe
-            src="https://www.google.com/maps?q=South+Gate+Mall,+Edmonton,+Alberta,+Canada&output=embed"
-            style="border:0"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            class="h-[420px] w-full"></iframe>
-
-        -->
         </div>
       </div>
     </div>
   </section>
-  <!-- <form id="cs-form" name="Contact Form" method="post">
-        <div class="cs-content">
-          <span class="cs-topper">Contact</span>
-          <h2 class="cs-title">Get in Touch</h2>
-          <p class="cs-text">
-            Need to relax and recharge? Contact us today to book your massage
-            and feel rejuvenated.
-          </p>
-        </div>
-        <label>
-          Name
-          <input
-            required
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Name"
-          />
-        </label>
-        <label>
-          Email
-          <input
-            required
-            type="text"
-            id="email"
-            name="email"
-            placeholder="Email"
-          />
-        </label>
-        <label>
-          Phone
-          <input
-            required
-            type="text"
-            id="phone"
-            name="phone"
-            placeholder="Phone"
-          />
-        </label>
-        <label>
-          How Did You Find Us
-          <input
-            type="text"
-            id="find"
-            name="find-us"
-            placeholder="How did you find us?"
-          />
-        </label>
-        <label class="cs-label-message">
-          Message
-          <textarea
-            required
-            name="Message"
-            id="message"
-            placeholder="Write message..."></textarea>
-        </label>
-        <button class="cs-button-solid rounded-button" type="submit"
-          >Submit Message</button
-        >
-      </form> -->
 </BaseLayout>

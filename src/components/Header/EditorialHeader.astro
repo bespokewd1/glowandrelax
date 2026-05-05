@@ -1,0 +1,866 @@
+---
+import { getNavData } from '@data/navData';
+import client from '@data/clientData';
+import { resolveImage } from '@js/imageUtils';
+import { Image } from 'astro-lqip/components';
+import navInfo from '@data/navInfo.json';
+import bookingInfo from '@data/booking.json';
+import { Icon } from 'astro-icon/components';
+
+const MainLogo = await resolveImage(navInfo.image);
+
+import type { HTMLAttributes } from 'astro/types';
+import AnnouncementBar from '@components/AnnouncementBar.astro';
+import Button from '@components/Button.astro';
+
+interface Props extends HTMLAttributes<'header'> {}
+
+const props = Astro.props as Props;
+
+const navData = await getNavData();
+const bookingHref = bookingInfo.buttonLink;
+---
+
+<!-- ============================================ --><!--                 Navigation                   --><!-- ============================================ -->
+<header
+  id="cs-navigation"
+  class="border-taupe-200/70 bg-cream-50/85 sticky top-0 z-[10000] border-b backdrop-blur-md"
+  {...props}
+>
+  <AnnouncementBar />
+
+  <div
+    class="cs-container relative mx-auto flex max-w-7xl items-center gap-4 px-5 py-3.5 lg:gap-10 lg:px-12 lg:py-4"
+  >
+    <!-- Logo -->
+    <a
+      href="/"
+      class="cs-logo group relative z-[1] flex shrink-0 items-center"
+      aria-label="back to home"
+    >
+      {
+        MainLogo && (
+          <Image
+            src={MainLogo}
+            alt={navInfo.alt}
+            class="block h-12 w-auto transition-transform duration-500 group-hover:scale-[1.03] md:h-14"
+          />
+        )
+      }
+    </a>
+
+    <!-- Decorative tagline (desktop) -->
+    <span
+      aria-hidden="true"
+      class="text-copper-700 hidden font-serif text-[0.65rem] tracking-[0.45em] uppercase italic xl:inline-flex xl:items-center xl:gap-2"
+    >
+      <span class="bg-copper-500 inline-block h-px w-6"></span>
+      Edmonton · Studio
+    </span>
+
+    <!-- Navigation -->
+    <nav class="cs-nav ml-auto flex items-center" role="navigation">
+      <!-- Mobile Toggle -->
+      <button
+        class="cs-toggle border-taupe-300 bg-cream-50 hover:border-copper-500 relative z-[1] flex h-11 w-11 items-center justify-center rounded-full border transition-colors lg:hidden"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="cs-expanded-ul"
+        aria-label="Toggle mobile menu."
+      >
+        <span class="cs-box relative block h-3.5 w-5">
+          <span class="cs-line cs-line1"></span>
+          <span class="cs-line cs-line2"></span>
+          <span class="cs-line cs-line3"></span>
+        </span>
+      </button>
+
+      <!-- Navigation Items -->
+      <div class="cs-ul-wrapper">
+        <!-- Decorative kicker (mobile-only inside overlay) -->
+        <span
+          aria-hidden="true"
+          class="text-copper-700 mobile-kicker pointer-events-none absolute top-24 left-7 hidden text-[0.6rem] font-medium tracking-[0.45em] uppercase opacity-80 lg:hidden"
+        >
+          ✦ Glow · Relax · Restore
+        </span>
+
+        <ul id="cs-expanded-ul" class="cs-ul">
+          {
+            navData
+              .filter((entry) => entry.key !== 'Book Appointment')
+              .map((entry, idx) => (
+                <li
+                  class:list={[
+                    'cs-li',
+                    {
+                      'cs-dropdown':
+                        entry.children?.length && entry.children.length > 0,
+                    },
+                  ]}
+                >
+                  {(entry.children?.length ?? 0) > 0 ? (
+                    <div class="cs-li-shell">
+                      <a
+                        href={entry.url}
+                        class:list={[
+                          'cs-li-link',
+                          {
+                            'is-active': Astro.url.pathname === entry.url,
+                          },
+                        ]}
+                        aria-current={
+                          Astro.url.pathname === entry.url ? 'page' : undefined
+                        }
+                      >
+                        <span class="cs-li-num" aria-hidden="true">
+                          0{idx + 1}
+                        </span>
+                        <span class="cs-li-text">{entry.key}</span>
+                      </a>
+                      <button
+                        aria-expanded="false"
+                        aria-controls={`submenu-${entry.key}`}
+                        aria-label={`Toggle ${entry.key} submenu`}
+                        class="submenu-btn cs-dropdown-button"
+                      >
+                        <span class="down-icon">
+                          <Icon
+                            name="tabler:chevron-down"
+                            class="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <span class="up-icon">
+                          <Icon
+                            name="tabler:chevron-up"
+                            class="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    <a
+                      href={entry.url}
+                      class:list={[
+                        'cs-li-link',
+                        {
+                          'is-active': Astro.url.pathname === entry.url,
+                        },
+                      ]}
+                      aria-current={
+                        Astro.url.pathname === entry.url ? 'page' : undefined
+                      }
+                    >
+                      <span class="cs-li-num" aria-hidden="true">
+                        0{idx + 1}
+                      </span>
+                      <span class="cs-li-text">{entry.key}</span>
+                    </a>
+                  )}
+                  {(entry.children?.length ?? 0) > 0 && (
+                    <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
+                      <li class="cs-drop-heading" aria-hidden="true">
+                        <span class="cs-drop-rule" />
+                        <span class="cs-drop-kicker">Treatments</span>
+                      </li>
+                      {entry.children?.map((child) => (
+                        <li class="cs-drop-li">
+                          <a
+                            href={child.url}
+                            class:list={[
+                              'cs-drop-link',
+                              {
+                                'is-active': Astro.url.pathname === child.url,
+                              },
+                            ]}
+                            aria-current={
+                              Astro.url.pathname === child.url
+                                ? 'page'
+                                : undefined
+                            }
+                          >
+                            <span class="cs-drop-bullet" aria-hidden="true" />
+                            <span>{child.key}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))
+          }
+
+          <!-- Mobile-only Book CTA inside the menu list -->
+          <li class="cs-li cs-li-cta lg:hidden">
+            <a
+              href={bookingHref}
+              class="bg-copper-500 text-cream-50 shadow-copper-500/30 hover:bg-copper-600 inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-sans text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5"
+            >
+              {bookingInfo.buttonText}
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              href={`tel:${client.phoneForTel}`}
+              class="text-taupe-700 hover:text-copper-600 mt-4 block text-center font-serif text-base italic transition-colors"
+            >
+              or call {client.phoneFormatted}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Desktop CTA -->
+      <Button as="a" href={bookingHref}>Book</Button>
+
+      <!-- <a
+        href={bookingHref}
+        class="cs-cta-desktop bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 ml-6 hidden items-center gap-2 rounded-full px-5 py-2.5 font-sans text-sm font-semibold tracking-wide shadow-md transition-all hover:-translate-y-0.5 lg:inline-flex"
+      >
+        Book
+        <span
+          aria-hidden="true"
+          class="transition-transform duration-300 group-hover:translate-x-0.5"
+          >→</span
+        >
+      </a> -->
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================ -->
+<!--           Booking Method Popup               -->
+<!-- ============================================ -->
+<div
+  id="popup"
+  class="popup-modal bg-taupe-900/55 fixed inset-0 z-[20000] hidden px-4 backdrop-blur-md"
+>
+  <div
+    class="bg-cream-50 border-taupe-200 relative w-full max-w-md overflow-hidden rounded-sm border shadow-[0_30px_60px_-20px_rgba(60,49,40,0.55)]"
+  >
+    <!-- Decorative header band -->
+    <div class="bg-sage-700 text-cream-50 relative overflow-hidden px-7 py-7">
+      <svg
+        aria-hidden="true"
+        class="text-sage-500/35 pointer-events-none absolute -top-8 -right-8 h-40 w-40"
+        viewBox="0 0 200 200"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1"
+      >
+        <circle cx="100" cy="100" r="80"></circle>
+        <circle cx="100" cy="100" r="60"></circle>
+        <circle cx="100" cy="100" r="40"></circle>
+      </svg>
+      <div class="relative flex items-center gap-3">
+        <span class="bg-copper-300 h-px w-8"></span>
+        <span
+          class="text-copper-200 text-[0.65rem] font-medium tracking-[0.4em] uppercase"
+        >
+          Book a Session
+        </span>
+      </div>
+      <h3
+        class="text-cream-50 mt-3 font-serif text-2xl tracking-[-0.01em] md:text-3xl"
+      >
+        Choose how you'd like to <em class="text-copper-300 italic">book</em>.
+      </h3>
+    </div>
+
+    <div class="space-y-3 px-7 pt-7 pb-8">
+      <a
+        href={bookingHref}
+        class="group bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 flex items-center justify-between gap-3 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5"
+      >
+        <span>Book Online (Studio Visit)</span>
+        <span
+          aria-hidden="true"
+          class="transition-transform group-hover:translate-x-1">→</span
+        >
+      </a>
+      <a
+        href={`tel:${client.phoneForTel}`}
+        class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 flex items-center justify-between gap-3 rounded-full border px-6 py-3.5 text-sm font-medium transition-colors"
+      >
+        <span>Call {client.phoneFormatted}</span>
+        <span
+          aria-hidden="true"
+          class="transition-transform group-hover:translate-x-1">→</span
+        >
+      </a>
+
+      <button
+        type="button"
+        onclick="document.getElementById('popup').classList.add('hidden'); document.getElementById('popup').classList.remove('flex')"
+        class="text-taupe-500 hover:text-copper-600 mt-4 block w-full text-center font-serif text-sm italic transition-colors"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Submenu chevron click should not bubble (prevents closing parent dropdown)
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target instanceof Element && target.closest('.submenu-btn')) {
+      e.stopPropagation();
+    }
+  });
+
+  // Popup: clicking the backdrop closes the modal
+  document.addEventListener('click', (e) => {
+    const popup = document.getElementById('popup');
+    if (!popup) return;
+    if (e.target === popup) {
+      popup.classList.add('hidden');
+    }
+  });
+
+  // Popup: close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const popup = document.getElementById('popup');
+    if (popup && !popup.classList.contains('hidden')) {
+      popup.classList.add('hidden');
+    }
+  });
+</script>
+
+<style>
+  /* ============================================
+     Popup modal centering (visible state via :not(.hidden))
+     ============================================ */
+  .popup-modal:not(.hidden) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: popup-fade 0.25s ease;
+  }
+  @keyframes popup-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* ============================================
+     Hamburger lines
+     ============================================ */
+  .cs-line {
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--color-taupe-800);
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+      top 0.3s,
+      bottom 0.3s,
+      opacity 0.2s;
+  }
+  .cs-line1 {
+    top: 0;
+  }
+  .cs-line2 {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .cs-line3 {
+    bottom: 0;
+  }
+
+  #mobile-menu-toggle.cs-active .cs-line1 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  #mobile-menu-toggle.cs-active .cs-line2 {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  #mobile-menu-toggle.cs-active .cs-line3 {
+    bottom: 50%;
+    opacity: 0;
+  }
+
+  /* ============================================
+     Mobile menu (≤1023px)
+     ============================================ */
+  @media (max-width: 63.9375rem) {
+    body.cs-open {
+      overflow: hidden;
+    }
+
+    .cs-ul-wrapper {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100dvh;
+      padding: 7rem 1.75rem 3rem;
+      background: var(--color-cream-50);
+      box-shadow: inset 0 8px 24px rgba(60, 49, 40, 0.05);
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+        opacity 0.4s ease,
+        visibility 0.4s;
+      overflow-y: auto;
+      z-index: 9990;
+    }
+
+    .cs-ul-wrapper::after {
+      /* large decorative serif numeral */
+      content: '✦';
+      position: absolute;
+      bottom: 2rem;
+      right: 1.75rem;
+      font-family: 'Fraunces', 'Cormorant Garamond', ui-serif, Georgia, serif;
+      font-size: 8rem;
+      line-height: 1;
+      font-style: italic;
+      color: var(--color-copper-500);
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .mobile-kicker {
+      display: inline-flex;
+    }
+
+    #cs-navigation.cs-active .cs-ul-wrapper {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cs-ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cs-li {
+      list-style: none;
+      position: relative;
+      border-bottom: 1px solid rgba(176, 106, 74, 0.12);
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .cs-li-cta {
+      border-bottom: none !important;
+      margin-top: 1.75rem;
+      padding-top: 0.5rem;
+    }
+
+    .cs-li:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+    .cs-li:nth-child(2) {
+      transition-delay: 0.16s;
+    }
+    .cs-li:nth-child(3) {
+      transition-delay: 0.22s;
+    }
+    .cs-li:nth-child(4) {
+      transition-delay: 0.28s;
+    }
+    .cs-li:nth-child(5) {
+      transition-delay: 0.34s;
+    }
+    .cs-li:nth-child(6) {
+      transition-delay: 0.4s;
+    }
+    .cs-li:nth-child(7) {
+      transition-delay: 0.46s;
+    }
+
+    #cs-navigation.cs-active .cs-li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cs-li-shell {
+      position: relative;
+      display: block;
+    }
+
+    .cs-li-link {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      gap: 0.85rem;
+      padding: 1.05rem 3rem 1.05rem 0;
+      font-family: 'Fraunces', 'Cormorant Garamond', ui-serif, Georgia, serif;
+      font-size: 1.65rem;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--color-taupe-900);
+      text-decoration: none;
+      transition:
+        color 0.25s ease,
+        padding-left 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .cs-li-link .cs-li-num {
+      font-family:
+        'Mona Sans',
+        'Manrope',
+        system-ui,
+        -apple-system,
+        sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--color-copper-600);
+      opacity: 0.7;
+      flex: 0 0 auto;
+      transform: translateY(-0.3em);
+    }
+    .cs-li-link .cs-li-text {
+      font-style: italic;
+    }
+    .cs-li-link:hover {
+      color: var(--color-copper-600);
+      padding-left: 0.85rem;
+    }
+    .cs-li-link.is-active {
+      color: var(--color-copper-600);
+    }
+
+    /* Submenu toggle button */
+    .submenu-btn {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      width: 2.25rem;
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      background: rgba(176, 106, 74, 0.08);
+      color: var(--color-copper-700);
+      border: none;
+      cursor: pointer;
+      transition:
+        background-color 0.25s ease,
+        transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .submenu-btn:hover {
+      background: rgba(176, 106, 74, 0.18);
+    }
+    .submenu-btn .up-icon {
+      display: none;
+    }
+    .cs-dropdown.cs-active .submenu-btn {
+      transform: translateY(-50%) rotate(180deg);
+    }
+    .cs-dropdown.cs-active .submenu-btn .down-icon {
+      display: inline-flex;
+    }
+    .cs-dropdown.cs-active .submenu-btn .up-icon {
+      display: none;
+    }
+
+    .cs-drop-ul {
+      list-style: none;
+      max-height: 0;
+      overflow: hidden;
+      margin: 0;
+      padding: 0 0 0 0.85rem;
+      transition:
+        max-height 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+        padding 0.3s ease,
+        margin 0.3s ease;
+    }
+    .cs-dropdown.cs-active .cs-drop-ul {
+      max-height: 60rem;
+      padding: 0 0 1.25rem 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cs-drop-heading {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 0 0.5rem;
+    }
+    .cs-drop-rule {
+      display: block;
+      width: 1.25rem;
+      height: 1px;
+      background: var(--color-copper-500);
+    }
+    .cs-drop-kicker {
+      font-family: 'Mona Sans', 'Manrope', system-ui, sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--color-copper-700);
+    }
+
+    .cs-drop-li {
+      list-style: none;
+    }
+    .cs-drop-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0;
+      font-family: 'Mona Sans', 'Manrope', system-ui, sans-serif;
+      font-size: 0.95rem;
+      color: var(--color-taupe-700);
+      text-decoration: none;
+      transition:
+        color 0.25s ease,
+        padding-left 0.3s ease;
+    }
+    .cs-drop-link:hover,
+    .cs-drop-link.is-active {
+      color: var(--color-copper-600);
+      padding-left: 0.4rem;
+    }
+    .cs-drop-bullet {
+      display: block;
+      width: 0.85rem;
+      height: 1px;
+      background: var(--color-taupe-300);
+      transition:
+        background-color 0.3s ease,
+        width 0.3s ease;
+    }
+    .cs-drop-link:hover .cs-drop-bullet,
+    .cs-drop-link.is-active .cs-drop-bullet {
+      background: var(--color-copper-500);
+      width: 1.25rem;
+    }
+  }
+
+  /* ============================================
+     Desktop nav (≥1024px)
+     ============================================ */
+  @media (min-width: 64rem) {
+    .cs-ul-wrapper::after,
+    .mobile-kicker {
+      display: none !important;
+    }
+
+    .cs-ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .cs-li {
+      list-style: none;
+      position: relative;
+    }
+
+    .cs-li-shell {
+      display: contents;
+    }
+
+    /* Hide chevron toggle on desktop (hover handles it) */
+    .submenu-btn {
+      display: none !important;
+    }
+
+    /* Hide mobile-only num prefix on desktop */
+    .cs-li-num {
+      display: none;
+    }
+    .cs-li-text {
+      font-style: normal;
+    }
+
+    .cs-li-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0;
+      font-family:
+        'Mona Sans',
+        'Manrope',
+        system-ui,
+        -apple-system,
+        sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--color-taupe-800);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+    .cs-li-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1.5px;
+      background: var(--color-copper-500);
+      transition: width 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .cs-li-link:hover {
+      color: var(--color-copper-600);
+    }
+    .cs-li-link:hover::after {
+      width: 100%;
+    }
+    .cs-li-link.is-active {
+      color: var(--color-copper-600);
+    }
+    .cs-li-link.is-active::after {
+      width: 100%;
+    }
+
+    /* Dropdown adornment */
+    .cs-dropdown > .cs-li-shell > .cs-li-link::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-2px) rotate(45deg);
+      margin-left: 0.15rem;
+      transition: transform 0.3s ease;
+      opacity: 0.7;
+    }
+    .cs-dropdown:hover > .cs-li-shell > .cs-li-link::before {
+      transform: translateY(0) rotate(225deg);
+    }
+
+    .cs-dropdown:hover .cs-drop-ul,
+    .cs-dropdown:focus-within .cs-drop-ul,
+    .cs-dropdown.cs-active .cs-drop-ul {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .cs-drop-ul {
+      position: absolute;
+      top: calc(100% + 0.85rem);
+      left: -1.25rem;
+      min-width: 17rem;
+      list-style: none;
+      margin: 0;
+      padding: 1rem 0 0.5rem;
+      background: var(--color-cream-50);
+      border: 1px solid var(--color-taupe-200);
+      border-bottom: 3px solid var(--color-copper-500);
+      box-shadow: 0 30px 60px -25px rgba(60, 49, 40, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition:
+        opacity 0.25s ease,
+        transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+        visibility 0.3s;
+      z-index: 100;
+    }
+    .cs-drop-ul::before {
+      /* tiny bridge so hover doesn't drop */
+      content: '';
+      position: absolute;
+      top: -0.85rem;
+      left: 0;
+      right: 0;
+      height: 0.85rem;
+    }
+
+    .cs-drop-heading {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0 1.25rem 0.6rem;
+    }
+    .cs-drop-rule {
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--color-copper-500);
+    }
+    .cs-drop-kicker {
+      font-family: 'Mona Sans', 'Manrope', system-ui, sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: var(--color-copper-700);
+    }
+
+    .cs-drop-li {
+      list-style: none;
+    }
+    .cs-drop-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.25rem;
+      font-family: 'Mona Sans', 'Manrope', system-ui, sans-serif;
+      font-size: 0.875rem;
+      color: var(--color-taupe-800);
+      text-decoration: none;
+      transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+    }
+    .cs-drop-link:hover,
+    .cs-drop-link.is-active {
+      background: var(--color-cream-100);
+      color: var(--color-copper-600);
+    }
+    .cs-drop-bullet {
+      display: block;
+      width: 0.65rem;
+      height: 1px;
+      background: var(--color-taupe-300);
+      transition:
+        background-color 0.3s ease,
+        width 0.3s ease;
+    }
+    .cs-drop-link:hover .cs-drop-bullet,
+    .cs-drop-link.is-active .cs-drop-bullet {
+      background: var(--color-copper-500);
+      width: 1.1rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .cs-ul-wrapper,
+    .cs-li,
+    .cs-li-link,
+    .cs-drop-ul,
+    .cs-drop-link,
+    .submenu-btn,
+    .cs-line {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,521 @@
+---
+import { getNavData } from '@data/navData';
+import client from '@data/clientData';
+import { Image } from 'astro-lqip/components';
+import navInfo from '@data/navInfo.json';
+import { resolveImage } from '@js/imageUtils';
+import { Icon } from 'astro-icon/components';
+import type { HTMLAttributes } from 'astro/types';
+import AnnouncementBar from '@components/AnnouncementBar.astro';
+
+interface Props extends HTMLAttributes<'header'> {}
+
+const props = Astro.props as Props;
+
+const MainLogo = await resolveImage(navInfo.image);
+const navData = await getNavData();
+---
+
+<!-- ============================================ -->
+<!--                 Navigation                   -->
+<!-- ============================================ -->
+<header
+  id="cs-navigation"
+  class="bg-cream-50/85 border-taupe-200/70 sticky top-0 z-[10000] border-b backdrop-blur-md"
+  {...props}
+>
+  <AnnouncementBar />
+
+  <div
+    class="relative mx-auto flex max-w-7xl items-center gap-6 px-5 py-3 md:px-8 md:py-4 lg:px-12"
+  >
+    <!-- Decorative copper rule (desktop) -->
+    <span
+      aria-hidden="true"
+      class="bg-copper-500/60 absolute bottom-0 left-1/2 hidden h-px w-24 -translate-x-1/2 lg:block"></span>
+
+    <!-- Logo -->
+    <a
+      href="/"
+      class="cs-logo group relative inline-flex shrink-0 items-center"
+      aria-label="Back to home"
+    >
+      {
+        MainLogo && (
+          <Image
+            src={MainLogo}
+            alt={navInfo.alt}
+            class="block h-auto w-[140px] transition-transform duration-500 group-hover:scale-[1.02] md:w-[160px] lg:w-[180px]"
+          />
+        )
+      }
+    </a>
+
+    <!-- Navigation -->
+    <nav
+      class="cs-nav ml-auto flex items-center gap-2 md:gap-4"
+      role="navigation"
+      aria-label="Primary"
+    >
+      <!-- Mobile Toggle -->
+      <button
+        class="cs-toggle text-taupe-900 border-taupe-300 hover:border-copper-500 hover:bg-copper-50 relative z-[10001] flex h-11 w-11 items-center justify-center rounded-full border bg-transparent transition-colors lg:hidden"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="cs-expanded-ul"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="cs-box relative block h-3.5 w-5" aria-hidden="true">
+          <span class="cs-line cs-line1"></span>
+          <span class="cs-line cs-line2"></span>
+          <span class="cs-line cs-line3"></span>
+        </span>
+      </button>
+
+      <!-- Navigation Items -->
+      <div
+        class="cs-ul-wrapper bg-cream-50 lg:bg-transparent border-taupe-200 invisible fixed top-0 right-0 left-0 z-[10000] h-screen origin-top scale-y-0 overflow-y-auto pt-28 pb-16 opacity-0 transition-[transform,opacity,visibility] duration-500 lg:visible lg:static lg:h-auto lg:scale-y-100 lg:overflow-visible lg:border-0 lg:pt-0 lg:pb-0 lg:opacity-100"
+      >
+        <!-- Decorative drawer accents (mobile only) -->
+        <div
+          aria-hidden="true"
+          class="bg-copper-200/40 pointer-events-none absolute -top-24 -right-20 h-72 w-72 rounded-full blur-3xl lg:hidden"
+        >
+        </div>
+        <div
+          aria-hidden="true"
+          class="bg-sage-200/40 pointer-events-none absolute bottom-0 -left-24 h-80 w-80 rounded-full blur-3xl lg:hidden"
+        >
+        </div>
+
+        <!-- Drawer Kicker (mobile only) -->
+        <div
+          class="text-copper-700 mx-auto mb-8 flex items-center justify-center gap-3 px-6 lg:hidden"
+        >
+          <span class="bg-copper-500 h-px w-10"></span>
+          <span
+            class="text-[0.7rem] font-medium tracking-[0.4em] uppercase"
+          >
+            Glow · Relax · Restore
+          </span>
+          <span class="bg-copper-500 h-px w-10"></span>
+        </div>
+
+        <ul
+          id="cs-expanded-ul"
+          class="relative mx-auto flex max-w-md flex-col items-stretch gap-1 px-8 lg:max-w-none lg:flex-row lg:items-center lg:gap-1 lg:px-0"
+        >
+          {
+            navData.map((entry) => {
+              const hasChildren =
+                !!entry.children?.length && entry.children.length > 0;
+              const isActive = Astro.url.pathname === entry.url;
+              const isInBranch =
+                hasChildren &&
+                entry.children?.some((c) => Astro.url.pathname === c.url);
+              return (
+                <li
+                  class:list={[
+                    'cs-li relative',
+                    {
+                      'cs-dropdown': hasChildren,
+                    },
+                  ]}
+                >
+                  {hasChildren ? (
+                    <div class="border-taupe-100 lg:border-0 relative flex items-center justify-between border-b py-1 lg:contents">
+                      <a
+                        href={entry.url}
+                        class:list={[
+                          'cs-li-link',
+                          'group relative inline-flex items-center font-sans text-base font-medium tracking-wide text-taupe-900 transition-colors lg:px-3 lg:py-7 lg:text-[0.9rem]',
+                          'hover:text-copper-700',
+                          {
+                            'cs-active text-copper-700':
+                              isActive || isInBranch,
+                          },
+                        ]}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        <span class="relative">
+                          {entry.key}
+                          <span
+                            aria-hidden="true"
+                            class:list={[
+                              'bg-copper-500 absolute -bottom-1 left-0 hidden h-px transition-[width] duration-300 lg:block',
+                              isActive || isInBranch
+                                ? 'w-full'
+                                : 'w-0 group-hover:w-full',
+                            ]}
+                          />
+                        </span>
+                      </a>
+                      <button
+                        type="button"
+                        class:list={[
+                          'cs-dropdown-button submenu-btn',
+                          'border-taupe-300 hover:border-copper-500 hover:bg-copper-50 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-transparent text-taupe-900 transition-colors lg:hidden',
+                          { 'cs-active': isInBranch },
+                        ]}
+                        aria-expanded="false"
+                        aria-controls={`submenu-${entry.key}`}
+                        aria-label={`Toggle ${entry.key} submenu`}
+                      >
+                        <span class="down-icon">
+                          <Icon
+                            name="tabler:chevron-down"
+                            class="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <span class="up-icon hidden">
+                          <Icon
+                            name="tabler:chevron-up"
+                            class="h-4 w-4"
+                            aria-hidden="true"
+                          />
+                        </span>
+                      </button>
+                    </div>
+                  ) : (
+                    <a
+                      href={entry.url}
+                      class:list={[
+                        'cs-li-link',
+                        'group border-taupe-100 lg:border-0 relative flex items-center border-b py-3 font-sans text-base font-medium tracking-wide text-taupe-900 transition-colors lg:px-3 lg:py-7 lg:text-[0.9rem]',
+                        'hover:text-copper-700',
+                        {
+                          'cs-active text-copper-700': isActive,
+                        },
+                      ]}
+                      aria-current={isActive ? 'page' : undefined}
+                    >
+                      <span class="relative">
+                        {entry.key}
+                        <span
+                          aria-hidden="true"
+                          class:list={[
+                            'bg-copper-500 absolute -bottom-1 left-0 hidden h-px transition-[width] duration-300 lg:block',
+                            isActive
+                              ? 'w-full'
+                              : 'w-0 group-hover:w-full',
+                          ]}
+                        />
+                      </span>
+                    </a>
+                  )}
+
+                  {hasChildren && (
+                    <ul
+                      id={`submenu-${entry.key}`}
+                      class:list={[
+                        'cs-drop-ul',
+                        'border-copper-300/40 bg-cream-50 flex flex-col gap-0 overflow-hidden border-l',
+                        'lg:absolute lg:top-full lg:left-1/2 lg:min-w-[260px] lg:flex-col lg:rounded-sm lg:border-0 lg:p-3 lg:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]',
+                      ]}
+                    >
+                      <li
+                        class="hidden lg:flex lg:items-center lg:gap-2 lg:px-4 lg:pt-2 lg:pb-3"
+                        aria-hidden="true"
+                      >
+                        <span class="bg-copper-500 h-px w-5" />
+                        <span class="text-copper-700 text-[0.6rem] font-medium tracking-[0.4em] uppercase">
+                          Treatments
+                        </span>
+                      </li>
+                      {entry.children?.map((child) => {
+                        const childActive =
+                          Astro.url.pathname === child.url;
+                        return (
+                          <li class="cs-drop-li">
+                            <a
+                              href={child.url}
+                              class:list={[
+                                'cs-li-link cs-drop-link',
+                                'group relative flex items-center gap-3 px-4 py-3 font-sans text-sm text-taupe-800 transition-colors',
+                                'hover:bg-cream-100 hover:text-copper-700',
+                                {
+                                  'bg-cream-100 text-copper-700':
+                                    childActive,
+                                },
+                              ]}
+                              aria-current={
+                                childActive ? 'page' : undefined
+                              }
+                            >
+                              <span
+                                aria-hidden="true"
+                                class:list={[
+                                  'bg-copper-500 h-px transition-[width] duration-300',
+                                  childActive
+                                    ? 'w-6'
+                                    : 'w-3 group-hover:w-6',
+                                ]}
+                              />
+                              <span class="font-serif text-[0.95rem] tracking-tight">
+                                {child.key}
+                              </span>
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })
+          }
+        </ul>
+
+        <!-- Mobile drawer footer (CTA + meta) -->
+        <div
+          class="border-taupe-200 mx-auto mt-10 max-w-md border-t px-8 pt-8 lg:hidden"
+        >
+          <button
+            type="button"
+            onclick="document.getElementById('popup').classList.remove('hidden'); document.getElementById('popup').classList.add('flex');"
+            class="bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 group flex w-full items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5"
+          >
+            Book a Session
+            <span
+              aria-hidden="true"
+              class="transition-transform group-hover:translate-x-1">→</span
+            >
+          </button>
+          <p
+            class="text-taupe-600 mt-6 text-center text-[0.65rem] font-medium tracking-[0.3em] uppercase"
+          >
+            <span class="text-copper-700">P.</span>
+            {client.phoneFormatted}
+          </p>
+        </div>
+      </div>
+
+      <!-- Desktop Book CTA -->
+      <button
+        type="button"
+        onclick="document.getElementById('popup').classList.remove('hidden'); document.getElementById('popup').classList.add('flex');"
+        class="bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 focus-visible:ring-copper-700 focus-visible:ring-offset-cream-50 group hidden items-center gap-2 rounded-full px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase shadow-lg transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 lg:inline-flex"
+      >
+        Book Now
+        <span
+          aria-hidden="true"
+          class="transition-transform group-hover:translate-x-1">→</span
+        >
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================ -->
+<!--               Booking Popup                   -->
+<!-- ============================================ -->
+<div
+  id="popup"
+  class="bg-taupe-900/55 fixed inset-0 z-[99999] hidden items-center justify-center px-4 backdrop-blur-md"
+>
+  <div
+    class="bg-cream-50 border-taupe-200 relative w-full max-w-md overflow-hidden rounded-sm border shadow-[0_30px_70px_-25px_rgba(60,49,40,0.55)]"
+  >
+    <!-- decorative top bar -->
+    <div class="bg-copper-500 h-1 w-full"></div>
+
+    <div class="px-7 py-9 md:px-9">
+      <!-- Kicker -->
+      <div class="flex items-center gap-3">
+        <span class="bg-copper-500 h-px w-8"></span>
+        <span
+          class="text-copper-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
+        >
+          Reserve
+        </span>
+      </div>
+      <h3
+        class="text-taupe-900 mt-4 font-serif text-2xl tracking-[-0.01em] md:text-3xl"
+      >
+        Book your <em class="text-copper-600 italic">session</em>.
+      </h3>
+      <p class="text-taupe-600 mt-2 text-sm">
+        Choose how you would like to be cared for.
+      </p>
+
+      <div class="mt-7 flex flex-col gap-3">
+        <a
+          href="https://www.massagebook.com/therapists/StoneMassage?src=external"
+          class="bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 group flex items-center justify-between gap-4 rounded-full px-6 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5"
+        >
+          Book In-Clinic Appointment
+          <span
+            aria-hidden="true"
+            class="transition-transform group-hover:translate-x-1">→</span
+          >
+        </a>
+        <a
+          href={`tel:${client.phoneForTel}`}
+          class="border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 group flex items-center justify-between gap-4 rounded-full border px-6 py-3.5 text-sm font-semibold tracking-wide transition-colors"
+        >
+          Call for In-Home Massage
+          <span
+            aria-hidden="true"
+            class="transition-transform group-hover:translate-x-1">→</span
+          >
+        </a>
+      </div>
+
+      <button
+        type="button"
+        onclick="document.getElementById('popup').classList.add('hidden'); document.getElementById('popup').classList.remove('flex');"
+        class="text-taupe-500 hover:text-copper-700 mt-7 inline-flex w-full items-center justify-center text-[0.65rem] font-medium tracking-[0.4em] uppercase transition-colors"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Stop click propagation on submenu chevrons (mobile)
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target instanceof Element && target.closest('.submenu-btn')) {
+      e.stopPropagation();
+    }
+  });
+
+  // Close popup when clicking outside the card
+  document.addEventListener('click', (e) => {
+    const popup = document.getElementById('popup');
+    if (!popup) return;
+    if (e.target === popup) {
+      popup.classList.add('hidden');
+      popup.classList.remove('flex');
+    }
+  });
+</script>
+
+<style>
+  /* ─────────────────────────────────────────────
+   *  Hamburger lines — Tailwind cannot draw these
+   * ───────────────────────────────────────────── */
+  .cs-line {
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    height: 1.5px;
+    background-color: currentColor;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition:
+      top 0.3s,
+      bottom 0.3s,
+      transform 0.45s,
+      opacity 0.3s;
+  }
+  .cs-line1 {
+    top: 0;
+  }
+  .cs-line2 {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .cs-line3 {
+    bottom: 0;
+  }
+
+  #mobile-menu-toggle.cs-active .cs-line1 {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  #mobile-menu-toggle.cs-active .cs-line2 {
+    opacity: 0;
+  }
+  #mobile-menu-toggle.cs-active .cs-line3 {
+    bottom: 50%;
+    transform: translate(-50%, 50%) rotate(-45deg);
+  }
+
+  /* ─────────────────────────────────────────────
+   *  Mobile drawer open state (driven by nav.js)
+   * ───────────────────────────────────────────── */
+  @media (max-width: 1023.98px) {
+    #cs-navigation.cs-active .cs-ul-wrapper {
+      visibility: visible;
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    /* Lock body scroll when drawer open (matches body.cs-open from nav.js) */
+    :global(body.cs-open) {
+      overflow: hidden;
+    }
+
+    /* Mobile dropdown reveal (driven by nav.js .cs-active on .cs-dropdown) */
+    .cs-dropdown .cs-drop-ul {
+      max-height: 0 !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition:
+        max-height 0.4s ease,
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+    }
+    .cs-dropdown.cs-active .cs-drop-ul {
+      max-height: 60rem !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .cs-dropdown.cs-active .submenu-btn .down-icon {
+      display: none;
+    }
+    .cs-dropdown.cs-active .submenu-btn .up-icon {
+      display: inline-flex;
+    }
+  }
+
+  /* ─────────────────────────────────────────────
+   *  Desktop dropdown hover/focus reveal
+   * ───────────────────────────────────────────── */
+  @media (min-width: 1024px) {
+    /* Initial closed state — kept here (not as Tailwind utilities)
+     * because tailwind is imported with `important`, which would
+     * otherwise prevent the hover/active rules below from overriding. */
+    .cs-dropdown > .cs-drop-ul {
+      visibility: hidden;
+      opacity: 0;
+      transform: translateX(-50%);
+      transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+    }
+    .cs-dropdown:hover > .cs-drop-ul,
+    .cs-dropdown:focus-within > .cs-drop-ul,
+    .cs-dropdown.cs-active > .cs-drop-ul {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Serif optical sizing on dropdown labels */
+  .cs-drop-link .font-serif {
+    font-family:
+      'Fraunces',
+      'Cormorant Garamond',
+      ui-serif,
+      Georgia,
+      serif;
+    font-feature-settings: 'ss01', 'ss02';
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 50;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-ul-wrapper,
+    .cs-drop-ul,
+    .cs-line {
+      transition: none !important;
+    }
+  }
+</style>

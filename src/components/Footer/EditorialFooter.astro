@@ -1,0 +1,380 @@
+---
+import client from '@data/clientData';
+import { getNavData } from '@data/navData';
+import { getCurrentYear } from '@js/utils';
+import MainLogo from '@assets/images/logo/glow-n-relax.png';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+const currentYear = getCurrentYear();
+const navData = await getNavData();
+const servicesNode = navData.find((e) => e.key === 'Services');
+const services = Array.isArray(servicesNode?.children)
+  ? servicesNode.children
+  : [];
+
+const infoLinks = navData.filter(
+  (entry) => entry.key !== 'Services' && entry.key !== 'Book Appointment'
+);
+---
+
+<!-- ============================================ -->
+<!--                   Footer                     -->
+<!-- ============================================ -->
+<footer
+  id="footer"
+  class="bg-taupe-900 text-cream-100 relative isolate overflow-hidden"
+>
+  <!-- Ambient color washes -->
+  <div
+    aria-hidden="true"
+    class="bg-copper-500/15 pointer-events-none absolute -top-40 -left-40 -z-10 h-[36rem] w-[36rem] rounded-full blur-3xl"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="bg-sage-600/15 pointer-events-none absolute -right-40 -bottom-40 -z-10 h-[36rem] w-[36rem] rounded-full blur-3xl"
+  >
+  </div>
+
+  <!-- Grain texture -->
+  <svg
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.06] mix-blend-screen"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <filter id="footer-noise">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.85"
+        numOctaves="2"
+        stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix
+        values="0 0 0 0 0.95
+                0 0 0 0 0.85
+                0 0 0 0 0.7
+                0 0 0 0.6 0"
+      ></feColorMatrix>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#footer-noise)"></rect>
+  </svg>
+
+  <!-- Decorative top divider strip -->
+  <div class="border-cream-100/10 border-b">
+    <div
+      class="mx-auto flex max-w-7xl items-center gap-6 px-6 py-7 lg:gap-8 lg:px-12"
+    >
+      <span class="bg-cream-100/15 h-px flex-1"></span>
+      <span
+        class="text-copper-300 font-serif text-base tracking-[-0.01em] italic md:text-xl"
+      >
+        Glow <span class="text-cream-100/60">&amp;</span> Relax
+      </span>
+      <span class="bg-cream-100/15 h-px flex-1"></span>
+    </div>
+  </div>
+
+  <!-- Vertical brand label -->
+  <div
+    aria-hidden="true"
+    class="text-copper-300/60 pointer-events-none absolute top-1/2 right-4 z-10 hidden -translate-y-1/2 rotate-180 text-[0.6rem] font-medium tracking-[0.45em] uppercase [writing-mode:vertical-rl] xl:block"
+  >
+    Restore · Renew · Rebalance
+  </div>
+
+  <!-- Main content grid -->
+  <div
+    class="relative mx-auto max-w-7xl px-6 py-16 lg:px-12 lg:py-20"
+  >
+    <div class="grid grid-cols-1 gap-y-14 md:grid-cols-12 md:gap-x-10">
+      <!-- Brand column -->
+      <section class="md:col-span-12 lg:col-span-4">
+        <a
+          href="/"
+          aria-label="Back to home"
+          class="block transition-opacity hover:opacity-90"
+        >
+          <Image
+            src={MainLogo}
+            class="h-auto w-44 object-contain brightness-0 invert"
+            alt="Glow and Relax Studio main logo"
+          />
+        </a>
+
+        <div class="mt-7 flex items-center gap-3">
+          <span class="bg-copper-500 h-px w-8"></span>
+          <span
+            class="text-copper-300 text-[0.65rem] font-medium tracking-[0.4em] uppercase"
+          >
+            Studio by SMP
+          </span>
+        </div>
+
+        <p
+          class="text-cream-100/85 mt-5 max-w-sm font-serif text-lg leading-snug italic md:text-xl"
+        >
+          A quiet sanctuary in Edmonton — restorative,
+          <span class="text-copper-300">evidence-based</span> care, tailored to
+          your body's needs.
+        </p>
+
+        <!-- Hours -->
+        <dl class="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+          <dt
+            class="text-copper-300 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+          >
+            Hours
+          </dt>
+          <dd class="text-cream-100/85 text-sm leading-6">
+            {client.openingHours.daysOpen}
+            <span class="text-cream-100/40 mx-2">·</span>
+            {client.openingHours.hours}
+          </dd>
+        </dl>
+
+        <!-- Socials -->
+        <div class="mt-9 flex items-center gap-3">
+          <a
+            href={client.socials.facebook}
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-facebook-filled"
+              class="h-5 w-5 text-cream-50"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.instagram}
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-instagram"
+              class="h-5 w-5 text-cream-50"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.linkedin}
+            aria-label="LinkedIn"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-linkedin"
+              class="h-5 w-5 text-cream-50"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.twitter}
+            aria-label="Twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-twitter-filled"
+              class="h-5 w-5 text-cream-50"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+      </section>
+
+      <!-- Information -->
+      <nav
+        aria-label="Information"
+        class="md:col-span-4 md:col-start-1 lg:col-span-2 lg:col-start-6"
+      >
+        <div class="flex items-center gap-3">
+          <span class="bg-sage-400 h-px w-6"></span>
+          <span
+            class="text-sage-300 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+          >
+            01
+          </span>
+        </div>
+        <h3
+          class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+        >
+          Information
+        </h3>
+        <ul class="mt-6 space-y-3">
+          {
+            infoLinks.map((entry) => (
+              <li>
+                <a
+                  href={entry.url}
+                  class="footer-link text-cream-100/85 hover:text-copper-300 group inline-flex items-center gap-2 text-sm transition-colors"
+                >
+                  <span class="bg-cream-100/30 group-hover:bg-copper-300 inline-block h-px w-0 transition-all duration-300 group-hover:w-3" />
+                  <span>{entry.key}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Services -->
+      <nav
+        aria-label="Services"
+        class="md:col-span-4 lg:col-span-3"
+      >
+        <div class="flex items-center gap-3">
+          <span class="bg-copper-400 h-px w-6"></span>
+          <span
+            class="text-copper-300 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+          >
+            02
+          </span>
+        </div>
+        <h3
+          class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+        >
+          Treatments
+        </h3>
+        <ul class="mt-6 space-y-3">
+          {
+            services.map((svc) => (
+              <li>
+                <a
+                  href={svc.url}
+                  class="footer-link text-cream-100/85 hover:text-copper-300 group inline-flex items-center gap-2 text-sm transition-colors"
+                >
+                  <span class="bg-cream-100/30 group-hover:bg-copper-300 inline-block h-px w-0 transition-all duration-300 group-hover:w-3" />
+                  <span>{svc.key}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <section class="md:col-span-4 lg:col-span-3">
+        <div class="flex items-center gap-3">
+          <span class="bg-copper-400 h-px w-6"></span>
+          <span
+            class="text-copper-300 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+          >
+            03
+          </span>
+        </div>
+        <h3
+          class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+        >
+          Get in <em class="text-copper-300 italic">Touch</em>
+        </h3>
+
+        <address class="mt-6 space-y-4 text-sm leading-6 not-italic">
+          <a
+            href={client.address.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-cream-100/85 hover:text-copper-300 group block transition-colors"
+          >
+            <span
+              class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+              >A.</span
+            >
+            {client.address.lineOne}<br />
+            <span class="ml-6 inline-block">{client.address.lineTwo}</span>
+          </a>
+
+          <a
+            href={`tel:${client.phoneForTel}`}
+            class="text-cream-100/85 hover:text-copper-300 block transition-colors"
+          >
+            <span
+              class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+              >P.</span
+            >
+            {client.phoneFormatted}
+          </a>
+
+          <a
+            href={`mailto:${client.email}`}
+            class="text-cream-100/85 hover:text-copper-300 block transition-colors"
+          >
+            <span
+              class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+              >E.</span
+            >
+            {client.email}
+          </a>
+        </address>
+
+        <p
+          class="text-cream-100/55 border-cream-100/10 mt-6 border-t pt-4 text-xs leading-5 italic"
+        >
+          Direct billing available. Please ask about eligible providers.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <!-- Bottom credit row -->
+  <div class="border-cream-100/10 border-t">
+    <div
+      class="mx-auto flex max-w-7xl flex-col items-start gap-4 px-6 py-6 text-xs lg:px-12 md:flex-row md:items-center md:justify-between"
+    >
+      <p class="text-cream-100/60 font-sans tracking-wide">
+        <span>©</span>
+        <span>{currentYear}</span>
+        <span class="mx-1">·</span>
+        <span class="text-cream-100/85 font-serif italic">
+          {client.name}
+        </span>
+        <span class="mx-1 hidden md:inline">·</span>
+        <span class="block md:inline">All rights reserved.</span>
+      </p>
+
+      <p class="text-cream-100/60 flex items-center gap-2 font-sans tracking-wide">
+        <span class="bg-copper-400 inline-block h-px w-6"></span>
+        <span>Designed &amp; hand-coded by</span>
+        <a
+          href="https://bespokewebdesign.ca/"
+          target="_blank"
+          rel="noopener"
+          class="text-copper-300 hover:text-copper-200 font-serif italic transition-colors"
+        >
+          Bespoke Web Design Edmonton
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Use Fraunces serif w/ refined optical sizing */
+  #footer h3,
+  #footer .font-serif,
+  #footer em {
+    font-family:
+      'Fraunces', 'Cormorant Garamond', ui-serif, Georgia, serif;
+    font-feature-settings: 'ss01', 'ss02';
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 50;
+  }
+  #footer em,
+  #footer .italic {
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 100;
+  }
+
+  /* Subtle entrance for footer-link bullets */
+  .footer-link {
+    position: relative;
+  }
+</style>
