@@ -62,7 +62,7 @@ const bookingHref = bookingInfo.buttonLink;
     <nav class="cs-nav ml-auto flex items-center" role="navigation">
       <!-- Mobile Toggle -->
       <button
-        class="cs-toggle border-taupe-300 bg-cream-50 hover:border-copper-500 relative z-[1] flex h-11 w-11 items-center justify-center rounded-full border transition-colors lg:hidden"
+        class="cs-toggle border-taupe-300 bg-cream-50 hover:border-copper-500 relative z-[10001] flex h-11 w-11 items-center justify-center rounded-full border transition-colors lg:hidden"
         id="mobile-menu-toggle"
         aria-expanded="false"
         aria-controls="cs-expanded-ul"
@@ -406,14 +406,16 @@ const bookingHref = bookingInfo.buttonLink;
       padding: 7rem 1.75rem 3rem;
       background: var(--color-cream-50);
       box-shadow: inset 0 8px 24px rgba(60, 49, 40, 0.05);
-      transform: translateX(100%);
+      clip-path: inset(0 0 0 100%);
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
       transition:
-        transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
+        clip-path 0.55s cubic-bezier(0.2, 0.7, 0.2, 1),
         opacity 0.4s ease,
         visibility 0.4s;
       overflow-y: auto;
+      overflow-x: hidden;
       z-index: 9990;
     }
 
@@ -437,9 +439,10 @@ const bookingHref = bookingInfo.buttonLink;
     }
 
     #cs-navigation.cs-active .cs-ul-wrapper {
-      transform: translateX(0);
+      clip-path: inset(0);
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
     }
 
     .cs-ul {
