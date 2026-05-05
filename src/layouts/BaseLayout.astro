@@ -13,8 +13,7 @@ import type { GetImageResult } from 'astro';
 import { resolveImage } from '@js/imageUtils';
 import seoSetting from '@data/seo-pages.json';
 import Header from '@components/Header/EditorialHeader.astro';
-import Footer from '@components/Footer/Footer.astro';
-import Footer2 from '@components/Footer/EditorialFooter.astro';
+import HybridFooter from '@components/Footer/HybridFooter.astro';
 const ogImg = await resolveImage(seoSetting.global.ogImage);
 let defaultOgImg: GetImageResult | null = null;
 if (ogImg) {
@@ -155,8 +154,7 @@ const preloadedImages = !preloadedImage
 
       <ScrollToTop />
     </main>
-    <Footer />
-    <Footer2 />
+    <HybridFooter />
 
     <!-- {
       !Astro.url.pathname.startsWith('/contact') && (

@@ -1,0 +1,364 @@
+---
+import client from '@data/clientData';
+import { getNavData } from '@data/navData';
+import { getCurrentYear } from '@js/utils';
+import MainLogo from '@assets/images/logo/glow-n-relax.png';
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+
+const currentYear = getCurrentYear();
+const navData = await getNavData();
+const servicesNode = navData.find((entry) => entry.key === 'Services');
+const services = Array.isArray(servicesNode?.children)
+  ? servicesNode.children
+  : [];
+
+const infoLinks = navData.filter(
+  (entry) => entry.key !== 'Services' && entry.key !== 'Book Appointment'
+);
+---
+
+<footer
+  id="hybrid-footer"
+  class="bg-sage-700 text-cream-50 relative isolate overflow-hidden"
+>
+  <div
+    aria-hidden="true"
+    class="bg-copper-500/10 pointer-events-none absolute -top-32 -right-32 -z-10 h-[36rem] w-[36rem] rounded-full blur-3xl"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="bg-sage-500/30 pointer-events-none absolute -bottom-40 -left-40 -z-10 h-[34rem] w-[34rem] rounded-full blur-3xl"
+  >
+  </div>
+
+  <svg
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-[0.06] mix-blend-overlay"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <filter id="hybrid-footer-noise">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.85"
+        numOctaves="2"
+        stitchTiles="stitch"></feTurbulence>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#hybrid-footer-noise)"></rect>
+  </svg>
+
+  <svg
+    aria-hidden="true"
+    class="text-sage-500/30 pointer-events-none absolute -top-16 -right-20 hidden h-80 w-80 lg:block"
+    viewBox="0 0 200 200"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1"
+  >
+    <circle cx="100" cy="100" r="92"></circle>
+    <circle cx="100" cy="100" r="74"></circle>
+    <circle cx="100" cy="100" r="56"></circle>
+    <circle cx="100" cy="100" r="38"></circle>
+    <circle cx="100" cy="100" r="20"></circle>
+  </svg>
+
+  <span
+    aria-hidden="true"
+    class="text-copper-300/70 pointer-events-none absolute top-24 left-6 hidden text-[0.65rem] font-medium tracking-[0.45em] uppercase [writing-mode:vertical-rl] lg:block"
+  >
+    Glow · Relax · Restore
+  </span>
+
+  <div
+    class="relative mx-auto max-w-7xl px-6 pt-20 pb-10 md:px-10 md:pt-24 lg:px-16"
+  >
+    <div class="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-12">
+      <section class="lg:col-span-5">
+        <a
+          href="/"
+          aria-label="Back to home"
+          class="block transition-opacity hover:opacity-90"
+        >
+          <Image
+            src={MainLogo}
+            class="h-auto w-44 object-contain brightness-0 invert"
+            alt="Glow and Relax Studio main logo"
+          />
+        </a>
+
+        <div class="mt-7 flex items-center gap-3">
+          <span class="bg-copper-300 h-px w-8"></span>
+          <span
+            class="text-copper-200 text-[0.65rem] font-medium tracking-[0.4em] uppercase"
+          >
+            Studio by SMP
+          </span>
+        </div>
+
+        <p
+          class="text-cream-100/85 mt-5 max-w-sm font-serif text-lg leading-snug italic md:text-xl"
+        >
+          A quiet sanctuary in Edmonton — restorative,
+          <span class="text-copper-300">evidence-based</span> care, tailored to your
+          body's needs.
+        </p>
+
+        <dl class="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2">
+          <dt
+            class="text-copper-300 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+          >
+            Hours
+          </dt>
+          <dd class="text-cream-100/85 text-sm leading-6">
+            {client.openingHours.daysOpen}
+            <span class="text-cream-100/40 mx-2">·</span>
+            {client.openingHours.hours}
+          </dd>
+        </dl>
+
+        <div class="mt-9 flex items-center gap-3">
+          <a
+            href={client.socials.facebook}
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-facebook-filled"
+              class="text-cream-50 h-5 w-5"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.instagram}
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-instagram"
+              class="text-cream-50 h-5 w-5"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.linkedin}
+            aria-label="LinkedIn"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-linkedin"
+              class="text-cream-50 h-5 w-5"
+              aria-hidden="true"
+            />
+          </a>
+          <a
+            href={client.socials.twitter}
+            aria-label="Twitter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="border-cream-100/20 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
+          >
+            <Icon
+              name="tabler:brand-twitter-filled"
+              class="text-cream-50 h-5 w-5"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+      </section>
+
+      <div
+        class="grid grid-cols-1 gap-y-12 sm:grid-cols-3 sm:gap-x-8 lg:col-span-7"
+      >
+        <nav aria-label="Information">
+          <div class="flex items-center gap-3">
+            <span class="bg-copper-300 h-px w-6"></span>
+            <span
+              class="text-copper-200 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+            >
+              01
+            </span>
+          </div>
+          <h3
+            class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+          >
+            Information
+          </h3>
+          <ul class="mt-6 space-y-3">
+            {
+              infoLinks.map((entry) => (
+                <li>
+                  <a
+                    href={entry.url}
+                    class="text-cream-100/85 hover:text-copper-300 group inline-flex items-center gap-2 text-sm transition-colors"
+                  >
+                    <span class="bg-cream-100/30 group-hover:bg-copper-300 inline-block h-px w-0 transition-all duration-300 group-hover:w-3" />
+                    <span>{entry.key}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <nav aria-label="Treatments">
+          <div class="flex items-center gap-3">
+            <span class="bg-copper-300 h-px w-6"></span>
+            <span
+              class="text-copper-200 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+            >
+              02
+            </span>
+          </div>
+          <h3
+            class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+          >
+            Treatments
+          </h3>
+          <ul class="mt-6 space-y-3">
+            {
+              services.map((svc) => (
+                <li>
+                  <a
+                    href={svc.url}
+                    class="text-cream-100/85 hover:text-copper-300 group inline-flex items-center gap-2 text-sm transition-colors"
+                  >
+                    <span class="bg-cream-100/30 group-hover:bg-copper-300 inline-block h-px w-0 transition-all duration-300 group-hover:w-3" />
+                    <span>{svc.key}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <section>
+          <div class="flex items-center gap-3">
+            <span class="bg-copper-300 h-px w-6"></span>
+            <span
+              class="text-copper-200 text-[0.6rem] font-medium tracking-[0.4em] uppercase"
+            >
+              03
+            </span>
+          </div>
+          <h3
+            class="text-cream-50 mt-3 font-serif text-xl tracking-[-0.01em] md:text-2xl"
+          >
+            Get in <em class="text-copper-300 italic">Touch</em>
+          </h3>
+
+          <address class="mt-6 space-y-4 text-sm leading-6 not-italic">
+            <a
+              href={client.address.mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-cream-100/85 hover:text-copper-300 group block transition-colors"
+            >
+              <span
+                class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+                >A.</span
+              >
+              {client.address.lineOne}<br />
+              <span class="ml-6 inline-block">{client.address.lineTwo}</span>
+            </a>
+
+            <a
+              href={`tel:${client.phoneForTel}`}
+              class="text-cream-100/85 hover:text-copper-300 block transition-colors"
+            >
+              <span
+                class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+                >P.</span
+              >
+              {client.phoneFormatted}
+            </a>
+
+            <a
+              href={`mailto:${client.email}`}
+              class="text-cream-100/85 hover:text-copper-300 block break-words transition-colors"
+            >
+              <span
+                class="text-copper-300 mr-2 inline-block w-4 text-[0.6rem] font-medium tracking-[0.3em] uppercase"
+                >E.</span
+              >
+              {client.email}
+            </a>
+          </address>
+
+          <p
+            class="text-cream-100/55 border-cream-100/10 mt-6 border-t pt-4 text-xs leading-5 italic"
+          >
+            Direct billing available. Please ask about eligible providers.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-6 md:px-10 lg:px-16">
+    <div class="flex items-center gap-6">
+      <span class="bg-cream-100/15 h-px flex-1"></span>
+      <span
+        class="text-cream-100/60 text-[0.65rem] font-medium tracking-[0.45em] uppercase"
+      >
+        ✦ Stay Well ✦
+      </span>
+      <span class="bg-cream-100/15 h-px flex-1"></span>
+    </div>
+  </div>
+
+  <div class="">
+    <div
+      class="relative mx-auto flex max-w-7xl flex-col items-start gap-4 px-6 py-8 text-xs md:flex-row md:items-center md:justify-between md:px-10 lg:px-16"
+    >
+      <p class="text-cream-100/60 font-sans tracking-wide">
+        <span>©</span>
+        <span>{currentYear}</span>
+        <span class="mx-1">·</span>
+        <span class="text-cream-100/85 font-serif italic">{client.name}</span>
+        <span class="mx-1 hidden md:inline">·</span>
+        <span class="block md:inline">All rights reserved.</span>
+      </p>
+
+      <p
+        class="text-cream-100/60 flex items-center gap-2 font-sans tracking-wide"
+      >
+        <span class="bg-copper-300 inline-block h-px w-6"></span>
+        <span>Designed &amp; hand-coded by</span>
+        <a
+          href="https://bespokewebdesign.ca/"
+          target="_blank"
+          rel="noopener"
+          class="text-copper-300 hover:text-copper-200 font-serif italic transition-colors"
+        >
+          Bespoke Web Design Edmonton
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  #hybrid-footer h3,
+  #hybrid-footer .font-serif,
+  #hybrid-footer em {
+    font-family: 'Fraunces', 'Cormorant Garamond', ui-serif, Georgia, serif;
+    font-feature-settings: 'ss01', 'ss02';
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 50;
+  }
+
+  #hybrid-footer em,
+  #hybrid-footer .italic {
+    font-variation-settings:
+      'opsz' 144,
+      'SOFT' 100;
+  }
+</style>
