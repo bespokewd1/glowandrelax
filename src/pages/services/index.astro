@@ -18,6 +18,7 @@ import { getCollection } from 'astro:content';
 import { resolveImage } from '@js/imageUtils';
 import type { GetImageResult } from 'astro';
 import seoSetting from '@data/seo-pages.json';
+import Button from '@components/Button.astro';
 const seo = seoSetting.services;
 const ogImg = await resolveImage(seo.ogImage);
 let ogImage: GetImageResult | null = null;
@@ -233,7 +234,12 @@ const preloadedImages = await reloadImages();
                   {s.blurb}
                 </p>
                 <div class="mt-auto pt-6">
-                  <a
+                  <Button as="a" variant="outline"
+                    href={s.href}
+                   >
+                    {s.cta ?? 'Read More'}
+                  </Button>
+                  {/* <a
                     href={s.href}
                     class="group/link inline-flex items-center gap-2 rounded-full border border-taupe-900 px-5 py-2.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
                   >
@@ -244,7 +250,7 @@ const preloadedImages = await reloadImages();
                     >
                       →
                     </span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </article>
