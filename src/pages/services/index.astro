@@ -3,12 +3,8 @@ import BaseLayout from 'src/layouts/BaseLayout.astro';
 import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 // import { Image } from 'astro:assets';
 import { Image } from 'astro-lqip/components';
+import { Icon } from 'astro-icon/components';
 import clientData from '@data/clientData';
-
-import serviceIcon1 from '@assets/images/service-icons-transparent/deep-tissue.png';
-import serviceIcon2 from '@assets/images/service-icons-transparent/hot-stone.png';
-import serviceIcon3 from '@assets/images/service-icons-transparent/cupping.png';
-import serviceIcon4 from '@assets/images/service-icons-transparent/thai-oil.png';
 
 import benefitImg from '@assets/images/About-Section.TherapistImage.jpg';
 
@@ -51,29 +47,29 @@ const services: Service[] = (await getCollection('services'))
 
 type Benefit = {
   title: string;
-  icon: ImageMetadata;
+  icon: string;
   body: string;
 };
 
 const benefits: Benefit[] = [
   {
     title: 'Deep‑Tissue Massage',
-    icon: serviceIcon1,
+    icon: 'tabler:massage',
     body: 'Ideal for individuals experiencing chronic tension or post‑exercise soreness. Focused techniques reach deeper muscle layers to provide effective relief and improved mobility.',
   },
   {
     title: 'Prenatal Massage',
-    icon: serviceIcon2,
+    icon: 'tabler:user-heart',
     body: 'A gentle, therapeutic massage designed for expectant mothers to relieve muscle tension, reduce swelling, and promote relaxation during pregnancy.',
   },
   {
     title: 'Cupping Massage',
-    icon: serviceIcon3,
+    icon: 'tabler:circles',
     body: 'A targeted technique using gentle negative pressure to lift fascia, improve tissue glide, and release tight areas. When paired with hands‑on work, it helps reduce tension and supports recovery.',
   },
   {
     title: 'Swedish Massage',
-    icon: serviceIcon4,
+    icon: 'tabler:wind',
     body: 'Grounded in relaxation, this therapy uses long, flowing strokes, gentle kneading, and circular movements to ease muscle tension, improve circulation, and promote a deep sense of calm and rejuvenation.',
   },
 ];
@@ -278,10 +274,10 @@ const preloadedImages = await reloadImages();
                 class="mx-auto mb-6 flex size-20 items-center justify-center rounded-full border border-copper-400 bg-cream-50"
                 aria-hidden="true"
               >
-                <Image
-                  src={b.icon}
-                  alt={b.title}
-                  class="size-12 object-contain drop-shadow-md"
+                <Icon
+                  name={b.icon}
+                  class="size-10 text-copper-500"
+                  aria-hidden="true"
                 />
               </div>
               <h3 class="font-serif text-lg font-semibold text-taupe-900 md:text-xl">
