@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 import { cn } from '../lib/utils';
 import { Icon } from 'astro-icon/components';
 
-type Variant = 'primary' | 'secondary';
+type Variant = 'primary' | 'secondary' | 'outline';
 
 type CommonProps = {
   variant?: Variant;
@@ -48,7 +48,13 @@ const variantClasses: Record<
     iconWrap: 'bg-white shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-sage-300)]',
     iconSvg: 'text-sage-700',
   },
+  outline: {
+    btn: 'bg-transparent text-taupe-900 shadow-[inset_0_0_0_1px_var(--color-copper-900)]',
+    iconWrap: 'bg-copper-100 shadow-[inset_0_0_0_1px_var(--color-taupe-900)]',
+    iconSvg: 'text-taupe-900',
+  },
 };
+// shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-copper-300)]
 const v = variantClasses[variant];
 
 const baseBtn = [

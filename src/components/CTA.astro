@@ -16,23 +16,23 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<section class="relative isolate overflow-hidden bg-sage-700 text-cream-50">
+<section class="bg-sage-700 text-cream-50 relative isolate overflow-hidden">
   <!-- ambient washes -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -top-24 -left-24 -z-10 h-[28rem] w-[28rem] rounded-full bg-sage-500/40 blur-3xl"
+    class="bg-sage-500/40 pointer-events-none absolute -top-24 -left-24 -z-10 h-[28rem] w-[28rem] rounded-full blur-3xl"
   >
   </div>
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -right-24 -bottom-24 -z-10 h-[28rem] w-[28rem] rounded-full bg-copper-500/20 blur-3xl"
+    class="bg-copper-500/20 pointer-events-none absolute -right-24 -bottom-24 -z-10 h-[28rem] w-[28rem] rounded-full blur-3xl"
   >
   </div>
 
   <!-- decorative concentric circles -->
   <svg
     aria-hidden="true"
-    class="pointer-events-none absolute top-1/2 left-8 -z-10 h-48 w-48 -translate-y-1/2 text-cream-50/10 lg:h-64 lg:w-64"
+    class="text-cream-50/10 pointer-events-none absolute top-1/2 left-8 -z-10 h-48 w-48 -translate-y-1/2 lg:h-64 lg:w-64"
     viewBox="0 0 200 200"
     fill="none"
     stroke="currentColor"
@@ -47,26 +47,25 @@ const { title, description } = Astro.props;
     class="relative mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-16 text-center md:py-20 lg:py-24"
   >
     <div class="flex items-center gap-3">
-      <span class="h-px w-8 bg-copper-300"></span>
+      <span class="bg-copper-300 h-px w-8"></span>
       <span
-        class="text-[0.7rem] font-medium tracking-[0.45em] text-copper-200 uppercase"
+        class="text-copper-200 text-[0.7rem] font-medium tracking-[0.45em] uppercase"
       >
         Begin your journey
       </span>
-      <span class="h-px w-8 bg-copper-300"></span>
+      <span class="bg-copper-300 h-px w-8"></span>
     </div>
 
     <h2
-      class="font-serif text-4xl leading-[1.05] tracking-[-0.01em] text-cream-50 italic md:text-5xl lg:text-6xl"
+      class="text-cream-50 font-serif text-4xl leading-[1.05] tracking-[-0.01em] italic md:text-5xl lg:text-6xl"
     >
       {title}
     </h2>
-    <p class="max-w-xl leading-7 text-cream-100/90">
+    <p class="text-cream-100/90 max-w-xl leading-7">
       {description}
     </p>
-    <CtaLink
-      class="group mt-2 inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-700/40 transition-all hover:-translate-y-0.5 hover:bg-copper-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-200"
-    />
+
+    <CtaLink />
   </div>
 </section>
 <!-- <section id="cta">

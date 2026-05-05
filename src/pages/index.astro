@@ -27,6 +27,7 @@ import TwitterIcon from '@components/Icons/Socials/TwitterIcon.astro';
 import WhyChooseUs from '@components/why-choose-us.astro';
 import CtaLink from '@components/CtaLink.astro';
 import Hero from '@components/Hero.astro';
+import Button from '@components/Button.astro';
 
 const posts = await getCollection('blog');
 posts.sort(
@@ -79,20 +80,20 @@ const highlight2 = allServices.find(
     <div class="mx-auto max-w-6xl px-6 py-16 lg:py-20">
       <div class="mx-auto max-w-3xl text-center">
         <div class="mb-4 flex items-center justify-center gap-3">
-          <span class="h-px w-8 bg-copper-500"></span>
+          <span class="bg-copper-500 h-px w-8"></span>
           <span
-            class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+            class="text-copper-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
           >
             Treatments
           </span>
-          <span class="h-px w-8 bg-copper-500"></span>
+          <span class="bg-copper-500 h-px w-8"></span>
         </div>
         <h2
-          class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+          class="text-taupe-900 font-serif text-3xl tracking-[-0.01em] md:text-4xl lg:text-5xl"
         >
           {homeData.serviceHighlights.heading}
         </h2>
-        <p class="mx-auto mt-4 max-w-2xl leading-7 text-taupe-700">
+        <p class="text-taupe-700 mx-auto mt-4 max-w-2xl leading-7">
           {homeData.serviceHighlights.description}
         </p>
       </div>
@@ -115,21 +116,21 @@ const highlight2 = allServices.find(
                 />
               </div>
 
-              <div class="flex items-center justify-center bg-sage-100 px-6 py-10 md:col-span-6 md:px-12">
+              <div class="bg-sage-100 flex items-center justify-center px-6 py-10 md:col-span-6 md:px-12">
                 <div class="w-full max-w-xl text-center md:text-left">
-                  <span class="text-[0.65rem] font-medium tracking-[0.4em] text-sage-700 uppercase">
+                  <span class="text-sage-700 text-[0.65rem] font-medium tracking-[0.4em] uppercase">
                     01 — Therapeutic
                   </span>
-                  <h3 class="mt-3 font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
+                  <h3 class="text-taupe-900 mt-3 font-serif text-2xl tracking-tight md:text-3xl">
                     {highlight1.data.title}
                   </h3>
-                  <p class="mt-4 leading-7 text-taupe-700">
+                  <p class="text-taupe-700 mt-4 leading-7">
                     {highlight1.data.subtitle}
                   </p>
                   <div class="mt-6">
                     <a
                       href="/services"
-                      class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-5 py-2.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
+                      class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-colors"
                     >
                       View Services
                       <span
@@ -153,21 +154,21 @@ const highlight2 = allServices.find(
               <div class="md:col-span-12">
                 <div class="grid grid-cols-1 md:grid-cols-12">
                   <div class="order-2 md:order-1 md:col-span-6">
-                    <div class="flex h-full w-full items-center justify-center bg-cream-100 px-6 py-10 md:px-12">
+                    <div class="bg-cream-100 flex h-full w-full items-center justify-center px-6 py-10 md:px-12">
                       <div class="w-full max-w-xl text-center md:text-left">
-                        <span class="text-[0.65rem] font-medium tracking-[0.4em] text-copper-700 uppercase">
+                        <span class="text-copper-700 text-[0.65rem] font-medium tracking-[0.4em] uppercase">
                           02 — Relaxation
                         </span>
-                        <h3 class="mt-3 font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
+                        <h3 class="text-taupe-900 mt-3 font-serif text-2xl tracking-tight md:text-3xl">
                           {highlight2.data.title}
                         </h3>
-                        <p class="mt-4 leading-7 text-taupe-700">
+                        <p class="text-taupe-700 mt-4 leading-7">
                           {highlight2.data.subtitle}
                         </p>
                         <div class="mt-6">
                           <a
                             href="/services"
-                            class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-5 py-2.5 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
+                            class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-medium transition-colors"
                           >
                             Learn More
                             <span
@@ -203,20 +204,20 @@ const highlight2 = allServices.find(
   <WhyChooseUs />
 
   <!-- ================= How to Book (Steps) ================= -->
-  <section class="relative bg-cream-100">
+  <section class="bg-cream-100 relative">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
       <div class="text-center">
         <div class="mb-4 flex items-center justify-center gap-3">
-          <span class="h-px w-8 bg-sage-600"></span>
+          <span class="bg-sage-600 h-px w-8"></span>
           <span
-            class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase"
+            class="text-sage-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
           >
             Three steps
           </span>
-          <span class="h-px w-8 bg-sage-600"></span>
+          <span class="bg-sage-600 h-px w-8"></span>
         </div>
         <h2
-          class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+          class="text-taupe-900 font-serif text-3xl tracking-[-0.01em] md:text-4xl lg:text-5xl"
         >
           {homeData.bookingSteps.title}
         </h2>
@@ -228,21 +229,21 @@ const highlight2 = allServices.find(
       >
         {
           homeData.bookingSteps.steps.map((step) => (
-            <div class="group relative overflow-hidden rounded-sm border border-taupe-200 bg-cream-50 px-8 py-10 text-center transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
+            <div class="group border-taupe-200 bg-cream-50 hover:border-copper-400 relative overflow-hidden rounded-sm border px-8 py-10 text-center transition-all hover:-translate-y-1 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute -top-2 -right-2 font-serif text-[7rem] leading-none italic text-copper-500/10 select-none"
+                class="text-copper-500/10 pointer-events-none absolute -top-2 -right-2 font-serif text-[7rem] leading-none italic select-none"
               >
                 {step.num}
               </div>
               <div class="relative">
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-copper-500 font-serif text-xl text-copper-600 italic">
+                <div class="border-copper-500 text-copper-600 mx-auto flex h-12 w-12 items-center justify-center rounded-full border font-serif text-xl italic">
                   {step.num}
                 </div>
-                <h3 class="mt-5 font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
+                <h3 class="text-taupe-900 mt-5 font-serif text-2xl tracking-tight md:text-3xl">
                   {step.title}
                 </h3>
-                <p class="mt-3 leading-7 text-taupe-700">{step.description}</p>
+                <p class="text-taupe-700 mt-3 leading-7">{step.description}</p>
               </div>
             </div>
           ))
@@ -251,16 +252,14 @@ const highlight2 = allServices.find(
 
       <!-- Direct billing + CTA -->
       <div class="mt-14 text-center">
-        <p class="font-serif text-xl text-taupe-900 italic">
+        <p class="text-taupe-900 font-serif text-xl italic">
           {homeData.bookingSteps.billingText}
         </p>
-        <p class="mt-1 text-sm text-taupe-600">
+        <p class="text-taupe-600 mt-1 text-sm">
           {homeData.bookingSteps.billingSub}
         </p>
 
-        <CtaLink
-          class="group mt-6 inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100"
-        />
+        <CtaLink />
       </div>
     </div>
   </section>
@@ -270,39 +269,39 @@ const highlight2 = allServices.find(
     <div class="mx-auto grid grid-cols-1 lg:grid-cols-12">
       <!-- Left: Info panel (sage) -->
       <div
-        class="relative flex flex-col justify-center overflow-hidden bg-sage-700 px-8 py-14 text-cream-50 md:px-12 md:py-20 lg:col-span-5"
+        class="bg-sage-700 text-cream-50 relative flex flex-col justify-center overflow-hidden px-8 py-14 md:px-12 md:py-20 lg:col-span-5"
       >
         <!-- Decorative SVG -->
         <svg
           aria-hidden="true"
-          class="pointer-events-none absolute -top-10 -right-10 h-64 w-64 text-sage-500/30"
+          class="text-sage-500/30 pointer-events-none absolute -top-10 -right-10 h-64 w-64"
           viewBox="0 0 200 200"
           fill="none"
           stroke="currentColor"
           stroke-width="1"
         >
-          <circle cx="100" cy="100" r="80" />
-          <circle cx="100" cy="100" r="60" />
-          <circle cx="100" cy="100" r="40" />
+          <circle cx="100" cy="100" r="80"></circle>
+          <circle cx="100" cy="100" r="60"></circle>
+          <circle cx="100" cy="100" r="40"></circle>
         </svg>
 
         <div class="relative max-w-md">
           <div class="flex items-center gap-3">
-            <span class="h-px w-8 bg-copper-300"></span>
+            <span class="bg-copper-300 h-px w-8"></span>
             <span
-              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-200 uppercase"
+              class="text-copper-200 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
             >
               Reach out
             </span>
           </div>
           <h2
-            class="mt-5 font-serif text-3xl tracking-[-0.01em] text-cream-50 md:text-4xl lg:text-5xl"
+            class="text-cream-50 mt-5 font-serif text-3xl tracking-[-0.01em] md:text-4xl lg:text-5xl"
           >
             Get in <em class="text-copper-300 italic">Touch</em>
           </h2>
 
-          <div class="mt-8 space-y-4 text-cream-100/90">
-            <p class="font-serif text-xl text-cream-50 italic">
+          <div class="text-cream-100/90 mt-8 space-y-4">
+            <p class="text-cream-50 font-serif text-xl italic">
               {client.name}
             </p>
             <div class="space-y-2 text-sm leading-6">
@@ -316,11 +315,11 @@ const highlight2 = allServices.find(
                 <span class="text-copper-300">E.</span>
                 {client.email}
               </p>
-              <p class="border-t border-cream-100/15 pt-3">
+              <p class="border-cream-100/15 border-t pt-3">
                 <span class="text-copper-300">Hours.</span>
                 {client.openingHours.daysOpen}: {client.openingHours.hours}
               </p>
-              <p class="text-xs leading-5 text-cream-100/70 italic">
+              <p class="text-cream-100/70 text-xs leading-5 italic">
                 Direct Billing Available. Please ask about eligible providers.
               </p>
             </div>
@@ -331,28 +330,28 @@ const highlight2 = allServices.find(
             <a
               href={client.socials.facebook}
               aria-label="Facebook"
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-cream-50/30 transition hover:border-copper-300 hover:bg-copper-300/10"
+              class="border-cream-50/30 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
             >
               <FacebookIcon class:list={['text-cream-50']} />
             </a>
             <a
               href={client.socials.instagram}
               aria-label="Instagram"
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-cream-50/30 transition hover:border-copper-300 hover:bg-copper-300/10"
+              class="border-cream-50/30 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
             >
               <InstagramIcon class:list={['text-cream-50']} />
             </a>
             <a
               href={client.socials.linkedin}
               aria-label="LinkedIn"
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-cream-50/30 transition hover:border-copper-300 hover:bg-copper-300/10"
+              class="border-cream-50/30 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
             >
               <LinkedInIcon class:list={['text-cream-50']} />
             </a>
             <a
               href={client.socials.twitter}
               aria-label="Twitter"
-              class="flex h-10 w-10 items-center justify-center rounded-full border border-cream-50/30 transition hover:border-copper-300 hover:bg-copper-300/10"
+              class="border-cream-50/30 hover:border-copper-300 hover:bg-copper-300/10 flex h-10 w-10 items-center justify-center rounded-full border transition"
             >
               <TwitterIcon class:list={['text-cream-50']} />
             </a>
@@ -364,15 +363,15 @@ const highlight2 = allServices.find(
       <div class="bg-cream-50 px-8 py-14 md:px-12 md:py-20 lg:col-span-7">
         <div class="mx-auto max-w-2xl">
           <div class="flex items-center gap-3">
-            <span class="h-px w-8 bg-copper-500"></span>
+            <span class="bg-copper-500 h-px w-8"></span>
             <span
-              class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+              class="text-copper-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
             >
               Send a message
             </span>
           </div>
           <h3
-            class="mt-4 font-serif text-2xl tracking-[-0.01em] text-taupe-900 md:text-3xl"
+            class="text-taupe-900 mt-4 font-serif text-2xl tracking-[-0.01em] md:text-3xl"
           >
             Tell us how we can help.
           </h3>
@@ -381,23 +380,23 @@ const highlight2 = allServices.find(
             <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div>
                 <label
-                  class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                  class="text-taupe-600 mb-2 block text-[0.65rem] font-medium tracking-[0.3em] uppercase"
                   >First Name</label
                 >
                 <input
                   type="text"
-                  class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                  class="border-taupe-300 text-taupe-900 placeholder:text-taupe-400 focus:border-copper-500 w-full border-b bg-transparent px-1 py-2 transition focus:outline-none"
                   placeholder="Jane"
                 />
               </div>
               <div>
                 <label
-                  class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                  class="text-taupe-600 mb-2 block text-[0.65rem] font-medium tracking-[0.3em] uppercase"
                   >Last Name</label
                 >
                 <input
                   type="text"
-                  class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                  class="border-taupe-300 text-taupe-900 placeholder:text-taupe-400 focus:border-copper-500 w-full border-b bg-transparent px-1 py-2 transition focus:outline-none"
                   placeholder="Doe"
                 />
               </div>
@@ -405,38 +404,41 @@ const highlight2 = allServices.find(
 
             <div class="mt-6">
               <label
-                class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                class="text-taupe-600 mb-2 block text-[0.65rem] font-medium tracking-[0.3em] uppercase"
                 >Email *</label
               >
               <input
                 type="email"
                 required
-                class="w-full border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                class="border-taupe-300 text-taupe-900 placeholder:text-taupe-400 focus:border-copper-500 w-full border-b bg-transparent px-1 py-2 transition focus:outline-none"
                 placeholder="you@example.com"
               />
             </div>
 
             <div class="mt-6">
               <label
-                class="mb-2 block text-[0.65rem] font-medium tracking-[0.3em] text-taupe-600 uppercase"
+                class="text-taupe-600 mb-2 block text-[0.65rem] font-medium tracking-[0.3em] uppercase"
                 >Message</label
               >
               <textarea
                 rows="5"
-                class="w-full resize-none border-b border-taupe-300 bg-transparent px-1 py-2 text-taupe-900 transition placeholder:text-taupe-400 focus:border-copper-500 focus:outline-none"
+                class="border-taupe-300 text-taupe-900 placeholder:text-taupe-400 focus:border-copper-500 w-full resize-none border-b bg-transparent px-1 py-2 transition focus:outline-none"
                 placeholder="How can we help?"></textarea>
             </div>
 
-            <button
+            <Button type="submit" icon="tabler:send-filled">
+              Send Message
+            </Button>
+            <!-- <button
               type="submit"
-              class="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-copper-500 px-8 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 md:w-auto"
+              class="group bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 focus-visible:ring-copper-700 mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 md:w-auto"
             >
               Send Message
               <span
                 aria-hidden="true"
-                class="transition-transform group-hover:translate-x-1"
-              >→</span>
-            </button>
+                class="transition-transform group-hover:translate-x-1">→</span
+              >
+            </button> -->
           </form>
         </div>
       </div>

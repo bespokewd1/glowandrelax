@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro-lqip/components';
 import homeData from '@data/home.json';
 import CtaLink from '@components/CtaLink.astro';
+import Button from './Button.astro';
 
 interface Props {
   heroImg: ImageMetadata | null;
@@ -164,9 +165,10 @@ const { heroImg, welcomeImage } = Astro.props;
 
       <!-- CTAs -->
       <div class="hero-rise hero-rise-5 mt-9 flex flex-wrap items-center gap-3">
-        <CtaLink
+        <CtaLink />
+        <!-- <CtaLink
           class="group bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 focus-visible:ring-copper-700 focus-visible:ring-offset-cream-50 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        />
+        /> -->
         <!-- <a
           href="https://imassagetherapeuticclinique.massagespotlight.com/firstvisit"
           target="_blank"

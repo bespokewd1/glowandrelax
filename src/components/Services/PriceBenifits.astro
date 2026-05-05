@@ -39,19 +39,19 @@ const email = clientData.email || 'info@yourclinic.ca';
   <div class="mx-auto max-w-7xl px-6 py-16 md:py-20 lg:px-12">
     <header class="mx-auto max-w-3xl text-center">
       <div class="mb-4 flex items-center justify-center gap-3">
-        <span class="h-px w-8 bg-copper-500"></span>
+        <span class="bg-copper-500 h-px w-8"></span>
         <span
-          class="text-[0.7rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          class="text-copper-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase"
         >
           Benefits
         </span>
-        <span class="h-px w-8 bg-copper-500"></span>
+        <span class="bg-copper-500 h-px w-8"></span>
       </div>
       <h2
-        class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl lg:text-5xl"
+        class="text-taupe-900 font-serif text-3xl tracking-[-0.01em] md:text-4xl lg:text-5xl"
       >
         {titleLead}{' '}
-        <em class="font-serif italic text-copper-600">{titleAccent}</em>
+        <em class="text-copper-600 font-serif italic">{titleAccent}</em>
       </h2>
     </header>
 
@@ -60,23 +60,21 @@ const email = clientData.email || 'info@yourclinic.ca';
     >
       {
         benefits.map((b) => (
-          <article class="group relative overflow-hidden rounded-sm border border-taupe-200 bg-cream-50 px-8 py-10 text-center transition-all hover:-translate-y-1 hover:border-copper-400 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
+          <article class="group border-taupe-200 bg-cream-50 hover:border-copper-400 relative overflow-hidden rounded-sm border px-8 py-10 text-center transition-all hover:-translate-y-1 hover:shadow-[0_30px_50px_-25px_rgba(60,49,40,0.35)]">
             <div
               aria-hidden="true"
-              class="pointer-events-none absolute top-2 right-2 font-serif text-[6rem] leading-none italic text-copper-500/10 select-none"
+              class="text-copper-500/10 pointer-events-none absolute top-2 right-2 font-serif text-[6rem] leading-none italic select-none"
             >
               {b.num}
             </div>
             <div class="relative">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-copper-500 font-serif text-xl italic text-copper-600">
+              <div class="border-copper-500 text-copper-600 mx-auto flex h-12 w-12 items-center justify-center rounded-full border font-serif text-xl italic">
                 {b.num}
               </div>
-              <h3
-                class="mt-5 font-serif text-xl tracking-tight text-taupe-900 md:text-2xl"
-              >
+              <h3 class="text-taupe-900 mt-5 font-serif text-xl tracking-tight md:text-2xl">
                 {b.title}
               </h3>
-              <p class="mt-3 text-sm leading-6 text-taupe-700">{b.body}</p>
+              <p class="text-taupe-700 mt-3 text-sm leading-6">{b.body}</p>
             </div>
           </article>
         ))
@@ -85,7 +83,7 @@ const email = clientData.email || 'info@yourclinic.ca';
 
     <!-- Tagline -->
     <p
-      class="mx-auto mt-12 max-w-2xl text-center font-serif text-xl text-taupe-900 italic md:text-2xl"
+      class="text-taupe-900 mx-auto mt-12 max-w-2xl text-center font-serif text-xl italic md:text-2xl"
     >
       {benefitsTagline}
     </p>
@@ -99,17 +97,16 @@ const email = clientData.email || 'info@yourclinic.ca';
       <div class="mx-auto max-w-3xl px-6 py-16 md:py-20">
         <header class="text-center">
           <div class="mb-4 flex items-center justify-center gap-3">
-            <span class="h-px w-8 bg-sage-600" />
-            <span class="text-[0.7rem] font-medium tracking-[0.4em] text-sage-700 uppercase">
+            <span class="bg-sage-600 h-px w-8" />
+            <span class="text-sage-700 text-[0.7rem] font-medium tracking-[0.4em] uppercase">
               Investment
             </span>
-            <span class="h-px w-8 bg-sage-600" />
+            <span class="bg-sage-600 h-px w-8" />
           </div>
-          <h3 class="font-serif text-3xl tracking-[-0.01em] text-taupe-900 md:text-4xl">
-            Session{' '}
-            <em class="font-serif italic text-copper-600">Options</em>
+          <h3 class="text-taupe-900 font-serif text-3xl tracking-[-0.01em] md:text-4xl">
+            Session <em class="text-copper-600 font-serif italic">Options</em>
           </h3>
-          <p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-taupe-700">
+          <p class="text-taupe-700 mx-auto mt-4 max-w-xl text-sm leading-6">
             All prices are tax-included. Rates reflect in-clinic sessions by
             licensed therapists.
           </p>
@@ -117,26 +114,24 @@ const email = clientData.email || 'info@yourclinic.ca';
 
         <ul class="mx-auto mt-10 max-w-2xl">
           {prices.map((row) => (
-            <li class="flex items-baseline justify-between gap-6 border-b border-taupe-200 py-5">
-              <span class="font-serif text-lg italic text-copper-600 md:text-xl">
+            <li class="border-taupe-200 flex items-baseline justify-between gap-6 border-b py-5">
+              <span class="text-copper-600 font-serif text-lg italic md:text-xl">
                 {row.duration}
               </span>
-              <span class="font-serif text-2xl tracking-tight text-taupe-900 md:text-3xl">
+              <span class="text-taupe-900 font-serif text-2xl tracking-tight md:text-3xl">
                 {row.price}
               </span>
             </li>
           ))}
         </ul>
 
-        <p class="mx-auto mt-6 max-w-xl text-center text-xs leading-5 text-taupe-600">
+        <p class="text-taupe-600 mx-auto mt-6 max-w-xl text-center text-xs leading-5">
           Need a different duration? Contact us and we'll help tailor a session
           to your needs.
         </p>
 
         <div class="mt-10 flex justify-center">
-          <CtaLink class="group inline-flex items-center gap-2 rounded-full bg-copper-500 px-7 py-3.5 text-sm font-semibold tracking-wide text-cream-50 shadow-lg shadow-copper-500/25 transition-all hover:-translate-y-0.5 hover:bg-copper-600 hover:shadow-copper-600/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-copper-700 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50">
-            {ctaLabel}
-          </CtaLink>
+          <CtaLink>{ctaLabel}</CtaLink>
         </div>
       </div>
     </section>
@@ -151,25 +146,25 @@ const email = clientData.email || 'info@yourclinic.ca';
     >
       <div>
         <p
-          class="text-[0.65rem] font-medium tracking-[0.4em] text-copper-700 uppercase"
+          class="text-copper-700 text-[0.65rem] font-medium tracking-[0.4em] uppercase"
         >
           Questions?
         </p>
-        <p class="mt-2 font-serif text-xl text-taupe-900 italic md:text-2xl">
+        <p class="text-taupe-900 mt-2 font-serif text-xl italic md:text-2xl">
           We're here to help you choose the right session.
         </p>
-        <p class="mt-2 text-sm text-taupe-700">
+        <p class="text-taupe-700 mt-2 text-sm">
           Call or text{' '}
           <a
             href={phoneHref}
-            class="text-copper-700 underline decoration-copper-400 underline-offset-4 transition-colors hover:text-copper-600"
+            class="text-copper-700 decoration-copper-400 hover:text-copper-600 underline underline-offset-4 transition-colors"
           >
             {phoneDisplay}
           </a>{' '}
           ·{' '}
           <a
             href={`mailto:${email}`}
-            class="text-copper-700 underline decoration-copper-400 underline-offset-4 transition-colors hover:text-copper-600"
+            class="text-copper-700 decoration-copper-400 hover:text-copper-600 underline underline-offset-4 transition-colors"
           >
             {email}
           </a>
@@ -177,7 +172,7 @@ const email = clientData.email || 'info@yourclinic.ca';
       </div>
       <a
         href="/contact"
-        class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-6 py-3 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"
+        class="group border-taupe-900 text-taupe-900 hover:bg-taupe-900 hover:text-cream-50 inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-medium transition-colors"
       >
         Ask a Question
         <span
