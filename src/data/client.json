@@ -1,14 +1,14 @@
 {
   "name": "Glow and Relax",
   "email": "glowandrelax@gmail.com",
-  "phone": "780-729-0978",
+  "phone": "780-710-0539",
   "address": {
     "lineOne": "",
-    "lineTwo": "Edmonton, AB",
-    "city": "Edmonton",
+    "lineTwo": "516 10 St.",
+    "city": "Cold Lake",
     "state": "AB",
     "zip": "",
-    "mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d151793.02846160723!2d-113.80443860704207!3d53.52623461207556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53a0224580deff23%3A0x411fa00c4af6155d!2sEdmonton%2C%20AB%2C%20Canada!5e0!3m2!1sen!2sph!4v1777991763050!5m2!1sen!2sph"
+    "mapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2318.725848296684!2d-110.1781919224404!3d54.46777419022717!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x53a7cb713aa13edb%3A0xf2935ba5cb0e8965!2s516%2010%20St%2C%20Cold%20Lake%2C%20AB%20T9M%201A3%2C%20Canada!5e0!3m2!1sen!2sph!4v1783695939051!5m2!1sen!2sph"
   },
   "socials": {
     "facebook": "https://www.facebook.com/yourpage",
@@ -20,5 +20,5 @@
     "daysOpen": "Monday – Sunday",
     "hours": "9:00 AM – 9:00 PM"
   },
-  "domain": "glowandrelax.netlify.app"
+  "domain": "https://glowandrelax.ca/"
 }

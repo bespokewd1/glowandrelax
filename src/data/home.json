@@ -2,13 +2,13 @@
   "hero": {
     "title": "Your Path to Relaxation Starts Here",
     "subtitle": "Experience soothing, professional massage therapy designed to relieve stress, restore balance, and renew your body and mind.",
-    "image": "/src/assets/images/home/hero-img1.jpg",
+    "image": "/src/assets/images/home/hero-img1.webp",
     "alt": "Lady in a stone massage"
   },
   "welcome": {
     "title": "Welcome to Glow & Relax Studio",
     "body": "At Glow and Relax Studio, we focus on restorative, evidence‑based massage care tailored to your body’s needs. From deep tissue and hot stone to relaxation-focused treatments, our goal is to reduce pain, release tension, and renew your overall well‑being. Proud to be local, Canadian Business.",
-    "image": "/src/assets/images/home/welcome.jpg",
+    "image": "/src/assets/images/home/welcome.webp",
     "alt": "Welcome image"
   },
   "greenCta": {
