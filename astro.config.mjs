@@ -1,4 +1,4 @@
-import { defineConfig  } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 
@@ -7,8 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  // update me!
-  site: 'https://glowandrelax.netlify.app/',
+  site: 'https://glowandrelax.ca/',
 
   integrations: [
     icon(),
@@ -22,5 +21,5 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
-  }
+  },
 });

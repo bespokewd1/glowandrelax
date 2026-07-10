@@ -1,7 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import client from '@data/clientData';
-import StickyButton from '@components/StickyButton.astro';
 import ScrollToTop from '@components/ScrollToTop.astro';
 import '@styles/root.less';
 // import '@styles/dark.less';
@@ -23,20 +22,22 @@ if (ogImg) {
 const siteOrigin = client.domain.startsWith('http')
   ? client.domain.replace(/\/+$/, '')
   : `https://${client.domain.replace(/^\/+|\/+$/g, '')}`;
+const siteUrl = Astro.site ?? new URL(siteOrigin);
 
 type Props = {
   description?: string;
   title?: string;
   preloadedImage?: GetImageResult | GetImageResult[];
-  ogImage: GetImageResult | null;
+  ogImage?: GetImageResult | null;
 };
 
-const {
-  description = 'Discover relaxation at Glow and Relax. Our professional massage therapy relieves stress, restores balance, and rejuvenates your body and mind. Book your session today.',
-  title = 'Glow and Relax | Professional Massage Therapy in Edmonton',
-  preloadedImage,
-  ogImage = defaultOgImg,
-} = Astro.props;
+const { preloadedImage } = Astro.props;
+const title = Astro.props.title?.trim() || seoSetting.global.title;
+const description =
+  Astro.props.description?.trim() || seoSetting.global.description;
+const ogImage = Astro.props.ogImage ?? defaultOgImg;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = ogImage ? new URL(ogImage.src, siteOrigin).href : null;
 
 const preloadedImages = !preloadedImage
   ? []
@@ -51,23 +52,18 @@ const preloadedImages = !preloadedImage
     <!-- View Transitions support -->
     <ClientRouter />
 
-    <!-- Standard meta tags -->
+    <!-- Site metadata -->
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="keywords" content="" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Fjalla+One&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Hammersmith+One&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
 
-    <link
-      rel="canonical"
-      href={`${siteOrigin}${Astro.url.pathname}`}
-    />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- Preloads the image passed as a prop -->
     {
@@ -75,26 +71,28 @@ const preloadedImages = !preloadedImage
         <link rel="preload" href={img.src} as="image" />
       ))
     }
-    {ogImage && <link rel="preload" href={ogImage.src} as="image" />}
-
-    <!--Social Media Display-->
+    <!-- Social media previews -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content={`${siteOrigin}${Astro.url.pathname}`}
-    />
+    <meta property="og:site_name" content={client.name} />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:url" content={canonicalUrl} />
     {
-      ogImage && (
+      ogImageUrl && (
         <>
-          <meta property="og:image" content={ogImage.src} />
-          <meta property="og:image:secure_url" content={ogImage.src} />
+          <meta property="og:image" content={ogImageUrl} />
+          <meta property="og:image:secure_url" content={ogImageUrl} />
+          <meta property="og:image:alt" content={title} />
         </>
       )
     }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
 
-    <!--Favicons-->
+    <!-- App icons -->
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -113,30 +111,9 @@ const preloadedImages = !preloadedImage
       href="/assets/favicons/favicon-16x16.png"
     />
     <link rel="manifest" href="/assets/favicons/site.webmanifest" />
-    <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#435b47" />
 
-    <!--For home page, use service keywords for the title, including location for SEO.
-            Other pages should just include the page name.
-
-            EXAMPLE:
-            Home page - House Painting Contractors | Painters and Co. | TestCity, WA
-            About Page - About us | Painters and Co.
-            -->
-    <title>
-      {
-        Astro.url.pathname === '/'
-          ? `${title}
-                |
-                ${client.name}
-                |
-                ${client.address.city},
-                ${client.address.state}`
-          : `${title}
-                    |
-                    ${client.name}`
-      }
-    </title>
+    <title>{`${title} | ${client.name}`}</title>
 
     <!-- Sitewide Scripts -->
     <script src="@js/nav.js"></script>
@@ -159,48 +136,5 @@ const preloadedImages = !preloadedImage
       <ScrollToTop />
     </main>
     <HybridFooter />
-
-    <!-- {
-      !Astro.url.pathname.startsWith('/contact') && (
-        <StickyButton phoneNumber="(587) 938-0458" />
-      )
-    } -->
   </body>
 </html>
-
-<script is:inline>
-  // helper functions to toggle dark mode
-  function enableDarkMode() {
-    document.body.classList.add('dark-mode');
-    localStorage.setItem('theme', 'dark');
-  }
-
-  function disableDarkMode() {
-    document.body.classList.remove('dark-mode');
-    localStorage.setItem('theme', 'light');
-  }
-
-  function setTheme() {
-    // default to the light theme
-    let theme = 'light';
-
-    // check localStorage for a saved 'theme' variable. if it's there, the user has visited before, so apply the necessary theme choices
-    if (localStorage.getItem('theme')) {
-      theme = localStorage.getItem('theme');
-    }
-    // if it's not there, check to see if the user has applied dark mode preferences themselves in the browser
-    else if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      theme = 'dark';
-    }
-
-    // if there is no preference set, the default of light will be used. apply accordingly
-    theme === 'dark' ? enableDarkMode() : disableDarkMode();
-  }
-
-  // setTheme();
-
-  // document.addEventListener('astro:after-swap', setTheme); // For View Transitions purposes - astro:after-swap ensures that the theme is kept after navigating to a new page.
-</script>

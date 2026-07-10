@@ -131,12 +131,12 @@ const steps: Step[] = [
   },
 ];
 
-const phoneDisplay = clientData.phoneFormatted?.trim() || '(587) 938-0458';
-const phoneHref = `tel:${clientData.phoneForTel?.replace(/\s+/g, '') || '5879380458'}`;
-const email = clientData.email || 'info@yourclinic.ca';
+const phoneDisplay = clientData.phoneFormatted;
+const phoneHref = `tel:${clientData.phoneForTel}`;
+const email = clientData.email;
 const bookingHref = '/direct-billing/';
 const mapNote =
-  'We offer in‑clinic massage services at Southgate Centre (Southgate Mall), Edmonton, Alberta. See our contact page for directions and parking details.';
+  'We offer in-clinic massage services in Cold Lake, Alberta. See our contact page for directions and parking details.';
 
 async function reloadImages() {
   return Promise.all(

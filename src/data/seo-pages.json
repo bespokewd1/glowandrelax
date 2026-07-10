@@ -1,42 +1,42 @@
 {
   "global": {
-    "title": "Glow and Relax | Professional Massage Therapy in Edmonton",
-    "description": "Discover relaxation at Glow and Relax. Our professional massage therapy relieves stress, restores balance, and rejuvenates your body and mind. Book your session today.",
+    "title": "Massage Therapy in Cold Lake, AB",
+    "description": "Glow and Relax provides personalized therapeutic and relaxation massage in Cold Lake, Alberta. Book a restorative session today.",
     "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "home": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Massage Therapy in Cold Lake, AB",
+    "description": "Personalized therapeutic and relaxation massage in Cold Lake, Alberta. Book your restorative session with Glow and Relax.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "about": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "About Glow and Relax",
+    "description": "Learn about Glow and Relax's personalized approach to therapeutic massage and restorative care in Cold Lake, Alberta.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "services": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Massage Services in Cold Lake, AB",
+    "description": "Explore therapeutic, deep-tissue, Swedish, prenatal, hot stone, and other massage services at Glow and Relax.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "contact": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Contact Glow and Relax",
+    "description": "Contact Glow and Relax in Cold Lake, Alberta to ask a question or book your massage therapy appointment.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "directBilling": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Direct Billing for Massage Therapy",
+    "description": "Learn about direct billing options for massage therapy appointments at Glow and Relax in Cold Lake, Alberta.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "gallery": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Glow and Relax Studio Gallery",
+    "description": "Explore the Glow and Relax massage studio and see the calm, restorative setting we offer in Cold Lake, Alberta.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   },
   "reviews": {
-    "title": "",
-    "description": "",
-    "ogImage": ""
+    "title": "Client Reviews",
+    "description": "Read client reviews of Glow and Relax's personalized massage therapy and restorative care in Cold Lake, Alberta.",
+    "ogImage": "/src/assets/images/og/hero-img1.jpg"
   }
 }
