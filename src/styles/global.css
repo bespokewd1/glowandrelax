@@ -11,53 +11,53 @@
 
   /* Brand palette — derived from Glow & Relax logo */
 
-  /* Sage green — lotus + moon outline */
-  --color-sage-50: #f3f6f1;
-  --color-sage-100: #e3ebde;
-  --color-sage-200: #c8d6c0;
-  --color-sage-300: #a8bb9c;
-  --color-sage-400: #8ea683;
-  --color-sage-500: #758d6a;
-  --color-sage-600: #5d7253;
-  --color-sage-700: #495a42;
-  --color-sage-800: #3a4836;
-  --color-sage-900: #2e392c;
+  /* Botanical green — Glow and Relax wordmark */
+  --color-sage-50: #f4f7f1;
+  --color-sage-100: #e7eee2;
+  --color-sage-200: #d1dec9;
+  --color-sage-300: #b1c5aa;
+  --color-sage-400: #8fa88a;
+  --color-sage-500: #6e896f;
+  --color-sage-600: #557157;
+  --color-sage-700: #435b47;
+  --color-sage-800: #344a3a;
+  --color-sage-900: #293b2e;
 
-  /* Copper / rose-gold — script lettering */
-  --color-copper-50: #faf1ec;
-  --color-copper-100: #f3ddd1;
-  --color-copper-200: #e6bba5;
-  --color-copper-300: #d59879;
-  --color-copper-400: #c47e5d;
-  --color-copper-500: #b06a4a;
-  --color-copper-600: #95553c;
-  --color-copper-700: #774430;
-  --color-copper-800: #5c3527;
-  --color-copper-900: #472a1f;
+  /* Dusty lotus rose — flower linework */
+  --color-copper-50: #fbf7f6;
+  --color-copper-100: #f5e9e7;
+  --color-copper-200: #ead5d3;
+  --color-copper-300: #dcbfbd;
+  --color-copper-400: #c79c9d;
+  --color-copper-500: #a87579;
+  --color-copper-600: #8d5f64;
+  --color-copper-700: #734c52;
+  --color-copper-800: #5d3d43;
+  --color-copper-900: #483035;
 
-  /* Cream — paper background */
-  --color-cream-50: #fbf7f1;
-  --color-cream-100: #f6efe3;
-  --color-cream-200: #ede0c9;
-  --color-cream-300: #e2cea8;
-  --color-cream-400: #d4b985;
-  --color-cream-500: #c2a268;
-  --color-cream-600: #a48650;
-  --color-cream-700: #826a40;
-  --color-cream-800: #635134;
-  --color-cream-900: #4a3d28;
+  /* Warm ivory — logo paper background */
+  --color-cream-50: #faf8ef;
+  --color-cream-100: #f4f0e4;
+  --color-cream-200: #eae3d2;
+  --color-cream-300: #ded4bc;
+  --color-cream-400: #cebea0;
+  --color-cream-500: #b8a580;
+  --color-cream-600: #998662;
+  --color-cream-700: #78694e;
+  --color-cream-800: #5d523e;
+  --color-cream-900: #463e30;
 
-  /* Taupe — warm neutral / shadow */
-  --color-taupe-50: #f5f1ec;
-  --color-taupe-100: #e8dfd4;
-  --color-taupe-200: #d1c0ac;
-  --color-taupe-300: #b39c82;
-  --color-taupe-400: #957d63;
-  --color-taupe-500: #7a6450;
-  --color-taupe-600: #614f3f;
-  --color-taupe-700: #4d3f33;
-  --color-taupe-800: #3c3128;
-  --color-taupe-900: #2e2620;
+  /* Olive charcoal — eye and arch linework */
+  --color-taupe-50: #f5f5ef;
+  --color-taupe-100: #e8e9e1;
+  --color-taupe-200: #d4d7cb;
+  --color-taupe-300: #b8bdaa;
+  --color-taupe-400: #929987;
+  --color-taupe-500: #747b6c;
+  --color-taupe-600: #5d6458;
+  --color-taupe-700: #4b5148;
+  --color-taupe-800: #3d423c;
+  --color-taupe-900: #30352f;
 
   /* Semantic aliases — reusable across UI */
   --color-brand-primary: var(--color-copper-500);
