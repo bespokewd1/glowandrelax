@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+/.opencode/skills/impeccable
+/astro-dev6.log
+/.impeccable
+/DESIGN.md
