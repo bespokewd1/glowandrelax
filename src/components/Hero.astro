@@ -66,7 +66,7 @@ const { heroImg, welcomeImage } = Astro.props;
     class="relative mx-auto grid max-w-7xl grid-cols-12 items-center gap-y-16 px-6 pt-14 pb-24 lg:gap-x-12 lg:px-16 lg:pt-20 lg:pb-32"
   >
     <!-- LEFT: image w/ decorative copper rule -->
-    <div class="hero-rise hero-rise-img relative col-span-12 lg:col-span-7">
+    <div class="hero-rise hero-rise-img relative order-2 col-span-12 mx-auto w-full max-w-2xl lg:order-1 lg:col-span-7 lg:mx-0 lg:max-w-none">
       <!-- offset frame -->
       <div
         aria-hidden="true"
@@ -81,7 +81,7 @@ const { heroImg, welcomeImage } = Astro.props;
           heroImg && (
             <Image
               src={heroImg}
-              class="block aspect-[4/5] h-full w-full object-cover lg:aspect-[5/6]"
+              class="block aspect-[4/5] h-full w-full object-cover sm:aspect-[4/3] lg:aspect-[5/6]"
               alt={homeData.hero.alt}
               loading={'eager'}
               decoding="sync"
@@ -127,7 +127,7 @@ const { heroImg, welcomeImage } = Astro.props;
     </div>
 
     <!-- RIGHT: copy -->
-    <div class="relative col-span-12 lg:col-span-5 lg:pl-6">
+    <div class="relative order-1 col-span-12 mx-auto w-full max-w-2xl lg:order-2 lg:col-span-5 lg:mx-0 lg:max-w-none lg:pl-6">
       <!-- kicker -->
       <div class="hero-rise hero-rise-1 flex items-center gap-3">
         <span class="bg-copper-500 h-px w-10"></span>

@@ -2,9 +2,12 @@
 import client from '@data/clientData';
 import { getNavData } from '@data/navData';
 import { getCurrentYear } from '@js/utils';
-import MainLogo from '@assets/images/logo/glow-n-relax.png';
-import { Image } from 'astro:assets';
+import { resolveImage } from '@js/imageUtils';
+import { Image } from 'astro-lqip/components';
 import { Icon } from 'astro-icon/components';
+import navInfo from '@data/navInfo.json';
+
+const MainLogo = await resolveImage(navInfo.image);
 
 const currentYear = getCurrentYear();
 const navData = await getNavData();
@@ -80,11 +83,15 @@ const infoLinks = navData.filter(
           aria-label="Back to home"
           class="block transition-opacity hover:opacity-90"
         >
-          <Image
-            src={MainLogo}
-            class="h-auto w-44 object-contain"
-            alt="Glow and Relax Studio main logo"
-          />
+          {
+            MainLogo && (
+              <Image
+                src={MainLogo}
+                class="h-auto w-44 object-contain"
+                alt={navInfo.alt}
+              />
+            )
+          }
         </a>
 
         <div class="mt-7 flex items-center gap-3">
