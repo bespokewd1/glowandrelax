@@ -119,24 +119,34 @@ collections:
               name: 'benefitBody',
               widget: 'text',
             }
-      - label: 'Prices'
-        name: 'prices'
+      - label: 'Price Groups'
+        name: 'priceGroups'
         widget: 'list'
         required: false
-        hint: 'optional prices for the service'
+        hint: 'optional grouped pricing for the service'
         fields:
           - {
-              label: 'Session Duration',
-              name: 'duration',
+              label: 'Group Title',
+              name: 'title',
               widget: 'string',
-              hint: 'e.g. 45 minutes',
+              hint: 'e.g. Massages, Under 7 & Over 70 RMT',
             }
-          - {
-              label: 'Session Price',
-              name: 'price',
-              widget: 'string',
-              hint: 'e.g. $85',
-            }
+          - label: 'Prices'
+            name: 'prices'
+            widget: 'list'
+            fields:
+              - {
+                  label: 'Session Duration',
+                  name: 'duration',
+                  widget: 'string',
+                  hint: 'e.g. 45 Minutes',
+                }
+              - {
+                  label: 'Session Price',
+                  name: 'price',
+                  widget: 'string',
+                  hint: 'e.g. $85',
+                }
 
   - name: 'Site Settings'
     label: 'Site Settings'

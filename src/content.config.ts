@@ -6,17 +6,17 @@ import { glob } from 'astro/loaders';
 // Doc: https://docs.astro.build/en/guides/images/#images-in-content-collections
 
 const blogsCollection = defineCollection({
-	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			author: z.string(),
-			date: z.date(),
-			tags: z.array(z.string()),
-			image: image(),
-			imageAlt: z.string(),
-		}),
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      author: z.string(),
+      date: z.date(),
+      tags: z.array(z.string()),
+      image: image(),
+      imageAlt: z.string(),
+    }),
 });
 
 const servicesCollection = defineCollection({
@@ -35,7 +35,7 @@ const servicesCollection = defineCollection({
         z.object({
           featName: z.string(),
           featBody: z.string(),
-        }),
+        })
       ),
       benefitsTitle: z.string(),
       benefitsTagline: z.string(),
@@ -43,14 +43,21 @@ const servicesCollection = defineCollection({
         z.object({
           benefitName: z.string(),
           benefitBody: z.string(),
-        }),
+        })
       ),
-      prices: z.array(
-        z.object({
-          duration: z.string(),
-          price: z.string(),
-        }),
-      ).optional(),
+      priceGroups: z
+        .array(
+          z.object({
+            title: z.string(),
+            prices: z.array(
+              z.object({
+                duration: z.string(),
+                price: z.string(),
+              })
+            ),
+          })
+        )
+        .optional(),
     }),
 });
 
@@ -66,16 +73,17 @@ const faqCollection = defineCollection({
 
 const teamCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/team' }),
-  schema: ({ image }) => z.object({
-    name: z.string(),
-    role: z.enum(['founder', 'therapist']),
-    photo: image().optional(),
-    occupation: z.string(),
-    since: z.string(),
-    where: z.string().optional(),
-    bio: z.string(),
-    // order: z.number().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      role: z.enum(['founder', 'therapist']),
+      photo: image().optional(),
+      occupation: z.string(),
+      since: z.string(),
+      where: z.string().optional(),
+      bio: z.string(),
+      // order: z.number().optional(),
+    }),
 });
 
 // Reviews / Testimonials collection
@@ -130,7 +138,7 @@ const galleryCollection = defineCollection({
 });
 
 export const collections = {
-	blog: blogsCollection,
+  blog: blogsCollection,
   services: servicesCollection,
   faq: faqCollection,
   team: teamCollection,
@@ -138,4 +146,3 @@ export const collections = {
   promotions: promotionsCollection,
   gallery: galleryCollection,
 };
-

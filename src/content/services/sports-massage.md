@@ -24,4 +24,29 @@ benefits:
     benefitBody: Boosts circulation and helps clear post‑workout soreness and stiffness.
   - benefitName: Optimize range of motion
     benefitBody: Focused work on hips, shoulders, and back to support training demands.
+
+priceGroups:
+  - title: Massages
+    prices:
+      - duration: 45 Minutes
+        price: $85
+      - duration: 60 Minutes
+        price: $105
+      - duration: 75 Minutes
+        price: $130
+      - duration: 90 Minutes
+        price: $155
+      - duration: 120 Minutes
+        price: $250
+      - duration: Couples Massage (60)
+        price: $105/p
+  - title: Under 7 & Over 70 RMT
+    prices:
+      - duration: 30 Minutes
+        price: $40
+      - duration: 60 Minutes
+        price: $95
+      - duration: 90 Minutes
+        price: $145
+
 ---

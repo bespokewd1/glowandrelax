@@ -14,16 +14,33 @@ export interface ServicePriceRow {
   price: string;
 }
 
+export interface ServicePriceGroup {
+  title: string;
+  prices: Array<ServicePriceRow>;
+}
+
 export interface PriceBenefitsProps {
   benefitsTitle: string;
   benefits: Array<ServiceBenefit>;
   benefitsTagline: string;
-  prices: Array<ServicePriceRow>;
+  prices: Array<ServicePriceGroup> | Array<ServicePriceRow>;
   ctaLabel: string;
 }
 
 const { benefitsTitle, benefits, benefitsTagline, prices, ctaLabel } =
   Astro.props as PriceBenefitsProps;
+
+// Normalize: accept both grouped (ServicePriceGroup[]) and flat (ServicePriceRow[]) formats
+const isFlatFormat =
+  Array.isArray(prices) && prices.length > 0 && 'duration' in prices[0];
+const safeGroups: Array<ServicePriceGroup> =
+  !Array.isArray(prices) || prices.length === 0
+    ? []
+    : isFlatFormat
+      ? [{ title: '', prices: prices as unknown as Array<ServicePriceRow> }]
+      : (prices as unknown as Array<ServicePriceGroup>).filter(
+          (g) => g.prices && g.prices.length > 0
+        );
 
 // Italic accent on last word of benefits title
 const titleWords = benefitsTitle.trim().split(/\s+/);
@@ -93,7 +110,7 @@ const email = clientData.email || 'info@yourclinic.ca';
 
 <!-- ============================== Prices ============================== -->
 {
-  prices.length > 0 && (
+  safeGroups.length > 0 && (
     <section class="bg-cream-50">
       <div class="mx-auto max-w-3xl px-6 py-16 md:py-20">
         <header class="text-center">
@@ -113,18 +130,31 @@ const email = clientData.email || 'info@yourclinic.ca';
           </p>
         </header>
 
-        <ul class="mx-auto mt-10 max-w-2xl">
-          {prices.map((row) => (
-            <li class="border-taupe-200 flex items-baseline justify-between gap-6 border-b py-5">
-              <span class="text-copper-600 font-serif text-lg italic md:text-xl">
-                {row.duration}
-              </span>
-              <span class="text-taupe-900 font-serif text-2xl tracking-tight md:text-3xl">
-                {row.price}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {
+          safeGroups.map((group) => (
+            <div class="mt-10">
+              {
+                group.title && (
+                  <h4 class="text-taupe-900 font-serif text-xl tracking-tight md:text-2xl mb-6">
+                    {group.title}
+                  </h4>
+                )
+              }
+              <ul class="mx-auto max-w-2xl">
+                {group.prices.map((row) => (
+                  <li class="border-taupe-200 flex items-baseline justify-between gap-6 border-b py-5">
+                    <span class="text-copper-600 font-serif text-lg italic md:text-xl">
+                      {row.duration}
+                    </span>
+                    <span class="text-taupe-900 font-serif text-2xl tracking-tight md:text-3xl">
+                      {row.price}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
 
         <p class="text-taupe-600 mx-auto mt-6 max-w-xl text-center text-xs leading-5">
           Need a different duration? Contact us and we'll help tailor a session
