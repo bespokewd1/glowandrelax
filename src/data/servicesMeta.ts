@@ -122,5 +122,5 @@ export const serviceMetaBySlug: Record<string, ServiceMeta> = {
     img: services15Img,
     blurImg: services15ImgBlur,
   },
-  
+
 };
