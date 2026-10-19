@@ -8,9 +8,6 @@ type Props = Omit<HTMLAttributes<'a'>, 'href'>;
 const { ...props } = Astro.props;
 ---
 
-<!-- <a href={booking.buttonLink} {...props}>
-  {booking.buttonText}
-</a> -->
 <Button as="a" href={booking.buttonLink} {...props}>
   {booking.buttonText}
 </Button>

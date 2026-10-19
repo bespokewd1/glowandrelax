@@ -7,7 +7,7 @@ import { Image } from 'astro-lqip/components';
 import client from '@data/clientData';
 import homeData from '@data/home.json';
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+// Optimize images for social previews and preloading.
 import { getOptimizedImage } from '@js/utils';
 import { resolveImage } from '@js/imageUtils';
 import type { GetImageResult } from 'astro';
@@ -28,11 +28,6 @@ import WhyChooseUs from '@components/why-choose-us.astro';
 import CtaLink from '@components/CtaLink.astro';
 import Hero from '@components/Hero.astro';
 import Button from '@components/Button.astro';
-
-const posts = await getCollection('blog');
-posts.sort(
-  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-);
 
 const heroImg = await resolveImage(homeData.hero.image);
 const welcomeImage = await resolveImage(homeData.welcome.image);
@@ -427,189 +422,9 @@ const highlight2 = allServices.find(
             <Button type="submit" icon="tabler:send-filled">
               Send Message
             </Button>
-            <!-- <button
-              type="submit"
-              class="group bg-copper-500 text-cream-50 shadow-copper-500/25 hover:bg-copper-600 hover:shadow-copper-600/30 focus-visible:ring-copper-700 mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold tracking-wide shadow-lg transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 md:w-auto"
-            >
-              Send Message
-              <span
-                aria-hidden="true"
-                class="transition-transform group-hover:translate-x-1">→</span
-              >
-            </button> -->
           </form>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ============================================ -->
-  <!--               Services                    -->
-  <!-- ============================================ -->
-
-  <!-- <section
-    id="massage-services"
-    class="relative overflow-hidden p-(--sectionPadding) lg:max-w-[80rem] mx-auto gap-4 flex flex-col md:gap-8"
-  >
-    <h2 class="cs-title">Our Services</h2>
-    <ServiceGrid services={massageServiceData} />
-
-    <Picture
-      src={serviceBgImg}
-      alt="stone arrangement with rolled towel"
-      formats={['avif', 'webp']}
-      pictureAttributes={{
-        class: 'absolute -z-10 inset-0 w-full h-full lg:hidden ',
-      }}
-      class="object-cover w-full h-full"
-    />
-  </section> -->
-
-  <!-- <FAQ /> -->
-  <!-- ============================================ -->
-  <!--                 Blog Section                 -->
-  <!-- ============================================ -->
-  <!-- <section id="blog" class="glass-bg">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Our Blog</span>
-        <h2 class="cs-title">Wellness Tips & Massage Insights</h2>
-        <p class="cs-text">
-          Explore expert advice on relaxation, pain relief, and self-care.
-        </p>
-      </div>
-      <div class="main-content">
-        {posts.length === 0 && <h1>No Recent Posts</h1>}
-        {
-          posts.length >= 1 &&
-            posts.map((post) => (
-              <article class="recent-articles">
-                <picture class="blog-mainImage">
-                  <Image
-                    src={post.data.image}
-                    alt={post.data.imageAlt}
-                    width="795"
-                    height="400"
-                    decoding="async"
-                  />
-                </picture>
-
-                <div class="article-group">
-                  <div class="blog-authorGroup">
-                    <picture class="blog-author-img">
-                      <img
-                        src="/assets/favicons/favicon-stone-massage.jpg"
-                        alt="house"
-                        width="32"
-                        height="32"
-                        decoding="async"
-                      />
-                    </picture>
-                    {/* <span class="blog-author">{post.data.author}</span>
-                    <span aria-hidden="true" class="blog-dot" />
-                    <span class="blog-date">{formatDate(post.data.date)}</span> */}
-                    <span class="blog-author">Stone Massage Admin</span>
-                    <span aria-hidden="true" class="blog-dot" />
-                    <span class="blog-date">Jun 14, 2025</span>
-                  </div>
-                  <h2 class="blog-h1">{post.data.title}</h2>
-                  <p class="blog-desc">{post.data.description}</p>
-                  <a href={'/blog/' + post.id} class="blog-link">
-                    Continue Reading
-                  </a>
-                </div>
-              </article>
-            ))
-        }
-      </div>
-    </div>
-  </section> -->
-
-  <!-- ============================================ -->
-  <!--            Extra Content To Rank             -->
-  <!-- ============================================ -->
-
-  <!-- <section id="sbs-r">
-    <div class="cs-container">
-      <div class="cs-left">
-        <picture class="cs-picture cs-picture1">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/stone-massage-feet.png"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/stone-massage-feet.png"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/stone-massage-feet.png"
-            alt="house"
-            loading="lazy"
-            width="400"
-            height="560"
-          />
-        </picture>
-        <picture class="cs-picture cs-picture2">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/stone-massage-back.png"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/stone-massage-back.png"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/stone-massage-back.png"
-            alt="cabinets"
-            loading="lazy"
-            width="400"
-            height="560"
-          />
-        </picture>
-      </div>
-      <div class="cs-right">
-        <span class="cs-topper">Benefits of Massage Therapy</span>
-        <h2 class="cs-title">Reap the Benefits of Massage Therapy Today</h2>
-        <p class="cs-text">
-          Massage therapy is a proven way to relieve stress, ease muscle
-          tension, and improve overall well-being. At Healing Touch Massage
-          Therapy, we offer various techniques tailored to your needs, from
-          relaxation to therapeutic treatments.
-        </p>
-        <p class="cs-text">
-          <strong>1. Reduces Stress</strong><br />
-          Massage helps lower stress hormones and boost relaxation, leaving you feeling
-          calm and rejuvenated.
-        </p>
-        <p class="cs-text">
-          <strong>2. Eases Muscle Tension</strong><br />
-          Deep tissue and Swedish massage techniques target tight muscles, alleviating
-          pain and discomfort.
-        </p>
-        <p class="cs-text">
-          <strong>3. Enhances Circulation</strong><br />
-          Improved blood flow helps reduce inflammation, promote healing, and increase
-          energy levels.
-        </p>
-        <p class="cs-text">
-          <strong>4. Improves Flexibility</strong><br />
-          Regular massage can increase joint mobility and flexibility, promoting
-          better movement and posture.
-        </p>
-        <p class="cs-text">
-          Experience the therapeutic benefits of massage and improve your
-          quality of life. Book your appointment today!
-        </p>
-        <a href="/direct-billing/" class="cs-button-solid rounded-button"
-          >Book Your Massage Today</a
-        >
-      </div>
-    </div>
-  </section> -->
-
-  <!-- <CTA /> -->
 </BaseLayout>
