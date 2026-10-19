@@ -2,7 +2,7 @@
 import { getNavData } from '@data/navData';
 import client from '@data/clientData';
 import { resolveImage } from '@js/imageUtils';
-import { Image } from 'astro-lqip/components';
+import { Image } from 'astro:assets';
 import navInfo from '@data/navInfo.json';
 import bookingInfo from '@data/booking.json';
 import { Icon } from 'astro-icon/components';
@@ -47,7 +47,7 @@ const bookingHref = bookingInfo.buttonLink;
             sizes="(min-width: 768px) 86px, 74px"
             loading="eager"
             decoding="async"
-            fetchpriority="auto"
+            fetchpriority="high"
             alt={navInfo.alt}
             class="block h-12 w-auto transition-transform duration-500 group-hover:scale-[1.03] md:h-14"
           />
