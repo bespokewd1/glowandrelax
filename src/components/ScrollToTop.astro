@@ -3,16 +3,21 @@
 ---
 
 <style>
-  /* Enable smooth scrolling for anchor links */
-  html {
+  :global(html) {
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
   }
 </style>
 
 <a
   id="backToTop"
   href="#main"
-  class="fixed bottom-15 right-5 opacity-0 transition-[opacity_color_background_background-color] duration-500 p-4 z-50 bg-(--primary) rounded-full text-gray-900 hover:bg-black hover:text-white"
+  class="fixed bottom-15 right-5 opacity-0 focus-visible:opacity-100 transition-[opacity_color_background_background-color] duration-500 p-4 z-50 bg-(--primary) rounded-full text-gray-900 hover:bg-black hover:text-white"
   aria-label="Back to top"
 >
   <svg
@@ -31,24 +36,49 @@
 </a>
 
 <script>
-  document.addEventListener('astro:page-load', function () {
+  let cleanup: (() => void) | undefined;
+
+  document.addEventListener('astro:page-load', () => {
+    cleanup?.();
+
     const main = document.getElementById('main');
     const backToTop = document.getElementById('backToTop');
+    if (!main || !backToTop) return;
 
-    function checkScroll() {
-      const mainBottom = main.offsetTop + main.offsetHeight;
-      const scrollPos = window.scrollY + window.innerHeight;
+    let mainBottom = 0;
+    let viewportHeight = 0;
+    let wasNearBottom: boolean | undefined;
 
-      if (scrollPos >= mainBottom - 100) {
-        backToTop.classList.remove('opacity-0');
-        backToTop.classList.add('opacity-100');
-      } else {
-        backToTop.classList.remove('opacity-100');
-        backToTop.classList.add('opacity-0');
-      }
-    }
+    const checkScroll = () => {
+      const isNearBottom = window.scrollY + viewportHeight >= mainBottom - 100;
+      if (isNearBottom === wasNearBottom) return;
+      wasNearBottom = isNearBottom;
+      backToTop.classList.toggle('opacity-100', isNearBottom);
+      backToTop.classList.toggle('opacity-0', !isNearBottom);
+    };
 
-    window.addEventListener('scroll', checkScroll);
-    checkScroll();
+    const updateLayout = () => {
+      mainBottom = main.offsetTop + main.offsetHeight;
+      viewportHeight = window.innerHeight;
+      checkScroll();
+    };
+
+    const resizeObserver = new ResizeObserver(updateLayout);
+    resizeObserver.observe(main);
+    resizeObserver.observe(document.body);
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', updateLayout);
+    updateLayout();
+
+    cleanup = () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', updateLayout);
+    };
+  });
+
+  document.addEventListener('astro:before-swap', () => {
+    cleanup?.();
+    cleanup = undefined;
   });
 </script>

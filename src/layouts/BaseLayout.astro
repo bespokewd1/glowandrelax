@@ -5,6 +5,9 @@ import ScrollToTop from '@components/ScrollToTop.astro';
 import '@styles/root.less';
 // import '@styles/dark.less';
 import '../styles/global.css';
+import '../styles/fonts.css';
+import frauncesFont from '../assets/fonts/fraunces-latin-normal-400.woff2?url';
+import monaSansFont from '../assets/fonts/mona-sans-latin-normal.woff2?url';
 
 import { getOptimizedImage } from '@js/utils';
 
@@ -45,8 +48,6 @@ const preloadedImages = !preloadedImage
     ? preloadedImage
     : [preloadedImage];
 
-const fontCss =
-  'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap';
 ---
 
 <!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
@@ -59,21 +60,34 @@ const fontCss =
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Load font CSS without blocking render; text paints in the fallback
-         immediately (display=swap) and swaps when the web fonts arrive. -->
-    <link rel="preload" as="style" href={fontCss} onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript>
-      <link rel="stylesheet" href={fontCss} />
-    </noscript>
+    <link
+      rel="preload"
+      href={frauncesFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={monaSansFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Preloads the image passed as a prop -->
     {
       preloadedImages.map((img) => (
-        <link rel="preload" href={img.src} as="image" />
+        <link
+          rel="preload"
+          href={img.src}
+          as="image"
+          imagesrcset={img.srcSet.attribute || undefined}
+          imagesizes={img.attributes.sizes}
+          fetchpriority="high"
+        />
       ))
     }
     <!-- Social media previews -->

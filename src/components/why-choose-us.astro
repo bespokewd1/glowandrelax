@@ -26,6 +26,8 @@ const whyChooseImg = await resolveImage(homeData.whyChooseUs.image);
           whyChooseImg && (
             <Image
               src={whyChooseImg}
+              widths={[480, 640, 768, 960, 1200, 1536]}
+              sizes="(min-width: 1848px) 900px, (min-width: 1280px) calc(50vw - 24px), (min-width: 648px) 900px, calc(150vw - 72px)"
               class="mx-auto block aspect-square w-full max-w-[600px] object-cover shadow-[0_30px_60px_-25px_rgba(60,49,40,0.4)] lg:h-full xl:ms-0"
               alt={homeData.whyChooseUs.alt}
               lqip="base64"
@@ -78,7 +80,9 @@ const whyChooseImg = await resolveImage(homeData.whyChooseUs.image);
           </ul>
 
           <div class="mt-9">
-            <Button as="a" href="/about" variant="outline"> Learn More </Button>
+            <Button as="a" href="/about" variant="outline">
+              Why Choose Our Clinic
+            </Button>
             <!-- <a
               href="/about"
               class="group inline-flex items-center gap-2 rounded-full border border-taupe-900 px-6 py-3 text-sm font-medium text-taupe-900 transition-colors hover:bg-taupe-900 hover:text-cream-50"

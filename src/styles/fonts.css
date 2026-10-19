@@ -1,0 +1,64 @@
+/* SIL Open Font License 1.1. Attribution and source notes: /fonts/README.md. */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-normal-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-italic-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 300 399;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 401 700;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 300 399;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 401 700;
+  font-display: swap;
+  src: url('../assets/fonts/fraunces-latin-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/mona-sans-latin-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Mona Sans';
+  font-style: italic;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('../assets/fonts/mona-sans-latin-italic.woff2') format('woff2');
+}

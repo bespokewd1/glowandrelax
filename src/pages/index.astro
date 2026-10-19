@@ -2,6 +2,7 @@
 import BaseLayout from 'src/layouts/BaseLayout.astro';
 import CTA from '@components/CTA.astro';
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 import { Image } from 'astro-lqip/components';
 import client from '@data/clientData';
 import homeData from '@data/home.json';
@@ -36,8 +37,21 @@ posts.sort(
 const heroImg = await resolveImage(homeData.hero.image);
 const welcomeImage = await resolveImage(homeData.welcome.image);
 
-const heroImage = await getOptimizedImage(heroImg);
-const aboutImg2 = await getOptimizedImage(welcomeImage);
+const heroWidths = [480, 640, 768, 960, 1200, 1536];
+// Account for the landscape photo's object-cover crop inside the portrait frame.
+const heroSizes =
+  '(min-width: 1280px) 1174px, (min-width: 1024px) calc(105vw - 170.4px), (min-width: 720px) 756px, (min-width: 640px) calc(112.5vw - 54px), calc(187.5vw - 90px)';
+const heroImage = heroImg
+  ? await getImage({
+      src: heroImg,
+      format: 'webp',
+      widths: heroWidths,
+      sizes: heroSizes,
+    })
+  : null;
+const serviceImageWidths = [480, 640, 768, 960, 1200, 1280, 1536];
+const serviceImageSizes =
+  '(min-width: 1280px) 640px, (min-width: 1260px) 50vw, (min-width: 768px) 630px, 100vw';
 
 const allServices = await getCollection('services');
 
@@ -58,13 +72,13 @@ const highlight2 = allServices.find(
   title={seoSetting.home.title}
   description={seoSetting.home.description}
   ogImage={ogImage}
-  preloadedImage={[heroImage, aboutImg2]}
+  preloadedImage={heroImage ?? undefined}
 >
   <!-- ============================================ -->
   <!--                    Hero                      -->
   <!-- ============================================ -->
 
-  <Hero heroImg={heroImg} welcomeImage={welcomeImage} />
+  <Hero heroImg={heroImg} heroImage={heroImage} welcomeImage={welcomeImage} />
 
   <!-- ================= CTA (Green band) ================ -->
   <CTA
@@ -107,6 +121,8 @@ const highlight2 = allServices.find(
               <div class="md:col-span-6">
                 <Image
                   src={highlight1.data.image}
+                  widths={serviceImageWidths}
+                  sizes={serviceImageSizes}
                   alt={highlight1.data.imageAlt}
                   class="block aspect-[16/10] w-full object-cover md:aspect-auto md:h-[420px]"
                   lqip="base64"
@@ -156,7 +172,7 @@ const highlight2 = allServices.find(
                         </p>
                         <div class="mt-6">
                           <Button as="a" href="/services" variant="outline">
-                            Learn More
+                            Explore Massage Treatments
                           </Button>
                         </div>
                       </div>
@@ -165,6 +181,8 @@ const highlight2 = allServices.find(
                   <div class="order-1 md:order-2 md:col-span-6">
                     <Image
                       src={highlight2.data.image}
+                      widths={serviceImageWidths}
+                      sizes={serviceImageSizes}
                       alt={highlight2.data.imageAlt}
                       class="block aspect-[16/10] w-full object-cover md:aspect-auto md:h-[420px]"
                       lqip="base64"
@@ -290,16 +308,16 @@ const highlight2 = allServices.find(
                 {client.address.lineTwo}
               </p>
               <p class="text-cream-100/85">
-                <span class="text-copper-300">P.</span>
+                <span class="text-copper-200">P.</span>
                 {client.phoneFormatted}<br />
-                <span class="text-copper-300">E.</span>
+                <span class="text-copper-200">E.</span>
                 {client.email}
               </p>
               <p class="border-cream-100/15 text-cream-100/85 border-t pt-3">
-                <span class="text-copper-300">Hours.</span>
+                <span class="text-copper-200">Hours.</span>
                 {client.openingHours.daysOpen}: {client.openingHours.hours}
               </p>
-              <p class="text-cream-100/70 text-xs leading-5 italic">
+              <p class="text-cream-100/85 text-xs leading-5 italic">
                 Direct Billing Available. Please ask about eligible providers.
               </p>
             </div>
@@ -595,10 +613,3 @@ const highlight2 = allServices.find(
 
   <!-- <CTA /> -->
 </BaseLayout>
-
-<style lang="less">
-  /* Add smooth scrolling to the entire HTML document */
-  html {
-    scroll-behavior: smooth;
-  }
-</style>

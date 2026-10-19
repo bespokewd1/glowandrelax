@@ -42,6 +42,12 @@ const bookingHref = bookingInfo.buttonLink;
         MainLogo && (
           <Image
             src={MainLogo}
+            width={172}
+            widths={[86, 128, 172, 258]}
+            sizes="(min-width: 768px) 86px, 74px"
+            loading="eager"
+            decoding="async"
+            fetchpriority="auto"
             alt={navInfo.alt}
             class="block h-12 w-auto transition-transform duration-500 group-hover:scale-[1.03] md:h-14"
           />

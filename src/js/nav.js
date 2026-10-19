@@ -1,5 +1,8 @@
+  let cleanupMenu;
+
   // Astro:page-load wrapper for View Transitions purposes
   document.addEventListener('astro:page-load', () => { // Make the script controlling the <Hamburger /> mobile menu component available after navigating to a new page.
+    cleanupMenu?.();
 
     const CSbody = document.querySelector('body');
     const CSnavbarMenu = document.getElementById('cs-navigation');
@@ -7,16 +10,14 @@
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     
     function toggleMenu() {
-        mobileMenuToggle.classList.toggle('cs-active');
-        CSnavbarMenu.classList.toggle('cs-active');
-        CSbody.classList.toggle('cs-open');
+        const isOpen = mobileMenuToggle.classList.toggle('cs-active');
+        CSnavbarMenu.classList.toggle('cs-active', isOpen);
+        CSbody.classList.toggle('cs-open', isOpen);
+        mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
     }
     
     // Toggles the hamburger mobile menu
-    mobileMenuToggle.addEventListener('click', function () {
-        toggleMenu()
-        ariaExpanded(mobileMenuToggle);
-    });
+    mobileMenuToggle.addEventListener('click', toggleMenu);
     
     // Checks the value of aria expanded on an element and changes it accordingly whether it is expanded or not
     function ariaExpanded(element) {
@@ -88,14 +89,21 @@
                     }
             });
     
-            // If you press Escape and the hamburger menu is open, close it
-            document.addEventListener("keydown", (event) => {
-                if (event.key === "Escape" && mobileMenuToggle.classList.contains("cs-active")) {
-                    toggleMenu();
-                }
-            });
+
         };
     });
+
+    function handleEscape(event) {
+        if (event.key === "Escape" && mobileMenuToggle.classList.contains("cs-active")) {
+            toggleMenu();
+        }
+    }
+
+    document.addEventListener("keydown", handleEscape);
+    cleanupMenu = () => {
+        document.removeEventListener("keydown", handleEscape);
+        mobileMenuToggle.removeEventListener("click", toggleMenu);
+    };
     
     // Pressing Enter will redirect to the href
     const dropdownLinks = document.querySelectorAll(".cs-drop-li > .cs-li-link");
@@ -106,4 +114,9 @@
             } 
         });
     });   
+    });
+
+    document.addEventListener('astro:before-swap', () => {
+        cleanupMenu?.();
+        cleanupMenu = undefined;
     });

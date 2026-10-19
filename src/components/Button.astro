@@ -38,14 +38,14 @@ const variantClasses: Record<
   { btn: string; iconWrap: string; iconSvg: string }
 > = {
   primary: {
-    btn: 'bg-copper-500 text-white shadow-[inset_0_0_1.6em_-0.6em_var(--color-copper-700)]',
+    btn: 'bg-copper-600 hover:bg-copper-700 text-white shadow-[inset_0_0_1.6em_-0.6em_var(--color-copper-700)]',
     iconWrap:
-      'bg-white shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-copper-300)]',
+      'bg-white shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-copper-700)]',
     iconSvg: 'text-copper-700',
   },
   secondary: {
-    btn: 'bg-sage-500 text-white shadow-[inset_0_0_1.6em_-0.6em_var(--color-sage-700)]',
-    iconWrap: 'bg-white shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-sage-300)]',
+    btn: 'bg-sage-600 hover:bg-sage-700 text-white shadow-[inset_0_0_1.6em_-0.6em_var(--color-sage-700)]',
+    iconWrap: 'bg-white shadow-[0.1em_0.1em_0.6em_0.2em_var(--color-sage-700)]',
     iconSvg: 'text-sage-700',
   },
   outline: {
@@ -66,8 +66,7 @@ const baseBtn = [
 const iconWrap =
   'icon-wrapper absolute right-[0.3em] top-1/2 -translate-y-1/2 ' +
   'flex items-center justify-center h-[2.2em] w-[2.2em] rounded-[0.7em] ' +
-  'transition-all duration-300 ease-out ' +
-  'group-hover/button:w-[calc(100%-0.6em)] group-active/button:scale-95';
+  'transition-transform duration-300 ease-out group-active/button:scale-95';
 
 const iconSvg =
   'w-[1.1em] transition-transform duration-300 ease-out group-hover/button:translate-x-[0.1em]';

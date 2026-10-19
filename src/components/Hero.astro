@@ -1,5 +1,5 @@
 ---
-import type { ImageMetadata } from 'astro';
+import type { GetImageResult, ImageMetadata } from 'astro';
 import { Image } from 'astro-lqip/components';
 import homeData from '@data/home.json';
 import CtaLink from '@components/CtaLink.astro';
@@ -7,10 +7,13 @@ import Button from './Button.astro';
 
 interface Props {
   heroImg: ImageMetadata | null;
+  heroImage: GetImageResult | null;
   welcomeImage: ImageMetadata | null;
 }
 
-const { heroImg, welcomeImage } = Astro.props;
+const { heroImg, heroImage, welcomeImage } = Astro.props;
+const welcomeSizes =
+  '(min-width: 1280px) 842px, (min-width: 1024px) calc(78.3vw - 161px), calc(188vw - 90px)';
 ---
 
 <section
@@ -78,9 +81,12 @@ const { heroImg, welcomeImage } = Astro.props;
         class="relative overflow-hidden rounded-sm shadow-[0_30px_70px_-25px_rgba(60,49,40,0.45)]"
       >
         {
-          heroImg && (
+          heroImg && heroImage && (
             <Image
               src={heroImg}
+              format="webp"
+              widths={heroImage.rawOptions.widths}
+              sizes={heroImage.rawOptions.sizes}
               class="block aspect-[4/5] h-full w-full object-cover sm:aspect-[4/3] lg:aspect-[5/6]"
               alt={homeData.hero.alt}
               loading={'eager'}
@@ -237,11 +243,13 @@ const { heroImg, welcomeImage } = Astro.props;
           welcomeImage && (
             <Image
               src={welcomeImage}
+              widths={[480, 640, 768, 960, 1200, 1537]}
+              sizes={welcomeSizes}
               class="block aspect-[4/5] h-full w-full object-cover"
               alt={homeData.welcome.alt}
-              loading={'eager'}
-              decoding="sync"
-              fetchpriority="high"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="auto"
               lqip="base64"
               lqipSize={10}
             />
@@ -318,7 +326,7 @@ const { heroImg, welcomeImage } = Astro.props;
       </ul>
 
       <Button as="a" class="mt-8" href="/about" variant="outline">
-        Learn More
+        About Our Massage Clinic
       </Button>
     </div>
   </div>
