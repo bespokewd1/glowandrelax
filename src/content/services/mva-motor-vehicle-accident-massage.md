@@ -1,5 +1,10 @@
 ---
 title: MVA (Motor Vehicle Accident) Massage
+seo:
+  title: MVA Massage in Cold Lake, AB
+  description: MVA massage in Cold Lake, Alberta offers targeted care for muscle
+    tension and soft-tissue discomfort after a car accident, with support for claim
+    documentation.
 cardDescription: Therapeutic treatment to address pain and soft tissue injuries
   resulting from car accidents, often covered by insurance.
 subtitle: Therapeutic treatment to address pain and soft tissue injuries

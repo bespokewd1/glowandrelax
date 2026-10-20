@@ -1,5 +1,8 @@
 ---
 title: Bucal Massage
+seo:
+  description: Bucal massage in Cold Lake, Alberta uses gentle work inside and around
+    the mouth to ease jaw and facial tension, with care for TMJ-related discomfort.
 cardDescription: Gentle facial and jaw therapy to relieve tension and improve circulation.
 subtitle: A focused facial and jaw therapy that uses gentle intra-oral and
   external techniques to relieve muscular tightness, reduce TMJ-related

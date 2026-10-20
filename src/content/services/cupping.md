@@ -1,5 +1,9 @@
 ---
 title: Cupping
+seo:
+  description: Cupping therapy in Cold Lake, Alberta uses suction cups to lift and
+    mobilize tight tissue. Target specific areas of muscle tension alongside hands-on
+    massage.
 cardDescription: An ancient therapy using suction cups to improve circulation,
   relieve muscle tension, and promote healing.
 subtitle: An ancient therapy using suction cups to improve circulation, relieve

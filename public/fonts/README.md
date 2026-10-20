@@ -22,6 +22,14 @@ The local normal and italic WOFF2 Latin files are unchanged copies of the files 
 Normal: https://fonts.gstatic.com/s/monasans/v4/o-0bIpQmx24alC5A4PNB6Ryti20_6n1iPHjc5a7duw.woff2
 Italic: https://fonts.gstatic.com/s/monasans/v4/o-0ZIpQmx24alC5A4PNr4C5OaxRsfNNlKbCePevtuXOm.woff2
 
+## Social image font
+
+`src/assets/fonts/mona-sans-latin-normal-400.woff` is the static regular Mona Sans
+font used only by the build-time social card renderer. It avoids variable-font
+weight differences between browser rendering and SVG rendering. Source:
+https://cdn.jsdelivr.net/npm/@fontsource/mona-sans@5.2.8/files/mona-sans-latin-400-normal.woff
+It uses the same SIL Open Font License in `MonaSans-OFL.txt`.
+
 ## Delivery
 
 The files in `src/assets/fonts` are referenced by `src/styles/fonts.css`. The production build emits content-hashed URLs. Font faces use `font-display: swap`; characters absent from a font use the declared system fallback stack.

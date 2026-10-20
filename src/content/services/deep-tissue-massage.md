@@ -1,5 +1,9 @@
 ---
 title: Deep Tissue Massage
+seo:
+  description: Deep tissue massage in Cold Lake, Alberta focuses on deeper muscle
+    layers and stubborn tightness, with targeted pressure to ease tension and support
+    movement.
 cardDescription: ""
 subtitle: Targets deeper muscle layers to relieve chronic tension, muscle
   tightness, and pain.

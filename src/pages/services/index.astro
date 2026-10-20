@@ -15,16 +15,9 @@ import CheckIconFilled from '@components/Icons/Utility/CheckIconFilled.astro';
 import CtaLink from '@components/CtaLink.astro';
 import { getCollection } from 'astro:content';
 
-import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
 import Button from '@components/Button.astro';
-const seo = seoSetting.services;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+import { getPageSeo } from '@lib/seo';
+const { seo, ogImage } = await getPageSeo('services');
 
 type Service = {
   title: string;

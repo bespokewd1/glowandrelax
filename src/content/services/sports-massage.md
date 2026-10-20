@@ -1,5 +1,9 @@
 ---
 title: Sports Massage
+seo:
+  description: Sports massage in Cold Lake, Alberta focuses on muscles used in
+    training, with targeted work to ease workout soreness and support mobility between
+    sessions.
 cardDescription: Focused therapy for athletes to enhance performance, prevent
   injury, and aid recovery.
 subtitle: Focused therapy for athletes to enhance performance, prevent injury,

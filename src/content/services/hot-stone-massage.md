@@ -1,5 +1,9 @@
 ---
 title: Hot Stone Massage
+seo:
+  description: Hot stone massage in Cold Lake, Alberta pairs warmed basalt stones with
+    massage to ease muscle stiffness. Settle into a calming treatment focused on
+    relaxation.
 cardDescription: A soothing massage that uses warmed stones to relax tight
   muscles, improve blood flow, and deliver deep, calming relief.
 subtitle: A deeply soothing massage that uses warmed basalt stones to melt away

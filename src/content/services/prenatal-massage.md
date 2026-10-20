@@ -1,5 +1,9 @@
 ---
 title: Prenatal Massage
+seo:
+  description: Prenatal massage in Cold Lake, Alberta uses gentle techniques and
+    supported positioning to ease tension in the lower back, hips, and legs during
+    pregnancy.
 cardDescription: A soothing massage tailored to the needs of expectant mothers
   to ease discomfort and support prenatal wellness.
 subtitle: A soothing massage tailored to the needs of expectant mothers to ease

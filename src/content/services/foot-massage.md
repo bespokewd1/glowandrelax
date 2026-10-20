@@ -1,5 +1,8 @@
 ---
 title: Foot Massage
+seo:
+  description: Foot massage in Cold Lake, Alberta combines warm oils and gentle to
+    firm strokes to ease tired feet and ankles and help you relax after a long day.
 cardDescription: A focused treatment that targets pressure points in the feet to
   relieve tension, improve circulation, and promote full-body relaxation.
 subtitle: A deeply relaxing foot massage that combines gentle to firm strokes

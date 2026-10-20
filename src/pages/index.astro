@@ -8,16 +8,9 @@ import client from '@data/clientData';
 import homeData from '@data/home.json';
 
 // Optimize images for social previews and preloading.
-import { getOptimizedImage } from '@js/utils';
 import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
-const seo = seoSetting.home;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+import { getPageSeo } from '@lib/seo';
+const { seo, ogImage } = await getPageSeo('home');
 
 // import heroImg from '@assets/images/home/hero-img1.jpg';
 import FacebookIcon from '@components/Icons/Socials/FacebookIcon.astro';
@@ -64,8 +57,8 @@ const highlight2 = allServices.find(
      would be unused render-blocking weight. -->
 
 <BaseLayout
-  title={seoSetting.home.title}
-  description={seoSetting.home.description}
+  title={seo.title}
+  description={seo.description}
   ogImage={ogImage}
   preloadedImage={heroImage ?? undefined}
 >

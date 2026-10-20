@@ -17,7 +17,7 @@ const { title, image, alt, subtitle, highlights, ctaPrimary, ctaSecondary } =
 
 // Split title — italicize last word for editorial accent
 const titleWords = title.trim().split(/\s+/);
-const titleAccent = titleWords.length > 1 ? titleWords.pop()! : title;
+const titleAccent = titleWords.pop() || '';
 const titleLead = titleWords.join(' ');
 ---
 

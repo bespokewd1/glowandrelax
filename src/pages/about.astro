@@ -3,17 +3,9 @@ import BaseLayout from 'src/layouts/BaseLayout.astro';
 import CTA from '@components/CTA.astro';
 import whyChooseImg from '@assets/images/why-choose.webp';
 
-// Optimize images for social previews and preloading.
 import { getOptimizedImage } from '@js/utils';
-import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
-const seo = seoSetting.about;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+import { getPageSeo } from '@lib/seo';
+const { seo, ogImage } = await getPageSeo('about');
 import WhyChooseUs from '@components/why-choose-us.astro';
 import { getCollection } from 'astro:content';
 
@@ -68,9 +60,9 @@ const promotions = allPromos.filter(({ data }) => {
   <section class="bg-orange-50">
     <div class="mx-auto max-w-6xl px-6 py-16 md:py-20">
       <div class="mx-auto max-w-3xl text-center">
-        <h2 class="font-serif text-3xl text-gray-950 md:text-5xl">
+        <h1 class="font-serif text-3xl text-gray-950 md:text-5xl">
           Meet Our Expert Therapists
-        </h2>
+        </h1>
         <p class="mt-4 leading-7 text-gray-700">
           Our team at Glow and Relax is dedicated to thoughtful,
           results‑focused massage care. We tailor every session to your goals so

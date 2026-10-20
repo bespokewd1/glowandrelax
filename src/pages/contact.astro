@@ -11,16 +11,9 @@ import InstagramIcon from '@components/Icons/Socials/InstagramIcon.astro';
 import CheckIcon from '@components/Icons/Utility/CheckIcon.astro';
 import MapPinFilled from '@components/Icons/Utility/MapPinFilled.astro';
 
-import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
+import { getPageSeo } from '@lib/seo';
 import Button from '@components/Button.astro';
-const seo = seoSetting.contact;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+const { seo, ogImage } = await getPageSeo('contact');
 
 type Social = {
   name: string;
@@ -42,11 +35,17 @@ const socials: Social[] = [
 ];
 
 const clinicName = client.name || 'Glow and Relax';
-const address =
-  client.address.lineOne?.trim() + ', ' + client.address.lineTwo?.trim();
-const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  client.address.lineOne + ' ' + client.address.lineTwo
-)}`;
+const address = [
+  client.address.lineOne,
+  client.address.lineTwo,
+  client.address.city,
+  `${client.address.state} ${client.address.zip}`.trim(),
+  'Canada',
+]
+  .map((part) => part.trim())
+  .filter(Boolean)
+  .join(', ');
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 
 const hours = [
   { label: 'Mon – Sat', value: '10:00 am – 10:00 pm' },
@@ -208,8 +207,7 @@ const reasons = [
             <p class="text-cream-50 font-serif text-xl italic">{clinicName}</p>
             <div class="space-y-2 text-sm leading-6">
               <p class="text-cream-100/85">
-                {client.address.lineOne}<br />
-                {client.address.lineTwo}
+                {address}
               </p>
               <p class="text-cream-100/85">
                 <a

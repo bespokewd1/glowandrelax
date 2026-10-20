@@ -1,5 +1,9 @@
 ---
 title: Swedish Massage
+seo:
+  description: Swedish massage in Cold Lake, Alberta uses gentle, flowing strokes to
+    ease everyday tension in the neck, shoulders, and back while you take time to
+    relax.
 cardDescription: A gentle, full-body massage designed to reduce stress, ease
   tension, and promote overall relaxation.
 subtitle: A relaxing full-body massage that uses smooth, gentle strokes to

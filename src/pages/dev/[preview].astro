@@ -1,0 +1,85 @@
+---
+import { getOgCards } from '@lib/seo';
+
+// No preview route is produced by a production build.
+export function getStaticPaths() {
+  return import.meta.env.PROD ? [] : [{ params: { preview: 'og' } }];
+}
+const cards = await getOgCards();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <title>Social card preview | Glow and Relax</title>
+  </head>
+  <body>
+    <header>
+      <h1>Social card preview</h1>
+      <p>
+        Local only. Each image is 1200 × 630 pixels. Click an image to open the
+        full-size PNG.
+      </p>
+    </header>
+    <main>
+      {
+        cards.map((card) => (
+          <article>
+            <h2>{card.key}</h2>
+            <a href={card.image.src} target="_blank">
+              <img
+                src={card.image.src}
+                alt={card.image.alt}
+                width="1200"
+                height="630"
+                loading="lazy"
+              />
+            </a>
+            <p>
+              <a href={card.route}>View page</a> ·{' '}
+              {card.override ? 'Uploaded override' : 'Generated card'}
+            </p>
+          </article>
+        ))
+      }
+    </main>
+  </body>
+</html>
+<style>
+  :global(body) {
+    margin: 0;
+    padding: 32px;
+    font-family: system-ui, sans-serif;
+    background: #f4f0e4;
+    color: #30352f;
+  }
+  header {
+    max-width: 1000px;
+    margin: 0 auto 32px;
+  }
+  main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
+    gap: 28px;
+    max-width: 1500px;
+    margin: auto;
+  }
+  article {
+    min-width: 0;
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #d4d7cb;
+  }
+  a {
+    color: #435b47;
+  }
+</style>

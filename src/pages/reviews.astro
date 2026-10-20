@@ -7,15 +7,8 @@ import { getOptimizedImage } from '@js/utils';
 import landingImage from '@assets/images/landing.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getCollection } from 'astro:content';
 
-import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
-const seo = seoSetting.reviews;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+import { getPageSeo } from '@lib/seo';
+const { seo, ogImage } = await getPageSeo('reviews');
 
 const optimizedImage = await getOptimizedImage(landingImage);
 

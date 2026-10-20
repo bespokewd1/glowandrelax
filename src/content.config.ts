@@ -5,6 +5,11 @@ import { glob } from 'astro/loaders';
 // In order to be able to optimize images with Astro built-in compoments, like <Image />, we first must use this image helper
 // Doc: https://docs.astro.build/en/guides/images/#images-in-content-collections
 
+const blankToUndefined = (value: unknown) =>
+  value === null || (typeof value === 'string' && value.trim() === '')
+    ? undefined
+    : value;
+
 const blogsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
   schema: ({ image }) =>
@@ -28,6 +33,17 @@ const servicesCollection = defineCollection({
     z.object({
       title: z.string(),
       cardDescription: z.string().optional(),
+      seo: z.preprocess(
+        blankToUndefined,
+        z
+          .object({
+            title: z.preprocess(blankToUndefined, z.string().optional()),
+            description: z.preprocess(blankToUndefined, z.string().optional()),
+            ogImage: z.preprocess(blankToUndefined, image().optional()),
+            ogImageAlt: z.preprocess(blankToUndefined, z.string().optional()),
+          })
+          .optional()
+      ),
       subtitle: z.string(),
       image: image(),
       imageAlt: z.string(),

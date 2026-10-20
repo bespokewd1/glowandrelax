@@ -1,5 +1,9 @@
 ---
 title: Injury Recovery Massage
+seo:
+  description: Injury recovery massage in Cold Lake, Alberta focuses on sore, stiff
+    muscles after strains or sprains, with targeted care for comfort and ease of
+    movement.
 cardDescription: Targeted therapy to aid healing, reduce pain, and restore mobility.
 subtitle: A focused treatment designed to support recovery from injuries by
   easing muscle tension, improving circulation, and promoting faster healing.

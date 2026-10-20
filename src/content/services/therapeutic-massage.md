@@ -1,5 +1,9 @@
 ---
 title: Therapeutic Massage
+seo:
+  description: Therapeutic massage in Cold Lake, Alberta uses focused pressure
+    tailored to your needs to ease muscle tension, with care for stiff or restricted
+    areas.
 cardDescription: A customized, hands-on treatment designed to reduce muscle
   tension, ease pain, and support overall mobility and recovery.
 subtitle: A restorative massage focused on relieving muscle tension, reducing

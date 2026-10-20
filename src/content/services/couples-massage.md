@@ -1,5 +1,9 @@
 ---
 title: Couples Massage
+seo:
+  description: Share a couples massage in Cold Lake, Alberta with side-by-side
+    treatments. Each partner can choose the pressure and focus that suit their comfort
+    and needs.
 cardDescription: Relaxing side-by-side massage experience for you and your partner
 subtitle: A shared relaxation experience where you and your partner enjoy
   personalized massages side-by-side, promoting connection, balance, and total

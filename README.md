@@ -11,6 +11,11 @@
     Created and maintained by <a href="https://github.com/BuckyBuck135" target="_blank">BuckyBuck135</a>
   </p>
 
+## SEO and social images
+
+See [page SEO and social image instructions](docs/seo-and-social-images.md) for
+Decap controls, automatic image generation, the local preview and validation.
+
 ## Table of Contents
 
 - [Overview](#overview)

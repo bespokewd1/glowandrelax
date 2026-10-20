@@ -6,6 +6,7 @@ import ServiceHero from '@components/Services/ServiceHero.astro';
 import type { PriceBenefitsProps } from '@components/Services/PriceBenifits.astro';
 import PriceBenifits from '@components/Services/PriceBenifits.astro';
 import { getCollection } from 'astro:content';
+import { getServiceSeo, getSocialImage } from '@lib/seo';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -50,12 +51,14 @@ const benefitsData: PriceBenefitsProps = {
 };
 
 const serviceImage = await getOptimizedImage(data.image);
+const seo = getServiceSeo(service);
+const ogImage = await getSocialImage(`service-${service.id}`);
 ---
 
 <BaseLayout
-  title={data.title}
-  description={data.cardDescription}
-  ogImage={serviceImage}
+  title={seo.title}
+  description={seo.description}
+  ogImage={ogImage}
   preloadedImage={serviceImage}
 >
   <ServiceHero {...heroData} />

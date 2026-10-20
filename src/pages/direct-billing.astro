@@ -8,16 +8,9 @@ import { Image } from 'astro-lqip/components';
 import FAQ from '@components/FAQ.astro';
 import CtaLink from '@components/CtaLink.astro';
 
-import { resolveImage } from '@js/imageUtils';
-import type { GetImageResult } from 'astro';
-import seoSetting from '@data/seo-pages.json';
 import Button from '@components/Button.astro';
-const seo = seoSetting.directBilling;
-const ogImg = await resolveImage(seo.ogImage);
-let ogImage: GetImageResult | null = null;
-if (ogImg) {
-  ogImage = await getOptimizedImage(ogImg);
-}
+import { getPageSeo } from '@lib/seo';
+const { seo, ogImage } = await getPageSeo('directBilling');
 
 const optimizedImage = await getOptimizedImage(allLogos);
 
